@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget Boss Multiplayer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg1: #2b1b4d;
+            --bg2: #4a2a7a;
+            --bg3: #ff8fab;
+
+            --panel: #fff8fc;
+            --panel2: #ffffff;
+            --line: #f2d7e6;
+            --text: #3b2d4a;
+            --muted: #7b6a86;
+
+            --purple: #6a35c1;
+            --violet: #8b5cf6;
+            --pink: #ff6fae;
+            --coral: #ff8a65;
+            --mango: #ffbf47;
+            --mint: #57d6b6;
+            --sky: #6ecbff;
+
+            --shadow: 0 14px 30px rgba(48, 21, 85, 0.20);
+            --shadow-soft: 0 8px 18px rgba(48, 21, 85, 0.12);
+            --radius: 24px;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 16%, rgba(255, 191, 71, 0.22), transparent 18%),
+                radial-gradient(circle at 88% 14%, rgba(87, 214, 182, 0.18), transparent 18%),
+                radial-gradient(circle at 22% 86%, rgba(110, 203, 255, 0.16), transparent 16%),
+                radial-gradient(circle at 78% 82%, rgba(255, 111, 174, 0.18), transparent 16%),
+                linear-gradient(135deg, var(--bg1), var(--bg2) 48%, var(--bg3));
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 18px auto;
+            padding: 14px;
+        }
+
+        .shell {
+            border-radius: 32px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 20px 46px rgba(29, 10, 51, 0.25);
+        }
+
+        .header {
+            position: relative;
+            padding: 30px 24px 24px;
+            background:
+                radial-gradient(circle at right top, rgba(255, 191, 71, 0.24), transparent 26%),
+                radial-gradient(circle at left bottom, rgba(87, 214, 182, 0.20), transparent 24%),
+                linear-gradient(135deg, rgba(43, 27, 77, 0.96), rgba(106, 53, 193, 0.90), rgba(255, 111, 174, 0.72));
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .money-float {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0.18;
+            pointer-events: none;
+            animation: floatMoney 8s linear infinite;
+        }
+
+        .money-float.f1 {
+            top: 14px;
+            left: 6%;
+            animation-delay: 0s;
+        }
+
+        .money-float.f2 {
+            top: 34px;
+            right: 12%;
+            animation-delay: 1.5s;
+        }
+
+        .money-float.f3 {
+            top: 80px;
+            left: 18%;
+            animation-delay: 3s;
+        }
+
+        .money-float.f4 {
+            top: 96px;
+            right: 28%;
+            animation-delay: 4.5s;
+        }
+
+        .money-float.f5 {
+            top: 24px;
+            right: 40%;
+            animation-delay: 6s;
+        }
+
+        @keyframes floatMoney {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.08;
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(8deg);
+                opacity: 0.22;
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.08;
+            }
+        }
+
+        .title {
+            margin: 0;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 1.4px;
+            line-height: 1.02;
+            text-transform: uppercase;
+            text-shadow:
+                0 3px 0 rgba(0, 0, 0, 0.10),
+                0 8px 20px rgba(0, 0, 0, 0.22),
+                0 0 18px rgba(255, 255, 255, 0.18);
+            background: linear-gradient(90deg, #ffffff 0%, #fff1a8 25%, #aefce8 55%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes titleGlow {
+            from {
+                filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0.0));
+            }
+
+            to {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.18));
+            }
+        }
+
+        .subtitle {
+            margin: 12px auto 0;
+            max-width: 950px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.94);
+            position: relative;
+            z-index: 1;
+        }
+
+        .top {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            padding: 16px;
+            align-items: stretch;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            padding: 0 16px 16px;
+            align-items: start;
+        }
+
+        .card,
+        .panel {
+            background: linear-gradient(180deg, var(--panel2), var(--panel));
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            min-width: 0;
+        }
+
+        .card {
+            padding: 16px;
+            height: 100%;
+        }
+
+        .panel {
+            padding: 16px;
+            min-height: 100%;
+        }
+
+        .card h3,
+        .panel h2,
+        .side-block h3 {
+            margin-top: 0;
+            color: var(--purple);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel h2 {
+            margin-bottom: 14px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f7ddff, #ffd8ea);
+            box-shadow: var(--shadow-soft);
+            font-size: 16px;
+            flex: 0 0 auto;
+        }
+
+        .setup-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .mode-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            border: none;
+            border-radius: 15px;
+            padding: 11px 14px;
+            font-weight: 900;
+            cursor: pointer;
+            background: #f4e8fb;
+            color: var(--purple);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(106, 53, 193, 0.14);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+        }
+
+        .player-inputs {
+            display: grid;
+            gap: 10px;
+        }
+
+        .player-line {
+            display: grid;
+            grid-template-columns: 88px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .player-line label {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--muted);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 14px;
+            border: 1px solid #ecd3e3;
+            font-size: 15px;
+            outline: none;
+            background: #ffffff;
+            color: var(--text);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--sky);
+            box-shadow: 0 0 0 3px rgba(110, 203, 255, 0.18);
+        }
+
+        .btn-row,
+        .action-buttons {
+            display: grid;
+            gap: 10px;
+        }
+
+        .btn-row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .btn {
+            border: none;
+            border-radius: 15px;
+            padding: 13px 16px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(48, 21, 85, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.62;
+            cursor: not-allowed;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--mint), var(--sky));
+            color: #173f52;
+        }
+
+        .secondary {
+            background: linear-gradient(135deg, var(--mango), var(--coral));
+            color: #5e3111;
+        }
+
+        .ghost {
+            background: linear-gradient(135deg, #f7ebfb, #f1dff7);
+            color: var(--purple);
+        }
+
+        .rules-box {
+            background: #fffdfd;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 12px 14px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--muted);
+            min-height: 220px;
+        }
+
+        .rules-box p {
+            margin: 0 0 8px;
+        }
+
+        .rules-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .mini {
+            border-radius: 18px;
+            padding: 12px 10px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            font-weight: 900;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            min-width: 0;
+            transition: transform 0.15s ease;
+        }
+
+        .mini:hover {
+            transform: translateY(-2px);
+        }
+
+        .mini:nth-child(1) {
+            background: #dcfff5;
+            color: #1c6351;
+        }
+
+        .mini:nth-child(2) {
+            background: #fff1c7;
+            color: #734d11;
+        }
+
+        .mini:nth-child(3) {
+            background: #eee5ff;
+            color: #5c3a8f;
+        }
+
+        .mini:nth-child(4) {
+            background: #ffe3ef;
+            color: #8b3f66;
+        }
+
+        .mini-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            opacity: 0.9;
+        }
+
+        .mini-value {
+            font-size: 28px;
+            margin-top: 6px;
+            word-break: break-word;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .tile {
+            min-height: 112px;
+            border-radius: 20px;
+            padding: 10px 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .tile:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 14px 22px rgba(48, 21, 85, 0.16);
+        }
+
+        .tile::after {
+            content: "";
+            position: absolute;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            right: -10px;
+            top: -10px;
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .tile-number,
+        .tile-name,
+        .tile-desc {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tile-number {
+            font-size: 12px;
+            font-weight: 800;
+            opacity: 0.85;
+        }
+
+        .tile-name {
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .tile-desc {
+            font-size: 11px;
+            line-height: 1.2;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        .start {
+            background: linear-gradient(135deg, #dcfff5, #bff5e4);
+            color: #1d6353;
+        }
+
+        .income {
+            background: linear-gradient(135deg, #dff3ff, #bfe5ff);
+            color: #20527d;
+        }
+
+        .save {
+            background: linear-gradient(135deg, #efe5ff, #ddcdff);
+            color: #5d4294;
+        }
+
+        .shop {
+            background: linear-gradient(135deg, #ffe6dc, #ffd0bd);
+            color: #86472c;
+        }
+
+        .risk {
+            background: linear-gradient(135deg, #ffdce7, #ffc2d6);
+            color: #8e3d63;
+        }
+
+        .smart {
+            background: linear-gradient(135deg, #e2fff8, #c9f7ec);
+            color: #226656;
+        }
+
+        .bill {
+            background: linear-gradient(135deg, #fff3c8, #ffe08c);
+            color: #7a5410;
+        }
+
+        .bonus {
+            background: linear-gradient(135deg, #e6f8ff, #cdefff);
+            color: #20536c;
+        }
+
+        .invest {
+            background: linear-gradient(135deg, #ece7ff, #d8cfff);
+            color: #5c4288;
+        }
+
+        .emergency {
+            background: linear-gradient(135deg, #ffe7d9, #ffd0ba);
+            color: #8b4b30;
+        }
+
+        .token-wrap {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            max-width: 72%;
+            z-index: 2;
+        }
+
+        .token {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+            animation: tokenPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes tokenPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .t1 {
+            background: var(--purple);
+        }
+
+        .t2 {
+            background: var(--pink);
+        }
+
+        .t3 {
+            background: var(--mint);
+            color: #1d4e45;
+        }
+
+        .t4 {
+            background: var(--mango);
+            color: #5a3d10;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .legend span {
+            padding: 8px;
+            border-radius: 999px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 900;
+            box-shadow: var(--shadow-soft);
+            min-width: 0;
+        }
+
+        .play-top {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .dice {
+            min-height: 136px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #fff9e8, #fff0bf);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 74px;
+            color: var(--purple);
+            border: 1px solid #f1ddb0;
+        }
+
+        .dice.rolling {
+            animation: diceShake 0.55s ease-in-out;
+        }
+
+        @keyframes diceShake {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            20% {
+                transform: rotate(-8deg) scale(1.04);
+            }
+
+            40% {
+                transform: rotate(8deg) scale(1.02);
+            }
+
+            60% {
+                transform: rotate(-6deg) scale(1.04);
+            }
+
+            80% {
+                transform: rotate(6deg) scale(1.02);
+            }
+
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        .turn-box {
+            border-radius: 16px;
+            padding: 12px 14px;
+            background: linear-gradient(135deg, #f2e8ff, #ffe8f2);
+            border: 1px solid var(--line);
+            margin-bottom: 12px;
+            font-weight: 900;
+            color: var(--purple);
+        }
+
+        .challenge-card {
+            min-height: 360px;
+            border-radius: 22px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-card::before {
+            content: "💰";
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            font-size: 22px;
+            opacity: 0.12;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f2dcff, #e6c6ff);
+            color: #6a35c1;
+            margin-bottom: 12px;
+        }
+
+        .challenge-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+
+        .challenge-text {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #5a4b69;
+            margin-bottom: 14px;
+            min-height: 92px;
+        }
+
+        .timer-wrap {
+            height: 18px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #f2edf5;
+            border: 1px solid #e7dcea;
+            margin-bottom: 8px;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--mint), var(--mango), var(--coral));
+            transition: width 1s linear;
+        }
+
+        .timer-text {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .choices {
+            display: grid;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            text-align: left;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: linear-gradient(135deg, #fff9fc, #ffffff);
+            color: #4f4260;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            min-width: 0;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 18px rgba(106, 53, 193, 0.10);
+        }
+
+        .choice-btn:disabled {
+            opacity: 0.68;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 14px;
+            min-height: 90px;
+            border-radius: 16px;
+            padding: 14px;
+            background: linear-gradient(135deg, #eefeff, #fff6eb);
+            border-left: 6px solid var(--mint);
+            color: #5a6272;
+            font-size: 15px;
+            line-height: 1.55;
+            font-weight: 800;
+        }
+
+        .scoreboard {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .player-score {
+            border-radius: 16px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-soft);
+            min-width: 0;
+            transition: transform 0.15s ease;
+        }
+
+        .player-score:hover {
+            transform: translateY(-2px);
+        }
+
+        .player-score.active {
+            outline: 3px solid rgba(255, 111, 174, 0.14);
+            border-color: #ffc3da;
+            background: linear-gradient(180deg, #fffafc, #fffdfd);
+        }
+
+        .player-score-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            font-weight: 900;
+            color: var(--purple);
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .player-score-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 6px;
+            font-size: 12px;
+            color: #6d7280;
+            font-weight: 800;
+        }
+
+        .small-box {
+            border-radius: 12px;
+            padding: 8px 6px;
+            text-align: center;
+            background: #faf6fb;
+            min-width: 0;
+            word-break: break-word;
+        }
+
+        .journal,
+        .records {
+            max-height: 260px;
+            overflow-y: auto;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            padding: 10px 12px;
+        }
+
+        .entry,
+        .record {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ead7e2;
+            font-size: 14px;
+            line-height: 1.48;
+            font-weight: 800;
+            word-break: break-word;
+        }
+
+        .entry:last-child,
+        .record:last-child {
+            border-bottom: none;
+        }
+
+        .good {
+            color: #2d8b6b;
+        }
+
+        .bad {
+            color: #c45a67;
+        }
+
+        .neutral {
+            color: #6b7080;
+        }
+
+        .tip {
+            margin-top: 12px;
+            border-radius: 16px;
+            padding: 13px 14px;
+            background: linear-gradient(135deg, #fff7dc, #fff0ba);
+            border-left: 6px solid var(--mango);
+            color: #7a5915;
+            font-size: 14px;
+            line-height: 1.55;
+            font-weight: 800;
+        }
+
+        .game-over {
+            display: none;
+            margin-top: 14px;
+            border-radius: 18px;
+            padding: 16px;
+            background: linear-gradient(135deg, #fffafe, #fff4ec);
+            border: 1px solid var(--line);
+            text-align: center;
+            color: #49556a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-over.show-sparkle::before,
+        .game-over.show-sparkle::after {
+            content: "✨";
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.45;
+            animation: sparkle 2.2s infinite ease-in-out;
+        }
+
+        .game-over.show-sparkle::before {
+            top: 12px;
+            left: 16px;
+        }
+
+        .game-over.show-sparkle::after {
+            top: 14px;
+            right: 16px;
+            animation-delay: 1s;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                transform: scale(0.8) rotate(0deg);
+                opacity: 0.25;
+            }
+
+            50% {
+                transform: scale(1.15) rotate(10deg);
+                opacity: 0.6;
+            }
+        }
+
+        .winner {
+            font-size: 30px;
+            font-weight: 900;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+
+        .side-block {
+            margin-bottom: 14px;
+        }
+
+        .side-block h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 1180px) {
+
+            .top,
+            .main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .board {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .play-top {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid,
+            .player-score-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .legend {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .btn-row {
+                grid-template-columns: 1fr;
+            }
+
+            .title {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#Featured Finance Games">Home</a>
+            <!-- <a href="strategy.html">⬅ Strategy</a>
+            <a href="behavior.html">➡ Behavior</a> -->
+        </div>
+    </div>
+    <div class="app">
+        <div class="shell">
+            <div class="header">
+                <div class="money-float f1">💰</div>
+                <div class="money-float f2">🪙</div>
+                <div class="money-float f3">💵</div>
+                <div class="money-float f4">🏦</div>
+                <div class="money-float f5">💎</div>
+                <h1 class="title">Budget Boss Multiplayer</h1>
+                <div class="subtitle">
+                    Play in 1, 2, or 4 player mode. Roll the dice, answer money questions, earn points, and learn smart
+                    budgeting through turn-based play.
+                </div>
+            </div>
+
+            <div class="top">
+                <div class="card">
+                    <h3><span class="icon-badge">⚙️</span> Game Setup</h3>
+                    <div class="setup-grid">
+                        <div>
+                            <div style="font-size:14px;font-weight:900;color:#607487;margin-bottom:8px;">Choose Mode
+                            </div>
+                            <div class="mode-row">
+                                <button class="mode-btn active" data-mode="1">1 Player</button>
+                                <button class="mode-btn" data-mode="2">2 Players</button>
+                                <button class="mode-btn" data-mode="4">4 Players</button>
+                            </div>
+                        </div>
+
+                        <div class="player-inputs" id="playerInputs"></div>
+
+                        <div class="btn-row">
+                            <button class="btn primary" id="startBtn">Start Game</button>
+                            <button class="btn ghost" id="clearRecordsBtn">Clear Records</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><span class="icon-badge">📜</span> Rules</h3>
+                    <div class="rules-box">
+                        <p>1. Choose 1, 2, or 4 players and enter player names.</p>
+                        <p>2. The current player rolls the dice and moves on the board.</p>
+                        <p>3. A money question appears. Pick the best answer before time runs out.</p>
+                        <p>4. Faster answers earn extra points.</p>
+                        <p>5. Every player has separate cash, savings, score, and board position.</p>
+                        <p>6. Questions do not repeat until the challenge bank is exhausted.</p>
+                        <p>7. After all rounds are complete, the player with the highest score wins.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><span class="icon-badge">📊</span> Match Summary</h3>
+                    <div class="summary-grid">
+                        <div class="mini">
+                            <div class="mini-label">Players</div>
+                            <div class="mini-value" id="summaryPlayers">1</div>
+                        </div>
+                        <div class="mini">
+                            <div class="mini-label">Round</div>
+                            <div class="mini-value" id="summaryRound">0</div>
+                        </div>
+                        <div class="mini">
+                            <div class="mini-label">Current Turn</div>
+                            <div class="mini-value" id="summaryTurn">—</div>
+                        </div>
+                        <div class="mini">
+                            <div class="mini-label">Time Left</div>
+                            <div class="mini-value" id="summaryTime">—</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="panel">
+                    <h2><span class="icon-badge">🗺️</span> Money Board</h2>
+                    <div class="board" id="board"></div>
+                    <div class="legend">
+                        <span class="income">Income</span>
+                        <span class="save">Save</span>
+                        <span class="shop">Shop</span>
+                        <span class="risk">Risk</span>
+                        <span class="smart">Smart</span>
+                        <span class="bill">Bill</span>
+                        <span class="bonus">Bonus</span>
+                        <span class="invest">Invest</span>
+                        <span class="emergency">Emergency</span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2><span class="icon-badge">🎮</span> Play Area</h2>
+
+                    <div class="turn-box" id="turnBox">Current turn: —</div>
+
+                    <div class="play-top">
+                        <div class="dice" id="diceFace">🎲</div>
+                        <div class="action-buttons">
+                            <button class="btn secondary" id="rollBtn" disabled>Roll Dice</button>
+                            <button class="btn ghost" id="nextBtn" disabled>Next Turn</button>
+                        </div>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="chip" id="challengeType">Welcome</div>
+                        <div class="challenge-title" id="challengeTitle">Set up the match</div>
+                        <div class="challenge-text" id="challengeText">
+                            Choose the player mode, enter player names, and start the game.
+                        </div>
+
+                        <div class="timer-wrap">
+                            <div class="timer-bar" id="timerBar"></div>
+                        </div>
+                        <div class="timer-text" id="timerText">You will get more time in this version.</div>
+
+                        <div class="choices" id="choices"></div>
+
+                        <div class="feedback" id="feedback">
+                            Smart money choices are about using money at the right time for the right reason.
+                        </div>
+
+                        <div class="game-over" id="gameOver"></div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="side-block">
+                        <h3><span class="icon-badge">🏅</span> Player Scoreboard</h3>
+                        <div class="scoreboard" id="scoreboard"></div>
+                    </div>
+
+                    <div class="side-block">
+                        <h3><span class="icon-badge">📁</span> Game Records</h3>
+                        <div class="records" id="records"></div>
+                    </div>
+
+                    <div class="side-block">
+                        <h3><span class="icon-badge">📘</span> Money Journal</h3>
+                        <div class="journal" id="journal"></div>
+                    </div>
+
+                    <div class="tip" id="tipBox">
+                        Tip: A strong budget usually handles needs first, saves regularly, and keeps wants under
+                        control.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                const TOTAL_ROUNDS_PER_PLAYER = 8;
+                const TIMER_SECONDS = 22;
+                const STORAGE_KEY = "budget_boss_multiplayer_records_v3";
+
+                const boardTiles = [
+                    { name: "Start", type: "start", desc: "begin the money journey" },
+                    { name: "Payday", type: "income", desc: "extra money comes in" },
+                    { name: "Save Jar", type: "save", desc: "build future safety" },
+                    { name: "Flash Sale", type: "shop", desc: "needs or wants?" },
+                    { name: "Bill Time", type: "bill", desc: "pay important costs" },
+                    { name: "Smart Choice", type: "smart", desc: "compare value carefully" },
+                    { name: "Bonus Work", type: "bonus", desc: "earn extra money" },
+                    { name: "Risk Zone", type: "risk", desc: "avoid a bad move" },
+                    { name: "Invest Corner", type: "invest", desc: "think long-term" },
+                    { name: "Emergency", type: "emergency", desc: "use backup wisely" }
+                ];
+
+                const challenges = {
+                    start: [
+                        {
+                            id: "start_1",
+                            title: "🚀 First Money Habit",
+                            text: "You are just starting your money journey. What is the strongest first step?",
+                            tip: "A good start makes every later money choice easier.",
+                            choices: [
+                                { label: "📝 Track what money comes in and what money goes out", cash: 0, savings: 12, points: 22, feedback: "Excellent choice. Tracking money helps you understand your spending clearly.", mood: "good" },
+                                { label: "🎉 Spend first and think about it later", cash: -20, savings: 0, points: -8, feedback: "That makes budgeting harder because money disappears before you plan it.", mood: "bad" },
+                                { label: "📋 Make a simple spending plan before buying things", cash: 0, savings: 10, points: 20, feedback: "Very strong start. Planning before spending is a healthy money habit.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "start_2",
+                            title: "🧭 Budget Map",
+                            text: "You want better control over your money this month. Which move helps most?",
+                            tip: "A clear system is better than guessing.",
+                            choices: [
+                                { label: "📒 Write down needs, wants, and saving goals", cash: 0, savings: 10, points: 24, feedback: "Excellent. You created a money map before spending.", mood: "good" },
+                                { label: "🤷 Spend as usual and hope it works out", cash: -15, savings: 0, points: -6, feedback: "Hope is not a strong money system.", mood: "bad" },
+                                { label: "💬 Ask yourself before each purchase: do I really need this?", cash: 0, savings: 6, points: 18, feedback: "Good habit. That question prevents many bad purchases.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    income: [
+                        {
+                            id: "income_1",
+                            title: "💼 Cash Quest Win!",
+                            text: "You helped your neighbor and earned $200. What will you do first?",
+                            tip: "Extra money still needs a job.",
+                            choices: [
+                                { label: "🎮 Spend most of it now", cash: -120, savings: 0, points: -10, feedback: "That was exciting for a moment, but most of the money disappeared fast.", mood: "bad" },
+                                { label: "⚖️ Divide it into saving, spending, and future needs", cash: 70, savings: 80, points: 28, feedback: "Excellent move. You enjoyed some money and still protected your future.", mood: "good" },
+                                { label: "🏦 Put most of it away for future goals", cash: 30, savings: 120, points: 25, feedback: "Strong choice. You treated surprise money like a smart planner would.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "income_2",
+                            title: "🎨 Weekend Work Reward!",
+                            text: "You earned $150 from a weekend project. What is the smartest move?",
+                            tip: "Income can help present needs and future goals.",
+                            choices: [
+                                { label: "🍔 Spend all of it on treats", cash: -100, savings: 0, points: -8, feedback: "That may feel fun now, but it leaves nothing for future plans.", mood: "bad" },
+                                { label: "💰 Save half and keep half available", cash: 40, savings: 60, points: 24, feedback: "Nice balance. You saved and still kept some flexibility.", mood: "good" },
+                                { label: "🎯 Put most of it toward a future goal", cash: 20, savings: 100, points: 27, feedback: "Excellent choice. Goal-based saving is a strong habit.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    shop: [
+                        {
+                            id: "shop_1",
+                            title: "🛍️ Mega Mall Trap!",
+                            text: "You see a shiny item with a huge sale sign. What is the smartest move?",
+                            tip: "A sale is only useful if the item was already worth buying.",
+                            choices: [
+                                { label: "🛑 Walk away because it is not in the budget", cash: 0, savings: 0, points: 30, feedback: "Excellent self-control.", mood: "good" },
+                                { label: "🔥 Buy it because cheap means smart", cash: -60, savings: 0, points: -8, feedback: "A lower price does not make an unneeded item a good choice.", mood: "bad" },
+                                { label: "⏳ Wait a day and decide later", cash: 0, savings: 0, points: 22, feedback: "Great idea. Time helps separate wants from needs.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "shop_2",
+                            title: "👟 Trendy Shoes Trouble!",
+                            text: "Your friends are buying trendy shoes. They were not in your plan this month. What should you do?",
+                            tip: "A good budget helps you say yes at the right time.",
+                            choices: [
+                                { label: "🛑 Skip them for now", cash: 0, savings: 0, points: 26, feedback: "Strong choice. You did not let pressure control your spending.", mood: "good" },
+                                { label: "💸 Buy them now so you do not feel left out", cash: -90, savings: 0, points: -10, feedback: "That was an emotional money choice.", mood: "bad" },
+                                { label: "🔎 Look later for a cheaper option", cash: -20, savings: 0, points: 20, feedback: "Smart thinking. You delayed the purchase and looked for value.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    risk: [
+                        {
+                            id: "risk_1",
+                            title: "🚨 Fast Money Mystery!",
+                            text: "A person tells you, 'Give me $100 today and I promise I will give you $200 tomorrow.' What should you do?",
+                            tip: "Guaranteed quick money is often a warning sign.",
+                            choices: [
+                                { label: "❌ Say no and keep your money safe", cash: 0, savings: 0, points: 35, feedback: "Brilliant choice. Protecting your money is smarter than chasing risky promises.", mood: "good" },
+                                { label: "🤞 Take the chance and hope it works", cash: -100, savings: 0, points: -20, feedback: "That was risky. Offers like this often lead to losing money instead of gaining it.", mood: "bad" },
+                                { label: "🔍 Ask questions and check if it is real", cash: 0, savings: 0, points: 18, feedback: "Better than rushing, but the safest move is still to avoid suspicious deals.", mood: "neutral" }
+                            ]
+                        },
+                        {
+                            id: "risk_2",
+                            title: "📱 Weird Link Warning!",
+                            text: "You get a message saying you won a prize, but you must click a link and enter your bank details first. What is the safest choice?",
+                            tip: "Protecting personal and money information matters.",
+                            choices: [
+                                { label: "🚫 Delete it and do not click anything", cash: 0, savings: 0, points: 32, feedback: "Excellent. You protected your money and personal information.", mood: "good" },
+                                { label: "🎁 Click the link quickly before the prize expires", cash: -80, savings: 0, points: -18, feedback: "That is how fake prize scams often work.", mood: "bad" },
+                                { label: "🧠 Ask a trusted adult or check if the company is real", cash: 0, savings: 0, points: 20, feedback: "Smart move. Verification is much better than rushing.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    save: [
+                        {
+                            id: "save_1",
+                            title: "🏦 Message From Future You!",
+                            text: "You have extra money left this month. What is the smartest saving move?",
+                            tip: "Saving regularly is stronger than waiting.",
+                            choices: [
+                                { label: "💰 Save a fixed amount now", cash: -40, savings: 40, points: 28, feedback: "Excellent. That builds a strong saving habit.", mood: "good" },
+                                { label: "😴 Save later", cash: 0, savings: 0, points: -6, feedback: "Later often turns into never.", mood: "bad" },
+                                { label: "⚖️ Save some and keep some", cash: -20, savings: 20, points: 20, feedback: "Nice balance. You saved without using all your cash.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "save_2",
+                            title: "🎯 Goal Jar Time!",
+                            text: "You want something important in a few months. What is the smartest way to start preparing for it?",
+                            tip: "Saving works better when it has a clear purpose.",
+                            choices: [
+                                { label: "🏦 Start a goal jar and add money regularly", cash: -30, savings: 30, points: 26, feedback: "Excellent. Specific goals make saving easier to stick with.", mood: "good" },
+                                { label: "🤷 Just hope you will have enough later", cash: 0, savings: 0, points: -8, feedback: "Hope is not a savings plan.", mood: "bad" },
+                                { label: "⚖️ Save a little now and a little each week", cash: -15, savings: 15, points: 20, feedback: "Nice steady progress. Small steps add up.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    emergency: [
+                        {
+                            id: "emergency_1",
+                            title: "🚑 Tech Trouble!",
+                            text: "Your laptop suddenly stops working, and you need it for school or work. What is the smartest move?",
+                            tip: "Emergency money exists to handle real problems without panic.",
+                            choices: [
+                                { label: "🛠️ Use savings to repair it if possible", cash: 0, savings: -50, points: 26, feedback: "Excellent. That is exactly what emergency savings are meant for.", mood: "good" },
+                                { label: "💳 Buy a very expensive new one right away", cash: -150, savings: 0, points: -12, feedback: "That solved the problem fast, but cost much more than necessary.", mood: "bad" },
+                                { label: "🔍 Compare repair cost and replacement cost first", cash: -10, savings: 0, points: 30, feedback: "Top-tier thinking. Comparing options helps you spend wisely under pressure.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "emergency_2",
+                            title: "🚲 Flat Tire Problem!",
+                            text: "Your bike gets a flat tire, and you use it often to get around. What is the smartest money move?",
+                            tip: "Emergency spending should solve the real problem without wasting extra money.",
+                            choices: [
+                                { label: "🛠️ Repair the tire for a smaller cost", cash: -20, savings: 0, points: 24, feedback: "Excellent. You fixed the problem without overspending.", mood: "good" },
+                                { label: "💸 Buy a brand-new expensive bike", cash: -180, savings: 0, points: -14, feedback: "That was a much bigger expense than necessary.", mood: "bad" },
+                                { label: "🔎 Compare repair and replacement cost first", cash: -5, savings: 0, points: 28, feedback: "Great thinking. You paused before spending big money.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    bonus: [
+                        {
+                            id: "bonus_1",
+                            title: "🎁 Lucky Money Drop!",
+                            text: "You got unexpected money from a gift, reward, or bonus. What is your move?",
+                            tip: "Unexpected money can either disappear fast or become useful.",
+                            choices: [
+                                { label: "🎉 Spend all of it because it feels like free money", cash: -50, savings: 0, points: -6, feedback: "That was fun for a moment, but the money did not help your future at all.", mood: "bad" },
+                                { label: "💰 Save most of it for something important later", cash: 10, savings: 60, points: 28, feedback: "Excellent move. You turned surprise money into future strength.", mood: "good" },
+                                { label: "⚖️ Split it between saving and spending", cash: 20, savings: 40, points: 24, feedback: "Great balance. You enjoyed the bonus and still made a smart plan.", mood: "good" }
+                            ]
+                        },
+                        {
+                            id: "bonus_2",
+                            title: "🏆 Reward Money!",
+                            text: "You won a small reward in a school or community contest. What is the strongest way to use that money?",
+                            tip: "Reward money can still strengthen your future.",
+                            choices: [
+                                { label: "🍟 Spend it all right away on snacks and drinks", cash: -30, savings: 0, points: -6, feedback: "That was enjoyable, but the reward disappeared quickly.", mood: "bad" },
+                                { label: "🏦 Add most of it to savings", cash: 10, savings: 45, points: 26, feedback: "Great job. You used reward money to build stability.", mood: "good" },
+                                { label: "⚖️ Save some and spend a small amount", cash: 15, savings: 25, points: 22, feedback: "Nice balance. You celebrated and still made a smart choice.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    bill: [
+                        {
+                            id: "bill_1",
+                            title: "📬 Bill Boss Battle!",
+                            text: "A bill is due this week. It is not exciting, but it is important. What should you do?",
+                            tip: "Important bills usually come before fun spending.",
+                            choices: [
+                                { label: "✅ Pay the bill first, then plan the rest", cash: -70, savings: 0, points: 27, feedback: "Excellent priority. You handled a real need before optional spending.", mood: "good" },
+                                { label: "🙈 Ignore it and hope it goes away", cash: 0, savings: 0, points: -15, feedback: "That usually makes money problems worse, not better.", mood: "bad" },
+                                { label: "🎉 Spend on fun things first and worry later", cash: -40, savings: 0, points: -10, feedback: "That puts wants ahead of needs, which weakens your budget.", mood: "bad" }
+                            ]
+                        },
+                        {
+                            id: "bill_2",
+                            title: "💡 Utility Bill Pressure!",
+                            text: "Your monthly utility bill came in, and you also want to spend on entertainment. What should come first?",
+                            tip: "A strong budget handles important obligations before optional wants.",
+                            choices: [
+                                { label: "💡 Pay the utility bill first", cash: -60, savings: 0, points: 25, feedback: "Correct. You handled a necessary expense before extra spending.", mood: "good" },
+                                { label: "🎮 Spend on entertainment first", cash: -35, savings: 0, points: -10, feedback: "That puts wants ahead of important responsibilities.", mood: "bad" },
+                                { label: "📋 Review your budget, then pay the bill", cash: -60, savings: 0, points: 28, feedback: "Excellent. You used planning and still handled the bill properly.", mood: "good" }
+                            ]
+                        }
+                    ],
+                    smart: [
+                        {
+                            id: "smart_1",
+                            title: "🧠 Smart Shopper Showdown!",
+                            text: "Two stores sell the same item. One is cheaper, but you also need to think about quality and return policy. What is the smartest move?",
+                            tip: "Best value means more than just the lowest price.",
+                            choices: [
+                                { label: "🔎 Compare price, quality, and return policy", cash: -28, savings: 0, points: 30, feedback: "Excellent choice. You looked for the best value, not just the fastest answer.", mood: "good" },
+                                { label: "🏃 Buy the first one quickly and move on", cash: -42, savings: 0, points: -5, feedback: "That was fast, but not necessarily wise. Quick buying can cost more later.", mood: "bad" },
+                                { label: "🛒 Buy two because one store is cheaper", cash: -60, savings: 0, points: -8, feedback: "Buying more than you need can cancel out the savings.", mood: "bad" }
+                            ]
+                        },
+                        {
+                            id: "smart_2",
+                            title: "🧾 Price Tag Puzzle!",
+                            text: "One item costs less today, but another item is stronger and will last longer. What is the smartest way to choose?",
+                            tip: "Sometimes higher value beats lower price.",
+                            choices: [
+                                { label: "🧠 Compare cost, quality, and how long it will last", cash: -35, savings: 0, points: 28, feedback: "Excellent. You thought about value over time, not just today's price.", mood: "good" },
+                                { label: "💸 Buy the cheapest one no matter what", cash: -20, savings: 0, points: -4, feedback: "Cheapest is not always best if it breaks quickly.", mood: "bad" },
+                                { label: "🤷 Pick the most expensive because it looks fancy", cash: -70, savings: 0, points: -9, feedback: "Price alone does not guarantee the smartest choice.", mood: "bad" }
+                            ]
+                        }
+                    ],
+                    invest: [
+                        {
+                            id: "invest_1",
+                            title: "📈 Grow It or Blow It?",
+                            text: "You have some money that you do not need right now. This gives you a chance to think beyond today. What is the smartest move?",
+                            tip: "Money for later can be used differently from money for now.",
+                            choices: [
+                                { label: "🌱 Put a small part toward long-term growth", cash: -25, savings: 15, points: 26, feedback: "Great move. You gave your money a chance to help future-you.", mood: "good" },
+                                { label: "🎊 Spend it all because today feels more exciting", cash: -50, savings: 0, points: -10, feedback: "That may feel good now, but it gives up future opportunity.", mood: "bad" },
+                                { label: "💵 Keep it available if you may need it soon", cash: 0, savings: 10, points: 16, feedback: "Reasonable. Keeping money ready can be smart for short-term needs.", mood: "neutral" }
+                            ]
+                        },
+                        {
+                            id: "invest_2",
+                            title: "🌱 Future Money Choice!",
+                            text: "You are deciding what to do with money that is not needed this month. What idea shows the strongest long-term thinking?",
+                            tip: "Long-term money and short-term money are not always treated the same way.",
+                            choices: [
+                                { label: "📈 Use a small amount for future growth and keep the rest balanced", cash: -20, savings: 15, points: 24, feedback: "Strong move. You balanced future growth with present safety.", mood: "good" },
+                                { label: "🛍️ Spend it because something fun is on sale", cash: -45, savings: 0, points: -8, feedback: "That choice focused on today but ignored tomorrow.", mood: "bad" },
+                                { label: "💵 Keep all of it available if a short-term need may come soon", cash: 0, savings: 12, points: 18, feedback: "Reasonable choice when the need is close.", mood: "neutral" }
+                            ]
+                        }
+                    ]
+                };
+
+                const boardEl = document.getElementById("board");
+                const playerInputsEl = document.getElementById("playerInputs");
+                const startBtn = document.getElementById("startBtn");
+                const clearRecordsBtn = document.getElementById("clearRecordsBtn");
+                const rollBtn = document.getElementById("rollBtn");
+                const nextBtn = document.getElementById("nextBtn");
+                const diceFaceEl = document.getElementById("diceFace");
+                const turnBoxEl = document.getElementById("turnBox");
+                const challengeTypeEl = document.getElementById("challengeType");
+                const challengeTitleEl = document.getElementById("challengeTitle");
+                const challengeTextEl = document.getElementById("challengeText");
+                const timerBarEl = document.getElementById("timerBar");
+                const timerTextEl = document.getElementById("timerText");
+                const choicesEl = document.getElementById("choices");
+                const feedbackEl = document.getElementById("feedback");
+                const tipBoxEl = document.getElementById("tipBox");
+                const gameOverEl = document.getElementById("gameOver");
+                const scoreboardEl = document.getElementById("scoreboard");
+                const journalEl = document.getElementById("journal");
+                const recordsEl = document.getElementById("records");
+                const summaryPlayersEl = document.getElementById("summaryPlayers");
+                const summaryRoundEl = document.getElementById("summaryRound");
+                const summaryTurnEl = document.getElementById("summaryTurn");
+                const summaryTimeEl = document.getElementById("summaryTime");
+                const modeButtons = Array.from(document.querySelectorAll(".mode-btn"));
+
+                let selectedMode = 1;
+                let players = [];
+                let currentPlayerIndex = 0;
+                let countdown = null;
+                let questionActive = false;
+                let answerChosen = false;
+                let currentChallenge = null;
+                let matchActive = false;
+                let usedChallengeIdsGlobal = [];
+
+                function safeName(name, fallback) {
+                    const v = (name || "").trim();
+                    return v ? v : fallback;
+                }
+
+                function buildPlayerInputs() {
+                    playerInputsEl.innerHTML = "";
+                    for (let i = 0; i < selectedMode; i++) {
+                        const row = document.createElement("div");
+                        row.className = "player-line";
+                        row.innerHTML = `
+          <label>Player ${i + 1}</label>
+          <input type="text" id="playerInput${i}" placeholder="Enter name for Player ${i + 1}" maxlength="20">
+        `;
+                        playerInputsEl.appendChild(row);
+                    }
+                    summaryPlayersEl.textContent = selectedMode;
+                }
+
+                function createPlayers() {
+                    const arr = [];
+                    for (let i = 0; i < selectedMode; i++) {
+                        const input = document.getElementById(`playerInput${i}`);
+                        arr.push({
+                            id: i + 1,
+                            name: safeName(input ? input.value : "", `Player ${i + 1}`),
+                            position: 0,
+                            cash: 300,
+                            savings: 150,
+                            points: 0,
+                            roundsPlayed: 0,
+                            eliminated: false
+                        });
+                    }
+                    return arr;
+                }
+
+                function renderBoard() {
+                    boardEl.innerHTML = "";
+                    boardTiles.forEach((tile, idx) => {
+                        const tilePlayers = players.filter(p => p.position === idx && !p.eliminated);
+                        const tokenHTML = tilePlayers.map(p => `<div class="token t${p.id}">${p.id}</div>`).join("");
+                        const div = document.createElement("div");
+                        div.className = `tile ${tile.type}`;
+                        div.innerHTML = `
+          <div class="tile-number">Space ${idx + 1}</div>
+          <div class="tile-name">${tile.name}</div>
+          <div class="tile-desc">${tile.desc}</div>
+          <div class="token-wrap">${tokenHTML}</div>
+        `;
+                        boardEl.appendChild(div);
+                    });
+                }
+
+                function renderScoreboard() {
+                    scoreboardEl.innerHTML = "";
+                    players.forEach((p, idx) => {
+                        const div = document.createElement("div");
+                        div.className = `player-score ${idx === currentPlayerIndex && matchActive ? "active" : ""}`;
+                        div.innerHTML = `
+          <div class="player-score-head">
+            <span>Player ${p.id}: ${p.name}</span>
+            <span>${p.eliminated ? "Out" : "Playing"}</span>
+          </div>
+          <div class="player-score-grid">
+            <div class="small-box">Points<br><strong>${p.points}</strong></div>
+            <div class="small-box">Cash<br><strong>$${p.cash}</strong></div>
+            <div class="small-box">Savings<br><strong>$${p.savings}</strong></div>
+            <div class="small-box">Round<br><strong>${p.roundsPlayed}/${TOTAL_ROUNDS_PER_PLAYER}</strong></div>
+          </div>
+        `;
+                        scoreboardEl.appendChild(div);
+                    });
+                }
+
+                function addJournal(text, mood = "neutral") {
+                    const div = document.createElement("div");
+                    div.className = `entry ${mood}`;
+                    div.textContent = text;
+                    journalEl.prepend(div);
+                }
+
+                function setChallenge(type, title, text) {
+                    challengeTypeEl.textContent = type || "Challenge";
+                    challengeTitleEl.textContent = title || "Money Challenge";
+                    challengeTextEl.textContent = text || "Choose the smartest option.";
+                }
+
+                function getCurrentPlayer() {
+                    return players[currentPlayerIndex] || null;
+                }
+
+                function updateSummary() {
+                    const p = getCurrentPlayer();
+                    summaryPlayersEl.textContent = selectedMode;
+                    summaryRoundEl.textContent = p ? `${p.roundsPlayed}/${TOTAL_ROUNDS_PER_PLAYER}` : "—";
+                    summaryTurnEl.textContent = p ? p.name : "—";
+                    summaryTimeEl.textContent = questionActive && currentChallenge ? `${currentChallenge.timeRemaining}s` : "—";
+                    turnBoxEl.textContent = p ? `Current turn: ${p.name}` : "Current turn: —";
+                    renderScoreboard();
+                }
+
+                function getDiceEmoji(n) {
+                    const map = { 1: "⚀", 2: "⚁", 3: "⚂", 4: "⚃", 5: "⚄", 6: "⚅" };
+                    return map[n] || "🎲";
+                }
+
+                function randomChallenge(type) {
+                    const pool = challenges[type] || challenges.start || [];
+
+                    if (pool.length === 0) {
+                        return {
+                            id: "fallback_1",
+                            title: "Money Challenge",
+                            text: "Choose the smartest money move.",
+                            tip: "Think before you spend.",
+                            choices: [
+                                { label: "Save some money", cash: -10, savings: 10, points: 10, feedback: "Saving regularly is a strong habit.", mood: "good" }
+                            ]
+                        };
+                    }
+
+                    let available = pool.filter(ch => ch.id && !usedChallengeIdsGlobal.includes(ch.id));
+
+                    if (available.length === 0) {
+                        usedChallengeIdsGlobal = [];
+                        available = pool.filter(ch => ch.id);
+                    }
+
+                    const chosen = available[Math.floor(Math.random() * available.length)];
+
+                    if (chosen && chosen.id) {
+                        usedChallengeIdsGlobal.push(chosen.id);
+                    }
+
+                    return chosen;
+                }
+
+                function startGame() {
+                    players = createPlayers();
+                    currentPlayerIndex = 0;
+                    questionActive = false;
+                    answerChosen = false;
+                    currentChallenge = null;
+                    matchActive = true;
+                    usedChallengeIdsGlobal = [];
+                    clearInterval(countdown);
+
+                    journalEl.innerHTML = "";
+                    gameOverEl.style.display = "none";
+                    gameOverEl.classList.remove("show-sparkle");
+                    gameOverEl.innerHTML = "";
+                    choicesEl.innerHTML = "";
+
+                    setChallenge("Welcome", "Match started", "Roll the dice to begin. Each player will take turns.");
+                    feedbackEl.textContent = "The highest score wins after all players finish their rounds.";
+                    tipBoxEl.textContent = "Tip: Clear priorities help. Cover needs, save regularly, and avoid rushed decisions.";
+                    diceFaceEl.textContent = "🎲";
+
+                    rollBtn.disabled = false;
+                    nextBtn.disabled = true;
+                    startBtn.textContent = "Restart Match";
+
+                    addJournal(`New match started with ${selectedMode} player${selectedMode > 1 ? "s" : ""}.`, "neutral");
+                    players.forEach(p => addJournal(`${p.name} begins with $300 cash and $150 savings.`, "neutral"));
+
+                    renderBoard();
+                    updateSummary();
+                    renderRecords();
+                }
+
+                function startTimer() {
+                    clearInterval(countdown);
+                    currentChallenge.timeRemaining = TIMER_SECONDS;
+                    questionActive = true;
+                    updateTimerUI();
+
+                    countdown = setInterval(() => {
+                        currentChallenge.timeRemaining -= 1;
+                        updateTimerUI();
+                        if (currentChallenge.timeRemaining <= 0) {
+                            clearInterval(countdown);
+                            handleTimeExpired();
+                        }
+                    }, 1000);
+                }
+
+                function updateTimerUI() {
+                    const t = currentChallenge ? currentChallenge.timeRemaining : 0;
+                    const percent = Math.max(0, (t / TIMER_SECONDS) * 100);
+                    timerBarEl.style.width = `${percent}%`;
+                    timerTextEl.textContent = questionActive ? `Answer in ${t} seconds` : "Timer stopped";
+                    summaryTimeEl.textContent = questionActive ? `${t}s` : "—";
+                }
+
+                function rollDice() {
+                    const p = getCurrentPlayer();
+                    if (!matchActive || !p || questionActive || p.eliminated) return;
+                    if (p.roundsPlayed >= TOTAL_ROUNDS_PER_PLAYER) {
+                        nextTurn();
+                        return;
+                    }
+
+                    p.roundsPlayed += 1;
+                    rollBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    feedbackEl.textContent = `${p.name} is rolling the dice...`;
+                    choicesEl.innerHTML = "";
+                    diceFaceEl.classList.add("rolling");
+
+                    let flashes = 0;
+                    const anim = setInterval(() => {
+                        diceFaceEl.textContent = getDiceEmoji(Math.floor(Math.random() * 6) + 1);
+                        flashes++;
+                        if (flashes >= 10) {
+                            clearInterval(anim);
+                            const roll = Math.floor(Math.random() * 6) + 1;
+                            diceFaceEl.textContent = getDiceEmoji(roll);
+                            setTimeout(() => diceFaceEl.classList.remove("rolling"), 300);
+                            p.position = (p.position + roll) % boardTiles.length;
+                            renderBoard();
+                            addJournal(`${p.name} rolled ${roll} and moved to ${boardTiles[p.position].name}.`, "neutral");
+                            launchChallengeForPlayer(p, boardTiles[p.position]);
+                            updateSummary();
+                        }
+                    }, 90);
+                }
+
+                function launchChallengeForPlayer(player, tile) {
+                    const ch = randomChallenge(tile.type);
+                    currentChallenge = { ...ch, timeRemaining: TIMER_SECONDS };
+                    answerChosen = false;
+                    questionActive = true;
+
+                    setChallenge(tile.name, ch.title, ch.text);
+                    tipBoxEl.textContent = `Tip: ${ch.tip || "Think before spending."}`;
+                    feedbackEl.textContent = `${player.name}, choose the smartest answer. Faster answers earn more points.`;
+                    choicesEl.innerHTML = "";
+
+                    ch.choices.forEach(choice => {
+                        const btn = document.createElement("button");
+                        btn.className = "choice-btn";
+                        btn.textContent = choice.label;
+                        btn.onclick = () => handleChoice(choice);
+                        choicesEl.appendChild(btn);
+                    });
+
+                    startTimer();
+                }
+
+                function handleChoice(choice) {
+                    const p = getCurrentPlayer();
+                    if (!p || !questionActive || answerChosen) return;
+
+                    answerChosen = true;
+                    questionActive = false;
+                    clearInterval(countdown);
+
+                    const btns = choicesEl.querySelectorAll("button");
+                    btns.forEach(b => b.disabled = true);
+
+                    const timeBonus = currentChallenge.timeRemaining * 2;
+                    const totalPoints = (choice.points || 0) + timeBonus;
+
+                    p.cash += choice.cash || 0;
+                    p.savings += choice.savings || 0;
+                    p.points += totalPoints;
+
+                    if (p.cash < 0) {
+                        const needed = Math.abs(p.cash);
+                        const taken = Math.min(p.savings, needed);
+                        if (taken > 0) {
+                            p.savings -= taken;
+                            p.cash += taken;
+                            addJournal(`${p.name} used $${taken} from savings to cover missing cash.`, "neutral");
+                        }
+                    }
+
+                    if (p.cash < 0 && p.savings <= 0) {
+                        p.cash = 0;
+                        p.savings = 0;
+                        p.eliminated = true;
+                        addJournal(`${p.name} ran out of money resources and is out of the match.`, "bad");
+                    }
+
+                    feedbackEl.textContent = `${choice.feedback} Time bonus: +${timeBonus} points.`;
+                    addJournal(
+                        `${p.name}: ${currentChallenge.title}. Choice: ${choice.label}. Cash ${formatSigned(choice.cash || 0)}, Savings ${formatSigned(choice.savings || 0)}, Points +${totalPoints}.`,
+                        choice.mood || "neutral"
+                    );
+
+                    timerTextEl.textContent = "Timer stopped";
+                    updateSummary();
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = "Next Turn";
+
+                    checkForMatchEnd();
+                }
+
+                function handleTimeExpired() {
+                    const p = getCurrentPlayer();
+                    if (!p || !questionActive || answerChosen) return;
+
+                    answerChosen = true;
+                    questionActive = false;
+
+                    const btns = choicesEl.querySelectorAll("button");
+                    btns.forEach(b => b.disabled = true);
+
+                    p.points = Math.max(0, p.points - 5);
+                    feedbackEl.textContent = `${p.name} ran out of time and lost 5 points.`;
+                    addJournal(`${p.name} did not answer in time. Points -5.`, "bad");
+
+                    timerTextEl.textContent = "Time is up";
+                    updateSummary();
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = "Next Turn";
+
+                    checkForMatchEnd();
+                }
+
+                function nextTurn() {
+                    if (!matchActive) return;
+
+                    choicesEl.innerHTML = "";
+                    timerBarEl.style.width = "100%";
+                    timerTextEl.textContent = "Timer will begin after the dice roll.";
+                    setChallenge("Next Turn", "Ready for the next player?", "Roll the dice for the current player's turn.");
+                    feedbackEl.textContent = "Keep making smart money decisions.";
+                    nextBtn.disabled = true;
+
+                    let found = false;
+                    for (let step = 1; step <= players.length; step++) {
+                        const idx = (currentPlayerIndex + step) % players.length;
+                        const candidate = players[idx];
+                        if (!candidate.eliminated && candidate.roundsPlayed < TOTAL_ROUNDS_PER_PLAYER) {
+                            currentPlayerIndex = idx;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        finishMatch();
+                        return;
+                    }
+
+                    rollBtn.disabled = false;
+                    updateSummary();
+                }
+
+                function checkForMatchEnd() {
+                    const unfinished = players.some(p => !p.eliminated && p.roundsPlayed < TOTAL_ROUNDS_PER_PLAYER);
+                    if (!unfinished) {
+                        nextBtn.textContent = "See Results";
+                    }
+                }
+
+                function finishMatch() {
+                    matchActive = false;
+                    questionActive = false;
+                    clearInterval(countdown);
+                    rollBtn.disabled = true;
+                    nextBtn.disabled = true;
+
+                    const sorted = [...players].sort((a, b) => b.points - a.points || b.savings - a.savings || b.cash - a.cash);
+                    const winner = sorted[0];
+
+                    setChallenge("Match Complete", "Final Results", "The match is over. Here are the final standings.");
+                    feedbackEl.textContent = `${winner.name} wins the match with the highest score.`;
+
+                    let html = `<div class="winner">🏆 Winner: ${winner.name}</div>`;
+                    html += sorted.map((p, i) => `
+        <p><strong>${i + 1}. ${p.name}</strong> — ${p.points} points | Cash: $${p.cash} | Savings: $${p.savings}</p>
+      `).join("");
+
+                    gameOverEl.style.display = "block";
+                    gameOverEl.classList.add("show-sparkle");
+                    gameOverEl.innerHTML = html;
+
+                    addJournal(`Match complete. ${winner.name} finished in 1st place with ${winner.points} points.`, "good");
+
+                    saveRecord({
+                        mode: selectedMode,
+                        winner: winner.name,
+                        standings: sorted.map(p => ({
+                            name: p.name,
+                            points: p.points,
+                            cash: p.cash,
+                            savings: p.savings
+                        })),
+                        date: new Date().toISOString()
+                    });
+
+                    renderRecords();
+                    updateSummary();
+                }
+
+                function formatSigned(v) {
+                    if (v > 0) return `+$${v}`;
+                    if (v < 0) return `-$${Math.abs(v)}`;
+                    return `$0`;
+                }
+
+                function loadRecords() {
+                    try {
+                        const raw = localStorage.getItem(STORAGE_KEY);
+                        const data = raw ? JSON.parse(raw) : [];
+                        return Array.isArray(data) ? data : [];
+                    } catch {
+                        return [];
+                    }
+                }
+
+                function saveRecord(record) {
+                    const data = loadRecords();
+                    data.unshift(record);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.slice(0, 20)));
+                }
+
+                function renderRecords() {
+                    const data = loadRecords();
+                    recordsEl.innerHTML = "";
+                    if (!data.length) {
+                        recordsEl.innerHTML = `<div class="record neutral">No records yet. Finish a match to save one.</div>`;
+                        return;
+                    }
+
+                    data.forEach((r, i) => {
+                        const first = r.standings && r.standings[0] ? r.standings[0] : null;
+                        const div = document.createElement("div");
+                        div.className = "record neutral";
+                        div.innerHTML = `
+          <div><strong>${i + 1}. ${r.mode}-Player Match</strong></div>
+          <div>Winner: ${r.winner || (first ? first.name : "Unknown")}</div>
+          <div>Top score: ${first ? first.points : "—"} pts</div>
+        `;
+                        recordsEl.appendChild(div);
+                    });
+                }
+
+                function clearRecords() {
+                    localStorage.removeItem(STORAGE_KEY);
+                    renderRecords();
+                }
+
+                modeButtons.forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        modeButtons.forEach(b => b.classList.remove("active"));
+                        btn.classList.add("active");
+                        selectedMode = Number(btn.dataset.mode) || 1;
+                        buildPlayerInputs();
+                    });
+                });
+
+                startBtn.addEventListener("click", startGame);
+                rollBtn.addEventListener("click", rollDice);
+                nextBtn.addEventListener("click", () => {
+                    const unfinished = players.some(p => !p.eliminated && p.roundsPlayed < TOTAL_ROUNDS_PER_PLAYER);
+                    if (!unfinished) finishMatch();
+                    else nextTurn();
+                });
+                clearRecordsBtn.addEventListener("click", clearRecords);
+
+                buildPlayerInputs();
+                renderBoard();
+                renderRecords();
+                updateSummary();
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEBT - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 880px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .loan-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .loan-card {
+      background: #f9fcff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .loan-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cfdceb;
+      border-radius: 10px;
+      font-size: 1rem;
+      color: #22324c;
+      background: #fff;
+    }
+
+    .sim-output {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      display: none;
+      line-height: 1.8;
+    }
+
+    @media (max-width:1000px) {
+      .loan-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .loan-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <!-- <a href="strategy.html">⬅ Strategy</a> -->
+      <a href="credit.html" style="color:rgb(137, 63, 137);">◀︎− Credit </a>
+      <a href="risk.html" style="color:rgb(137, 63, 137);"> Risk −▶︎ </a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>DEBT</h1>
+      <p>
+        Debt is future money being pulled into the present. It can sometimes be useful, but it can
+        also become a trap when people focus only on monthly payments instead of total cost. This
+        page explains what debt does, how interest changes outcomes, and why careful borrowing is
+        very different from casual borrowing.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Interest</span>
+        <span class="pill">APR</span>
+        <span class="pill">Minimum Payment Trap</span>
+        <span class="pill">Total Cost</span>
+        <span class="pill">Future Money</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Debt is not just money borrowed. It is a decision that changes future cash flow. Every loan,
+        credit balance, or borrowed amount affects money that has not even been earned yet. This is
+        why debt should never be judged only by whether it feels affordable today. The stronger
+        question is: what does it do to tomorrow?
+      </p>
+      <div class="quote">
+        “Debt uses tomorrow’s money to solve today’s problem.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> the monthly payment matters, but the total cost matters
+        more.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Aarav Pays the Minimum, Mia Pays with Intention</h2>
+      <p>
+        Aarav began using credit casually. At first it felt convenient. Small purchases became easy,
+        and the required monthly payment looked manageable. Because the minimum seemed low, he did
+        not feel much danger. But over time, his balance remained. Interest kept being added.
+        Payments were being made, yet the problem was not disappearing quickly.
+      </p>
+      <p>
+        Mia also used credit, but very differently. She treated it as a tool, not extra income. She
+        paid full balances when possible, avoided borrowing for casual wants, and compared total
+        repayment before taking on any longer loan. Aarav focused on whether something felt
+        affordable now. Mia focused on what it would really cost in the end. Their choices looked
+        similar at first, but their futures became very different.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What Debt Really Changes</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">📅</span>
+          <strong>Future Cash Flow</strong>
+          <p>Borrowing creates obligations that reduce what is available later.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📈</span>
+          <strong>Interest Cost</strong>
+          <p>The final amount repaid can be far larger than the amount first borrowed.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">⚠️</span>
+          <strong>Risk</strong>
+          <p>If income weakens, debt payments can quickly create pressure.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🧠</span>
+          <strong>Decision Quality</strong>
+          <p>Debt can either be used carefully or become a habit of borrowing against the future.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        Debt is powerful because it changes timing. It lets someone use value now and repay later.
+        That can be helpful in some situations, especially when borrowing supports something
+        productive or necessary. But debt becomes dangerous when people stop asking what the full
+        cost will be. A lower monthly payment may look easier, but if it lasts much longer, the
+        total repayment may end up being far more expensive.
+      </p>
+      <p>
+        This is why interest matters so much. Interest means borrowed money is rarely neutral. It has
+        a price. The longer debt remains, the more that price can grow. Some forms of borrowing may
+        support progress when used carefully. Others simply drain future money for present comfort.
+        The difference is not the word “loan” itself. The difference is purpose, cost, and control.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Principal</td>
+          <td>The original amount borrowed.</td>
+        </tr>
+        <tr>
+          <td>Interest</td>
+          <td>The extra cost paid for borrowing.</td>
+        </tr>
+        <tr>
+          <td>APR</td>
+          <td>A common way of expressing the yearly cost of borrowing.</td>
+        </tr>
+        <tr>
+          <td>Minimum Payment</td>
+          <td>The smallest required payment, which may not reduce debt quickly.</td>
+        </tr>
+        <tr>
+          <td>Total Repayment</td>
+          <td>The full amount paid over the life of the debt.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Monthly Payment vs Total Cost</h2>
+      <table>
+        <tr>
+          <th>Loan Style</th>
+          <th>Looks Like</th>
+          <th>Risk</th>
+          <th>Likely Result</th>
+        </tr>
+        <tr>
+          <td>Low monthly, long time</td>
+          <td>Feels easier right now</td>
+          <td>Total cost may rise a lot</td>
+          <td>More money paid in the end</td>
+        </tr>
+        <tr>
+          <td>Higher monthly, shorter time</td>
+          <td>Feels heavier now</td>
+          <td>Cash flow pressure now</td>
+          <td>Often lower total cost overall</td>
+        </tr>
+        <tr>
+          <td>Minimum-only habit</td>
+          <td>Feels manageable</td>
+          <td>Debt can linger while interest keeps adding up</td>
+          <td>Slow payoff and heavy long-term drain</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ Looking only at monthly payment</strong>
+          <p>A lower monthly payment can still hide a much larger total cost.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Treating credit like free money</strong>
+          <p>Borrowed money almost always changes future cash flow.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Paying only minimums without a plan</strong>
+          <p>Interest can keep the problem alive far longer than expected.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Borrowing for avoidable wants</strong>
+          <p>Debt used casually can quietly damage long-term flexibility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          Which is usually the stronger borrowing mindset?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('total')">Compare total repayment, not just monthly payment</button>
+          <button class="alt" onclick="showScenario('monthly')">Choose whatever has the lowest monthly number</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Loan Cost Simulator</h2>
+      <p class="small">
+        Enter a loan amount, annual rate, and years to see estimated monthly payment, total repaid,
+        and total interest cost.
+      </p>
+
+      <div class="loan-grid">
+        <div class="loan-card">
+          <strong>Loan Amount</strong>
+          <input type="number" id="loanAmount" value="10000" min="0">
+        </div>
+        <div class="loan-card">
+          <strong>Annual Rate %</strong>
+          <input type="number" id="loanRate" value="6" min="0">
+        </div>
+        <div class="loan-card">
+          <strong>Years</strong>
+          <input type="number" id="loanYears" value="5" min="1">
+        </div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="runLoanSim()">Calculate Loan</button>
+        <button class="alt" onclick="resetLoanSim()">Reset</button>
+      </div>
+
+      <div id="loanOutput" class="sim-output"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What is one major danger of looking only at the monthly payment?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">You may ignore how much the loan really costs overall</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">Monthly payment tells you everything important</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">Lower monthly payment always means lower total cost</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why can minimum payments be risky?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">Because debt may stay around while interest keeps adding up</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Because minimum payments always erase debt quickly</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">Because interest stops when minimums are paid</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> What is a stronger borrowing habit?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">Borrow carefully and compare total repayment before deciding</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Borrow first and think about cost much later</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Assume credit is extra income</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Use the simulator to compare two loan lengths on the same amount.</li>
+          <li>Notice how a lower monthly payment can still mean higher total repayment.</li>
+          <li>Write one example of borrowing that might support progress and one that might only fund a want.</li>
+          <li>Ask: how will this borrowing change my future monthly cash flow?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Money Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Useful for understanding why people often borrow emotionally and underestimate long-term consequences.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Practical Systems</div>
+          <h4>I Will Teach You to Be Rich</h4>
+          <p>
+            Helpful for creating money systems that reduce careless debt and improve decision-making.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "total") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Total repayment often reveals the real cost better than the monthly number alone.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That is a common mistake. A lower monthly payment can still cost much more overall.";
+          }
+        }
+
+        function runLoanSim() {
+          const principal = Number(document.getElementById("loanAmount").value);
+          const annualRate = Number(document.getElementById("loanRate").value) / 100;
+          const years = Number(document.getElementById("loanYears").value);
+          const output = document.getElementById("loanOutput");
+
+          if (principal <= 0 || annualRate < 0 || years < 1) {
+            output.style.display = "block";
+            output.innerHTML = "Please enter valid numbers.";
+            return;
+          }
+
+          const n = years * 12;
+          const r = annualRate / 12;
+
+          let monthlyPayment;
+          if (r === 0) {
+            monthlyPayment = principal / n;
+          } else {
+            monthlyPayment = principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+          }
+
+          const totalPaid = monthlyPayment * n;
+          const totalInterest = totalPaid - principal;
+
+          output.style.display = "block";
+          output.innerHTML = `
+        <strong>Estimated Monthly Payment:</strong> $${monthlyPayment.toFixed(2)}<br>
+        <strong>Total Paid Over Time:</strong> $${totalPaid.toFixed(2)}<br>
+        <strong>Total Interest Cost:</strong> $${totalInterest.toFixed(2)}<br><br>
+        A longer loan can lower the monthly payment, but it may increase the total cost significantly.
+      `;
+        }
+
+        function resetLoanSim() {
+          document.getElementById("loanAmount").value = 10000;
+          document.getElementById("loanRate").value = 6;
+          document.getElementById("loanYears").value = 5;
+          document.getElementById("loanOutput").style.display = "none";
+          document.getElementById("loanOutput").innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. The monthly number can hide a much larger total cost over time.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Monthly payment alone does not tell the full story of debt.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Minimum payments can keep debt alive while interest keeps adding to the burden.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Minimum payments often slow payoff rather than solving the problem quickly.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Strong borrowing decisions compare total cost and long-term impact before taking the debt.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Borrowing first and thinking later usually leads to weaker financial outcomes.";
+            }
+          }
+        }
+      </script>
+</body>
+
+</html>

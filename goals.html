@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOALS - Finance Academy</title>
+
+    <style>
+        :root {
+            --bg1: #eef5ff;
+            --bg2: #fff8ef;
+            --card: #ffffff;
+            --text: #22324c;
+            --muted: #4b5b77;
+            --line: #dfe8f2;
+            --good: #18794e;
+            --bad: #b34040;
+            --warn: #9a6500;
+            --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, var(--bg1), var(--bg2));
+            color: var(--text);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+
+
+        /* .topbar {
+            background: #22324c;
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        } */
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .topbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: 700;
+        }
+
+        .wrap {
+            max-width: 1120px;
+            margin: auto;
+            padding: 22px 16px 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d8f7ff, #ffe8a6, #ffdede, #e7ddff);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            line-height: 1.85;
+            max-width: 920px;
+            font-size: 1.04rem;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, .8);
+            color: #22324c;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .92rem;
+        }
+
+        .card {
+            background: #fff;
+            padding: 22px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.85;
+            color: var(--text);
+        }
+
+        .quote {
+            background: #f4f8ff;
+            padding: 14px 16px;
+            border-left: 5px solid #7baeff;
+            border-radius: 10px;
+            margin-top: 12px;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fffce8, #f7fcff);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 18px;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .grid-2,
+        .grid-3 {
+            display: grid;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .mini {
+            border: 1px solid #dfe8f2;
+            padding: 18px;
+            border-radius: 16px;
+            transition: .2s;
+        }
+
+        .mini:hover {
+            transform: translateY(-4px);
+        }
+
+        .goal-short {
+            background: #e8fff0;
+        }
+
+        .goal-medium {
+            background: #fff7e8;
+        }
+
+        .goal-long {
+            background: #eef5ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        th {
+            background: #f5fbff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        ul {
+            line-height: 1.9;
+            padding-left: 22px;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 16px;
+            background: #fff;
+            margin-top: 12px;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            padding: 10px 14px;
+            border: none;
+            background: #22324c;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-right: 8px;
+            transition: .2s;
+            font-weight: 700;
+        }
+
+        button:hover {
+            background: #1a263a;
+            transform: scale(1.03);
+        }
+
+        button.alt {
+            background: #5d739b;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 700;
+            line-height: 1.7;
+        }
+
+        .feedback.good {
+            display: block;
+            background: #e8fff0;
+            color: #18794e;
+        }
+
+        .feedback.bad {
+            display: block;
+            background: #ffeaea;
+            color: #b34040;
+        }
+
+        .feedback.warn {
+            display: block;
+            background: #fff7e8;
+            color: #9a6500;
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+        }
+
+        .book-tag {
+            display: inline-block;
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: .82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .book-card h4 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+        }
+
+        .book-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            background: #22324c;
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .footer-nav a:hover {
+            background: #1a263a;
+            transform: scale(1.03);
+        }
+
+        @media(max-width:900px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+            <!-- <a href="strategy.html">⬅ Strategy</a> -->
+            <a href="behavior.html" style="color:rgb(137, 63, 137);"> Behavior −▶︎ </a>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <div class="hero">
+            <h1>Goal Planning</h1>
+            <p>
+                Money becomes far more useful when it is connected to direction. Without clear goals,
+                financial decisions often feel scattered, emotional, or inconsistent. With goals, even small
+                actions begin to move in the same direction. Goal planning is what turns money from a random
+                resource into a tool for building the life you actually want.
+            </p>
+
+            <div class="pill-row">
+                <span class="pill">Direction</span>
+                <span class="pill">Priority</span>
+                <span class="pill">Time Horizon</span>
+                <span class="pill">Focus</span>
+                <span class="pill">Progress</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>1. Why Goals Matter</h2>
+
+            <p>
+                Many people earn, spend, and even save without a clear purpose. They may be working hard, but
+                they still feel uncertain because the effort is not tied to a destination. Goal planning
+                changes that. It gives money a job. It helps you understand what you are building toward, why
+                discipline matters, and which choices support the future you want.
+            </p>
+
+            <p>
+                Without goals, money tends to follow mood, pressure, or habit. With goals, money begins to
+                follow intention.
+            </p>
+
+            <div class="quote">
+                Direction turns effort into progress.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. A Real Story</h2>
+
+            <p>
+                Two people begin their working lives with similar incomes. One saves occasionally and spends
+                whenever something feels urgent, exciting, or rewarding. The other takes time to define what
+                the future should look like. That second person decides to build an emergency cushion, prepare
+                for larger future plans, and create long-term stability step by step.
+            </p>
+
+            <p>
+                At first, there is not much visible difference. But over time, one person feels like money is
+                always reacting to life, while the other starts to feel that money is helping shape life. The
+                difference is not luck. The difference is direction.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>3. Types of Goals</h2>
+
+            <div class="grid-3">
+
+                <div class="mini goal-short">
+                    <h3>Short-Term Goals</h3>
+                    <p>
+                        These goals focus on the near future. They often include building an emergency fund,
+                        paying for a planned need, learning a skill, or improving immediate financial control.
+                    </p>
+                    <p>
+                        Short-term goals help build confidence because progress can be seen sooner.
+                    </p>
+                </div>
+
+                <div class="mini goal-medium">
+                    <h3>Medium-Term Goals</h3>
+                    <p>
+                        These goals usually require more planning and patience. They may include preparing for a
+                        large purchase, building business capital, funding education, or strengthening savings for
+                        an important transition.
+                    </p>
+                    <p>
+                        Medium-term goals often connect today’s discipline with tomorrow’s opportunities.
+                    </p>
+                </div>
+
+                <div class="mini goal-long">
+                    <h3>Long-Term Goals</h3>
+                    <p>
+                        These goals shape the broader direction of life. They may include financial freedom,
+                        retirement, wealth building, reducing long-term stress, or creating greater flexibility in
+                        the future.
+                    </p>
+                    <p>
+                        Long-term goals matter because they shape how money should be used over many years.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4. Clear Goals vs Vague Wishes</h2>
+
+            <p>
+                A vague wish sounds like wanting “more money” or “a better future.” A clear goal explains
+                what the money is for, how much is needed, and how long you have to reach it. The more
+                clearly a goal is defined, the easier it becomes to make decisions that match it.
+            </p>
+
+            <table>
+                <tr>
+                    <th>Weak Version</th>
+                    <th>Stronger Version</th>
+                </tr>
+                <tr>
+                    <td>I want to save more.</td>
+                    <td>I want to build a first emergency cushion over the next several months.</td>
+                </tr>
+                <tr>
+                    <td>I want financial freedom.</td>
+                    <td>I want to build long-term assets and reduce dependence on one income source.</td>
+                </tr>
+                <tr>
+                    <td>I want a better future.</td>
+                    <td>I want a system where my money supports stability, growth, and lower stress.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>5. What Strong Goal Thinking Looks Like</h2>
+
+            <p>
+                Good goal planning is not only about writing a list. It is about asking better questions. A
+                strong planner begins to think in layers: what is urgent, what is important, what must come
+                first, and what belongs later.
+            </p>
+
+            <ul>
+                <li>What do I want money to do for me in the next year?</li>
+                <li>What do I want to build in the next five years?</li>
+                <li>What kind of life do I want long term?</li>
+                <li>Which goal protects me, and which goal grows me?</li>
+                <li>What am I doing right now that supports or delays these goals?</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>6. A Common Problem</h2>
+
+            <p>
+                One of the biggest planning mistakes is treating every goal as equally important. When
+                everything feels urgent, focus disappears. Financial progress becomes stronger when goals are
+                ranked. Some goals need immediate attention, such as protection and stability. Others need
+                patience, such as long-term investing or wealth building.
+            </p>
+
+            <p>
+                Goals become useful when they are not only named, but prioritized.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>7. Scenario Thinking</h2>
+
+            <div class="scenario">
+                <p>
+                    You receive extra money unexpectedly. Which response is usually stronger?
+                </p>
+
+                <div class="choice-row">
+                    <button onclick="choose('goal')">Use it according to your goals</button>
+                    <button onclick="choose('random')">Spend it without a plan</button>
+                </div>
+
+                <div id="result" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>8. Quick Check</h2>
+
+            <div class="scenario">
+                <p>
+                    Which statement reflects stronger financial thinking?
+                </p>
+
+                <div class="choice-row">
+                    <button onclick="quiz('a')">Goals give money direction</button>
+                    <button onclick="quiz('b')">Goals are not very important</button>
+                </div>
+
+                <div id="quiz" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>9. Real Life Reflection</h2>
+
+            <p>
+                If you had to describe your financial future clearly, what would you say? What are you trying
+                to protect? What are you trying to build? What are you trying to escape? These questions may
+                sound simple, but they often reveal whether your money currently has direction or not.
+            </p>
+
+            <p>
+                The goal does not need to be perfect at first. It just needs to be real enough to guide the
+                next step.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>10. Book Recommendations</h2>
+
+            <div class="grid-2">
+                <div class="book-card">
+                    <div class="book-tag">Focus and Direction</div>
+                    <h4>Atomic Habits</h4>
+                    <p>
+                        Strong for understanding how small repeated actions can turn long-term goals into visible
+                        progress.
+                    </p>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-tag">Practical Planning</div>
+                    <h4>I Will Teach You to Be Rich</h4>
+                    <p>
+                        Helpful for turning financial intentions into repeatable systems and purposeful action.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                function choose(type) {
+                    let box = document.getElementById("result");
+                    box.style.display = "block";
+
+                    if (type === "goal") {
+                        box.className = "feedback good";
+                        box.innerHTML = "Correct. This supports direction, progress, and stronger long-term planning.";
+                    } else {
+                        box.className = "feedback bad";
+                        box.innerHTML = "This may feel satisfying now, but it weakens progress when money is disconnected from clear goals.";
+                    }
+                }
+
+                function quiz(ans) {
+                    let box = document.getElementById("quiz");
+                    box.style.display = "block";
+
+                    if (ans === "a") {
+                        box.className = "feedback good";
+                        box.innerHTML = "Correct. Goals help transform money from random movement into meaningful direction.";
+                    } else {
+                        box.className = "feedback bad";
+                        box.innerHTML = "Not quite. Without goals, money decisions often become scattered and inconsistent.";
+                    }
+                }
+            </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compound Wealth Shuffle Game</title>
+    <style>
+        :root {
+            --bg1: #efc2ef;
+            --bg2: #d6e3f3;
+            --bg3: #ec9e62;
+
+            --text: #21364a;
+            --muted: #667b90;
+
+            --green: #437058;
+            --green-soft: #b1dac3;
+
+            --blue: #3d6fd6;
+            --blue-soft: #dbe7fb;
+
+            --orange: #d9853b;
+            --orange-soft: #eec6a3;
+
+            --card-green: #a8ecc8;
+            --card-blue: #e3ebf9;
+            --card-orange: #f8e8dc;
+            --card-mix: #649fbd;
+
+            --border: #b7c9d8;
+            --shadow: 0 16px 38px rgba(18, 39, 64, .10);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(61, 111, 214, .12), transparent 28%),
+                radial-gradient(circle at top right, rgba(217, 133, 59, .10), transparent 26%),
+                radial-gradient(circle at bottom left, rgba(47, 158, 98, .10), transparent 28%),
+                linear-gradient(135deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .app {
+            width: min(1680px, 97%);
+            margin: 18px auto 42px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #5b87de, #6490e8, #e881ba, #d9853b);
+            color: #fff;
+            border-radius: 30px;
+            padding: 26px 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 4vw, 3.1rem);
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 1040px;
+            line-height: 1.65;
+            font-size: 1.02rem;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            padding: 8px 13px;
+            border-radius: 999px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .24);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 390px 1fr;
+            gap: 20px;
+            margin-top: 20px;
+            align-items: start;
+        }
+
+        .panel {
+            background: linear-gradient(135deg, rgba(184, 237, 209, 0.96), rgba(227, 235, 249, .96), rgba(248, 232, 220, .96));
+            border: 2px solid rgba(161, 202, 236, 0.95);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .panel h2 {
+            margin: 0 0 14px;
+            font-size: 1.28rem;
+        }
+
+        .rules {
+            background: linear-gradient(135deg, #bfe4cf, #b4caef, #efd3bb);
+        }
+
+        .rule {
+            background: linear-gradient(135deg, #d1f4dd, #98afd9, #f0d6c5);
+            padding: 13px 15px;
+            border-radius: 16px;
+            margin: 10px 0;
+            border-left: 8px solid var(--blue);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .05);
+            line-height: 1.58;
+        }
+
+        .rule:nth-child(3) {
+            border-left-color: var(--green)
+        }
+
+        .rule:nth-child(4) {
+            border-left-color: var(--orange)
+        }
+
+        .rule:nth-child(5) {
+            border-left-color: var(--blue)
+        }
+
+        .rule:nth-child(6) {
+            border-left-color: var(--green)
+        }
+
+        .rule:nth-child(7) {
+            border-left-color: var(--orange)
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            font-size: .92rem;
+        }
+
+        input,
+        select,
+        button {
+            font: inherit;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border-radius: 13px;
+            border: 2px solid #bccbd8;
+            background: linear-gradient(135deg, #f6faf8, #f4f7fd, #fdf7f1);
+            color: var(--text);
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 4px rgba(61, 111, 214, .10);
+        }
+
+        .grid2,
+        .nameGrid,
+        .simGrid,
+        .miniGrid,
+        .scoreGrid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .grid2,
+        .nameGrid,
+        .simGrid,
+        .miniGrid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .scoreGrid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .btnRow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        button {
+            border: none;
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+            transition: .15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btnPrimary {
+            background: linear-gradient(135deg, #3d6fd6, #2d5fc2);
+            color: #fff;
+        }
+
+        .btnGreen {
+            background: linear-gradient(135deg, #e7abda, #567b67);
+            color: #fff;
+        }
+
+        .btnPink {
+            background: linear-gradient(135deg, #d9853b, #e79a57);
+            color: #fff;
+        }
+
+        .btnSoft {
+            background: linear-gradient(135deg, #dfe8f8, #eef3fb);
+            color: #2d5fc2;
+        }
+
+        .btnOrange {
+            background: linear-gradient(135deg, #d9853b, #e79a57);
+            color: #fff;
+        }
+
+        .btnRed {
+            background: linear-gradient(135deg, #d9853b, #de6c58);
+            color: #fff;
+        }
+
+        .btnBlue {
+            background: linear-gradient(135deg, #3d6fd6, #5a88e5);
+            color: #fff;
+        }
+
+        .status {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #dceee4, #edf6f0);
+            border: 2px solid #a8d0b6;
+            color: #205c3b;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .rightCol {
+            display: grid;
+            gap: 20px;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #a9c5f5, #a7d0b3, #edd0b6);
+            padding: 14px;
+            border-radius: 18px;
+            border: 2px solid #b2c9df;
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.04rem;
+            margin-top: 6px;
+            color: #5f87d7;
+        }
+
+        .mainGrid {
+            display: grid;
+            grid-template-columns: 1.08fr .92fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .roundCards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            min-height: 190px;
+        }
+
+        .cardMini {
+            border: 2px solid #68a1cf;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #e5f1e9, #a8b6d0, #f9eee5);
+            padding: 15px;
+            min-height: 185px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .05);
+        }
+
+        .cardMini.selected {
+            border-color: var(--blue);
+            background: linear-gradient(180deg, #829fdb, #bfe5cb);
+            box-shadow: 0 0 0 4px rgba(61, 111, 214, .10), 0 12px 22px rgba(0, 0, 0, .08);
+        }
+
+        .typeTag {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 999px;
+            color: #fff;
+            font-size: .78rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .type-invest {
+            background: var(--blue);
+        }
+
+        .type-loan {
+            background: var(--orange);
+        }
+
+        .cardMini h4 {
+            margin: 0 0 8px;
+            font-size: 1.02rem;
+            line-height: 1.36;
+        }
+
+        .cardMini p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .86rem;
+            line-height: 1.56;
+        }
+
+        .selectedCard {
+            background: linear-gradient(180deg, #c9eed5, #eaf0fb, #edbc94);
+            border: 2px solid #d7e1e9;
+            border-radius: 24px;
+            padding: 22px;
+            min-height: 640px;
+        }
+
+        .bigTag {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: #fff;
+            font-size: .82rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .bigTag.invest {
+            background: var(--blue);
+        }
+
+        .bigTag.loan {
+            background: var(--orange);
+        }
+
+        .bigTitle {
+            font-size: 1.8rem;
+            margin: 0 0 10px;
+        }
+
+        .bigText {
+            margin: 0 0 10px;
+            line-height: 1.75;
+            color: #3f5263;
+            font-size: 1.02rem;
+        }
+
+        .instructionBox,
+        .answerArea,
+        .resultBox,
+        .noticeBox,
+        .quickUseBox {
+            border-radius: 18px;
+            padding: 15px;
+            line-height: 1.75;
+            margin-top: 14px;
+        }
+
+        .instructionBox {
+            background: linear-gradient(135deg, #e5ecfb, #e6f2e9, #f9ece1);
+            border: 2px solid #cfdae6;
+        }
+
+        .resultBox {
+            background: linear-gradient(135deg, #eef7f1, #edf2fb, #faf1e8);
+            border: 2px solid #dde5eb;
+        }
+
+        .noticeBox {
+            background: linear-gradient(135deg, #f9e7d7, #f6dcc5);
+            border: 2px solid #e8b98f;
+            font-weight: bold;
+            color: #945126;
+        }
+
+        .quickUseBox {
+            background: linear-gradient(135deg, #e6edf9, #e7f2ea);
+            border: 2px solid #d1deeb;
+        }
+
+        .answerArea {
+            background: linear-gradient(135deg, #e7f2ea, #eaf0fb, #f9ede3);
+            border: 2px solid #d1dfeb;
+        }
+
+        .answerRow {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 10px;
+            align-items: end;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eff6f2, #eef2fb, #fbf3eb);
+            border: 1px solid #dce4ea;
+            min-height: 48px;
+            line-height: 1.6;
+        }
+
+        .simWrap {
+            display: grid;
+            gap: 18px;
+        }
+
+        .simCard {
+            background: linear-gradient(135deg, #e5f1e9, #eaf0fb, #f9eee5);
+            border: 2px solid #dde5ea;
+            border-radius: 20px;
+            padding: 18px;
+        }
+
+        .simCard h3 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+        }
+
+        .simOutput {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eef6f2, #edf2fb, #faf3eb);
+            border: 1px solid #dbe3e8;
+            line-height: 1.7;
+        }
+
+        .playersBoard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .playerCard {
+            background: linear-gradient(135deg, #e5f1e9, #eaf0fb, #f9eee5);
+            border-radius: 20px;
+            border: 2px solid #dde5ea;
+            padding: 16px;
+            box-shadow: 0 10px 18px rgba(0, 0, 0, .05);
+        }
+
+        .playerCard h3 {
+            margin: 0 0 12px;
+            font-size: 1.08rem;
+        }
+
+        .mini {
+            background: linear-gradient(135deg, #eef6f2, #edf2fb, #fbf4ed);
+            border: 1px solid #dce3e8;
+            border-radius: 14px;
+            padding: 11px;
+            text-align: center;
+            font-size: .9rem;
+            line-height: 1.45;
+        }
+
+        .mini strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 1rem;
+        }
+
+        .winner {
+            display: none;
+            background: linear-gradient(135deg, #f8e8db, #e7f2ea, #e7eef9);
+            border: 2px solid #e4b78c;
+            border-radius: 20px;
+            padding: 18px;
+            font-weight: bold;
+            line-height: 1.75;
+        }
+
+        .ok {
+            color: #71a88a;
+            font-weight: bold;
+        }
+
+        .bad {
+            color: #b54a3e;
+            font-weight: bold;
+        }
+
+        @media (max-width:1300px) {
+
+            .layout,
+            .mainGrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width:920px) {
+
+            .grid2,
+            .nameGrid,
+            .simGrid,
+            .miniGrid,
+            .scoreGrid,
+            .answerRow,
+            .roundCards {
+                grid-template-columns: 1fr;
+            }
+
+            .app {
+                width: min(98%, 98%);
+            }
+
+            .scoreboardPanel {
+                width: 100%;
+                max-width: 1100px;
+
+                /* THIS is the real fix */
+                justify-self: center;
+
+                margin: 30px 0;
+            }
+
+            /* center the title */
+            .scoreboardPanel h2 {
+                text-align: center;
+            }
+
+            /* center cards inside */
+            .playersBoard {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+                gap: 18px;
+
+                justify-content: center;
+            }
+
+            /* prevent stretching */
+            .playerCard {
+                max-width: 320px;
+                width: 100%;
+            }
+
+
+        }
+
+        /* PASTE CSS HERE */
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#Featured Finance Games">Home</a>
+            <!-- <a href="strategy.html">⬅ Strategy</a>
+            <a href="behavior.html">➡ Behavior</a> -->
+        </div>
+    </div>
+    <div class="app">
+        <section class="hero">
+            <h1>Compound Wealth Shuffle Game</h1>
+            <p>
+                Each turn shows 4 cards. Shuffle picks 1 card. Investment cards build wealth,
+                loan cards reduce balance and add drag, and home loan cards also build a growing asset.
+            </p>
+            <div class="badges">
+                <span class="badge">2 Invest + 2 Loan</span>
+                <span class="badge">Shuffle One Card</span>
+                <span class="badge">Player Names Fixed</span>
+                <span class="badge">Remaining Amount Tracked</span>
+            </div>
+        </section>
+
+        <div class="layout">
+            <div>
+                <section class="panel">
+                    <h2>Game Setup</h2>
+
+                    <div class="grid2">
+                        <div>
+                            <label for="playerCount">Players</label>
+                            <select id="playerCount">
+                                <option value="1">1 Player</option>
+                                <option value="2">2 Players</option>
+                                <option value="3">3 Players</option>
+                                <option value="6">6 Players</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="turnCount">Turns</label>
+                            <select id="turnCount">
+                                <option value="5">5</option>
+                                <option value="8" selected>8</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nameGrid" id="nameGrid"></div>
+
+                    <div class="btnRow">
+                        <button class="btnPrimary" id="startBtn">Start Game</button>
+                        <button class="btnSoft" id="resetBtn">Reset</button>
+                    </div>
+
+                    <div class="status" id="statusBox">Enter player names and start the game.</div>
+                </section>
+
+                <section class="panel rules">
+                    <h2>Simple Rules</h2>
+                    <div class="rule">1. Every player starts with $10,000 balance and $1,000 compounded wealth.</div>
+                    <div class="rule">2. Each turn shows 2 investment cards and 2 loan cards.</div>
+                    <div class="rule">3. Shuffle selects exactly 1 card.</div>
+                    <div class="rule">4. Investment cards increase compounded wealth.</div>
+                    <div class="rule">5. Loan cards reduce balance and add expense drag.</div>
+                    <div class="rule">6. Home loan cards cannot be skipped and create a growing home asset.</div>
+                </section>
+            </div>
+
+            <div class="rightCol">
+                <section class="panel">
+                    <div class="scoreGrid">
+                        <div class="stat">Round<strong id="turnInfo">0 / 0</strong></div>
+                        <div class="stat">Player<strong id="playerInfo">—</strong></div>
+                        <div class="stat">Card Type<strong id="toolInfo">None</strong></div>
+                        <div class="stat">Balance<strong id="balanceInfo">$0</strong></div>
+                        <div class="stat">Remaining<strong id="remainingInfo">$0</strong></div>
+                        <div class="stat">Skips<strong id="skipInfo">0</strong></div>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h2>Turn Panel</h2>
+                    <div id="turnMessage">Start the game, then show the first 4 cards.</div>
+                    <div class="btnRow">
+                        <button class="btnGreen" id="generateBtn" disabled>Show 4 Cards</button>
+                        <button class="btnPink" id="shuffleBtn" disabled>Shuffle</button>
+                        <button class="btnRed" id="skipBtn" disabled>Skip Action</button>
+                        <button class="btnSoft" id="nextBtn" disabled>Next Turn</button>
+                    </div>
+                </section>
+
+                <section class="mainGrid">
+                    <section>
+                        <section class="panel">
+                            <h2>4 Cards for This Turn</h2>
+                            <div class="roundCards" id="roundCards"></div>
+                        </section>
+
+                        <section class="selectedCard" id="selectedCardBox">
+                            <span class="bigTag invest">WAITING</span>
+                            <h2 class="bigTitle">No selected card yet</h2>
+                            <p class="bigText">First show the 4 cards, then click Shuffle.</p>
+
+                            <div class="instructionBox" id="instructionBox">Selected card instructions will appear here.
+                            </div>
+                            <div class="noticeBox" id="noticeBox">The card will clearly say which exact result to type.
+                            </div>
+                            <div class="quickUseBox" id="quickUseBox">Quick result buttons will appear here after you
+                                run a calculator.</div>
+                            <div class="resultBox" id="resultBox">The chosen card’s effect on wealth or expense will be
+                                explained here.</div>
+
+                            <div class="answerArea">
+                                <label for="answerInput">Enter the exact result asked on the card</label>
+                                <div class="answerRow">
+                                    <input id="answerInput" type="number" step="0.01"
+                                        placeholder="Enter exact asked result">
+                                    <button class="btnOrange" id="checkBtn" disabled>Check Answer</button>
+                                    <button class="btnSoft" id="applyBtn" disabled>Apply Turn</button>
+                                </div>
+                                <div class="feedback" id="feedbackBox">
+                                    After shuffle, read the selected card and type the exact result asked.
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+
+                    <section class="simWrap">
+                        <section class="simCard">
+                            <h3>Advanced Compound Simulator</h3>
+                            <div class="simGrid">
+                                <div>
+                                    <label for="cStart">Start Amount</label>
+                                    <input id="cStart" type="number" value="1000">
+                                </div>
+                                <div>
+                                    <label for="cMonthly">Monthly Invest</label>
+                                    <input id="cMonthly" type="number" value="200">
+                                </div>
+                                <div>
+                                    <label for="cStep">Step-Up %</label>
+                                    <input id="cStep" type="number" step="0.1" value="0">
+                                </div>
+                                <div>
+                                    <label for="cReturn">Annual Return %</label>
+                                    <input id="cReturn" type="number" step="0.1" value="8">
+                                </div>
+                                <div>
+                                    <label for="cYears">Years</label>
+                                    <input id="cYears" type="number" value="10">
+                                </div>
+                                <div>
+                                    <label for="cWithdraw">Final Withdrawal</label>
+                                    <input id="cWithdraw" type="number" value="0">
+                                </div>
+                            </div>
+
+                            <div class="btnRow">
+                                <button class="btnPrimary" id="runCompoundBtn">Run Compound</button>
+                                <button class="btnBlue" id="useFutureValueBtn" disabled>Use Future Value</button>
+                            </div>
+
+                            <div class="simOutput" id="compoundOutput">No result yet.</div>
+                        </section>
+
+                        <section class="simCard">
+                            <h3>Loan Cost Simulator</h3>
+                            <div class="simGrid">
+                                <div>
+                                    <label for="lAmount">Loan Amount</label>
+                                    <input id="lAmount" type="number" value="5000">
+                                </div>
+                                <div>
+                                    <label for="lRate">Interest %</label>
+                                    <input id="lRate" type="number" step="0.1" value="8">
+                                </div>
+                                <div>
+                                    <label for="lYears">Years</label>
+                                    <input id="lYears" type="number" value="3">
+                                </div>
+                                <div>
+                                    <label for="lExtra">Extra Monthly Pay</label>
+                                    <input id="lExtra" type="number" value="0">
+                                </div>
+                            </div>
+
+                            <div class="btnRow">
+                                <button class="btnPrimary" id="runLoanBtn">Run Loan</button>
+                                <button class="btnBlue" id="useEmiBtn" disabled>Use EMI</button>
+                            </div>
+
+                            <div class="simOutput" id="loanOutput">No result yet.</div>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="panel scoreboardPanel">
+                    <h2>Players Scoreboard</h2>
+                    <div class="playersBoard" id="playersBoard"></div>
+                </section>
+                <!-- <section class="panel scoreboardPanel">
+                    <h2>Players Scoreboard</h2>
+                    <div class="playersBoard" id="playersBoard"></div>
+                </section> -->
+
+                <section class="winner" id="winnerBox"></section>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="home.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+
+                const START_BALANCE = 10000;
+                const START_COMPOUNDED_WEALTH = 1000;
+                const HOME_ASSET_GROWTH = 0.04;
+                const YEARLY_BASE_EXPENSE = 1200;
+
+                const $ = (id) => document.getElementById(id);
+
+                function getSkipChances(turns) {
+                    if (turns <= 5) return 2;
+                    return Math.max(2, Math.floor(turns / 2.5));
+                }
+
+                function totalWealthOf(player) {
+                    return player.balance + player.compoundedWealth + player.homeAssetValue;
+                }
+
+                function remainingAmountOf(player) {
+                    return Math.max(0, player.balance - YEARLY_BASE_EXPENSE - (player.loanExpenseDrag * 12));
+                }
+
+                function fmt(n) {
+                    return Number(n).toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        maximumFractionDigits: 0
+                    });
+                }
+
+                function fmt2(n) {
+                    return Number(n).toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
+
+                function deepClone(obj) {
+                    return JSON.parse(JSON.stringify(obj));
+                }
+
+                function shuffle(arr) {
+                    const copy = [...arr];
+                    for (let i = copy.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [copy[i], copy[j]] = [copy[j], copy[i]];
+                    }
+                    return copy;
+                }
+
+                function sampleUnique(arr, count) {
+                    return shuffle(arr).slice(0, count).map((x) => deepClone(x));
+                }
+
+                const investCards = [
+                    {
+                        id: "i1",
+                        type: "invest",
+                        title: "College Fund Start",
+                        shortText: "Invest $2,000 now for 10 years at 8%",
+                        instructionHtml: `<strong>Use: Advanced Compound Simulator</strong><br>
+      Start Amount = <strong>$2,000</strong><br>
+      Monthly Invest = <strong>$0</strong><br>
+      Step-Up = <strong>0%</strong><br>
+      Annual Return = <strong>8%</strong><br>
+      Years = <strong>10</strong><br>
+      Final Withdrawal = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: FUTURE VALUE",
+                        resultText: "If correct, your compounded wealth increases by this Future Value.",
+                        fields: { start: 2000, monthly: 0, step: 0, ret: 8, years: 10, withdraw: 0 },
+                        answerType: "compound_future",
+                        tolerance: 50
+                    },
+                    {
+                        id: "i2",
+                        type: "invest",
+                        title: "Monthly SIP Plan",
+                        shortText: "Invest $250/month for 12 years at 8%",
+                        instructionHtml: `<strong>Use: Advanced Compound Simulator</strong><br>
+      Start Amount = <strong>$0</strong><br>
+      Monthly Invest = <strong>$250</strong><br>
+      Step-Up = <strong>0%</strong><br>
+      Annual Return = <strong>8%</strong><br>
+      Years = <strong>12</strong><br>
+      Final Withdrawal = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: FUTURE VALUE",
+                        resultText: "If correct, your compounded wealth increases by this Future Value.",
+                        fields: { start: 0, monthly: 250, step: 0, ret: 8, years: 12, withdraw: 0 },
+                        answerType: "compound_future",
+                        tolerance: 50
+                    },
+                    {
+                        id: "i3",
+                        type: "invest",
+                        title: "Retirement Booster",
+                        shortText: "$300/month, 5% step-up, 15 years, 9%",
+                        instructionHtml: `<strong>Use: Advanced Compound Simulator</strong><br>
+      Start Amount = <strong>$0</strong><br>
+      Monthly Invest = <strong>$300</strong><br>
+      Step-Up = <strong>5%</strong><br>
+      Annual Return = <strong>9%</strong><br>
+      Years = <strong>15</strong><br>
+      Final Withdrawal = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: FUTURE VALUE",
+                        resultText: "If correct, your compounded wealth increases by this Future Value.",
+                        fields: { start: 0, monthly: 300, step: 5, ret: 9, years: 15, withdraw: 0 },
+                        answerType: "compound_future",
+                        tolerance: 70
+                    },
+                    {
+                        id: "i4",
+                        type: "invest",
+                        title: "Emergency Money Invested",
+                        shortText: "Invest $5,000 for 6 years at 6%",
+                        instructionHtml: `<strong>Use: Advanced Compound Simulator</strong><br>
+      Start Amount = <strong>$5,000</strong><br>
+      Monthly Invest = <strong>$0</strong><br>
+      Step-Up = <strong>0%</strong><br>
+      Annual Return = <strong>6%</strong><br>
+      Years = <strong>6</strong><br>
+      Final Withdrawal = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: FUTURE VALUE",
+                        resultText: "If correct, your compounded wealth increases by this Future Value.",
+                        fields: { start: 5000, monthly: 0, step: 0, ret: 6, years: 6, withdraw: 0 },
+                        answerType: "compound_future",
+                        tolerance: 50
+                    },
+                    {
+                        id: "i5",
+                        type: "invest",
+                        title: "Step-Up Wealth Path",
+                        shortText: "$220/month, 4% step-up, 11 years, 8%",
+                        instructionHtml: `<strong>Use: Advanced Compound Simulator</strong><br>
+      Start Amount = <strong>$0</strong><br>
+      Monthly Invest = <strong>$220</strong><br>
+      Step-Up = <strong>4%</strong><br>
+      Annual Return = <strong>8%</strong><br>
+      Years = <strong>11</strong><br>
+      Final Withdrawal = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: FUTURE VALUE",
+                        resultText: "If correct, your compounded wealth increases by this Future Value.",
+                        fields: { start: 0, monthly: 220, step: 4, ret: 8, years: 11, withdraw: 0 },
+                        answerType: "compound_future",
+                        tolerance: 55
+                    }
+                ];
+
+                const loanCards = [
+                    {
+                        id: "l1",
+                        type: "loan",
+                        subtype: "normal_loan",
+                        title: "Medical Expense Loan",
+                        shortText: "Loan $5,000 at 9% for 3 years",
+                        instructionHtml: `<strong>Use: Loan Cost Simulator</strong><br>
+      Loan Amount = <strong>$5,000</strong><br>
+      Interest Rate = <strong>9%</strong><br>
+      Years = <strong>3</strong><br>
+      Extra Monthly Pay = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: EMI / MONTHLY PAYMENT",
+                        resultText: "If correct: $5,000 is deducted from balance and EMI is added to monthly expense drag.",
+                        fields: { amount: 5000, rate: 9, years: 3, extra: 0 },
+                        answerType: "loan_emi",
+                        tolerance: 5,
+                        canSkip: true
+                    },
+                    {
+                        id: "l2",
+                        type: "loan",
+                        subtype: "normal_loan",
+                        title: "Wedding Expense Loan",
+                        shortText: "Loan $10,000 at 7% for 5 years",
+                        instructionHtml: `<strong>Use: Loan Cost Simulator</strong><br>
+      Loan Amount = <strong>$10,000</strong><br>
+      Interest Rate = <strong>7%</strong><br>
+      Years = <strong>5</strong><br>
+      Extra Monthly Pay = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: EMI / MONTHLY PAYMENT",
+                        resultText: "If correct: $10,000 is deducted from balance and EMI is added to monthly expense drag.",
+                        fields: { amount: 10000, rate: 7, years: 5, extra: 0 },
+                        answerType: "loan_emi",
+                        tolerance: 5,
+                        canSkip: true
+                    },
+                    {
+                        id: "l3",
+                        type: "loan",
+                        subtype: "normal_loan",
+                        title: "Car Purchase Loan",
+                        shortText: "Loan $12,000 at 8% for 4 years",
+                        instructionHtml: `<strong>Use: Loan Cost Simulator</strong><br>
+      Loan Amount = <strong>$12,000</strong><br>
+      Interest Rate = <strong>8%</strong><br>
+      Years = <strong>4</strong><br>
+      Extra Monthly Pay = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: EMI / MONTHLY PAYMENT",
+                        resultText: "If correct: $12,000 is deducted from balance and EMI is added to monthly expense drag.",
+                        fields: { amount: 12000, rate: 8, years: 4, extra: 0 },
+                        answerType: "loan_emi",
+                        tolerance: 5,
+                        canSkip: true
+                    },
+                    {
+                        id: "l4",
+                        type: "loan",
+                        subtype: "home_loan",
+                        title: "Home Loan Purchase",
+                        shortText: "Home loan $8,000 at 7.5% for 5 years",
+                        instructionHtml: `<strong>Use: Loan Cost Simulator</strong><br>
+      Loan Amount = <strong>$8,000</strong><br>
+      Interest Rate = <strong>7.5%</strong><br>
+      Years = <strong>5</strong><br>
+      Extra Monthly Pay = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: EMI / MONTHLY PAYMENT",
+                        resultText: "If correct: $8,000 is deducted from balance, EMI is added to drag, and you gain a home asset worth $8,000 that grows over time.",
+                        fields: { amount: 8000, rate: 7.5, years: 5, extra: 0 },
+                        answerType: "loan_emi",
+                        tolerance: 5,
+                        canSkip: false
+                    },
+                    {
+                        id: "l5",
+                        type: "loan",
+                        subtype: "home_loan",
+                        title: "Bigger Home Loan",
+                        shortText: "Home loan $15,000 at 8% for 6 years",
+                        instructionHtml: `<strong>Use: Loan Cost Simulator</strong><br>
+      Loan Amount = <strong>$15,000</strong><br>
+      Interest Rate = <strong>8%</strong><br>
+      Years = <strong>6</strong><br>
+      Extra Monthly Pay = <strong>$0</strong>`,
+                        exactResultLabel: "Type this exact result: EMI / MONTHLY PAYMENT",
+                        resultText: "If correct: $15,000 is deducted from balance, EMI is added to drag, and you gain a home asset worth $15,000 that grows over time.",
+                        fields: { amount: 15000, rate: 8, years: 6, extra: 0 },
+                        answerType: "loan_emi",
+                        tolerance: 5,
+                        canSkip: false
+                    }
+                ];
+
+                const game = {
+                    started: false,
+                    players: [],
+                    turnIndex: 0,
+                    totalTurns: 8,
+                    currentPlayerIndex: 0,
+                    currentCards: [],
+                    selectedCard: null,
+                    currentExpectedAnswer: null,
+                    answerValidated: false,
+                    turnApplied: false,
+                    lastCompoundResult: null,
+                    lastLoanResult: null
+                };
+
+                function buildNames() {
+                    const count = Number($("playerCount").value);
+                    $("nameGrid").innerHTML = "";
+                    for (let i = 1; i <= count; i++) {
+                        const div = document.createElement("div");
+                        div.innerHTML = `
+      <label for="p${i}">Player ${i} Name</label>
+      <input id="p${i}" value="Player ${i}">
+    `;
+                        $("nameGrid").appendChild(div);
+                    }
+                }
+
+                function createPlayers() {
+                    const count = Number($("playerCount").value);
+                    const turns = Number($("turnCount").value);
+                    const skipChances = getSkipChances(turns);
+
+                    return Array.from({ length: count }, (_, i) => ({
+                        name: ($(`p${i + 1}`).value || `Player ${i + 1}`).trim(),
+                        balance: START_BALANCE,
+                        compoundedWealth: START_COMPOUNDED_WEALTH,
+                        monthlyInvest: 200,
+                        annualReturn: 8,
+                        stepUp: 2,
+                        loanExpenseDrag: 0,
+                        homeAssetValue: 0,
+                        calcPoints: 0,
+                        skipChancesLeft: skipChances,
+                        turnsTaken: 0,
+                        lastTurnText: "—"
+                    }));
+                }
+
+                function updateTop() {
+                    if (!game.started || game.players.length === 0) {
+                        $("turnInfo").textContent = "0 / 0";
+                        $("playerInfo").textContent = "—";
+                        $("toolInfo").textContent = "None";
+                        $("balanceInfo").textContent = "$0";
+                        $("remainingInfo").textContent = "$0";
+                        $("skipInfo").textContent = "0";
+                        return;
+                    }
+
+                    const currentPlayer = game.players[game.currentPlayerIndex];
+                    const currentRound = Math.floor(game.turnIndex / game.players.length) + 1;
+
+                    $("turnInfo").textContent = `${currentRound} / ${game.totalTurns}`;
+                    $("playerInfo").textContent = currentPlayer.name;
+                    $("toolInfo").textContent = game.selectedCard ? game.selectedCard.type.toUpperCase() : "None";
+                    $("balanceInfo").textContent = fmt(currentPlayer.balance);
+                    $("remainingInfo").textContent = fmt(remainingAmountOf(currentPlayer));
+                    $("skipInfo").textContent = currentPlayer.skipChancesLeft;
+                }
+
+                function renderPlayers() {
+                    $("playersBoard").innerHTML = "";
+                    game.players.forEach((p, idx) => {
+                        const card = document.createElement("div");
+                        card.className = "playerCard";
+                        card.innerHTML = `
+      <h3>${game.started && idx === game.currentPlayerIndex ? "👉 " : ""}${p.name}</h3>
+      <div class="miniGrid">
+        <div class="mini">Turns Taken<strong>${p.turnsTaken}</strong></div>
+        <div class="mini">Balance<strong>${fmt(p.balance)}</strong></div>
+        <div class="mini">Remaining<strong>${fmt(remainingAmountOf(p))}</strong></div>
+        <div class="mini">Compounded Wealth<strong>${fmt(p.compoundedWealth)}</strong></div>
+        <div class="mini">Home Asset<strong>${fmt(p.homeAssetValue)}</strong></div>
+        <div class="mini">Total Wealth<strong>${fmt(totalWealthOf(p))}</strong></div>
+        <div class="mini">Loan Drag<strong>${fmt(p.loanExpenseDrag)}</strong></div>
+        <div class="mini">Skips Left<strong>${p.skipChancesLeft}</strong></div>
+        <div class="mini">Last Turn<strong>${p.lastTurnText}</strong></div>
+      </div>
+    `;
+                        $("playersBoard").appendChild(card);
+                    });
+
+                    updateSkipButtonState();
+                }
+
+                function updateSkipButtonState() {
+                    const skipBtn = $("skipBtn");
+                    const feedbackBox = $("feedbackBox");
+
+                    if (!game.started || !game.players.length) {
+                        skipBtn.disabled = true;
+                        return;
+                    }
+
+                    const current = game.players[game.currentPlayerIndex];
+
+                    if (!current || game.turnApplied) {
+                        skipBtn.disabled = true;
+                        return;
+                    }
+
+                    if (current.skipChancesLeft <= 0) {
+                        skipBtn.disabled = true;
+                        return;
+                    }
+
+                    if (!game.selectedCard) {
+                        skipBtn.disabled = true;
+                        return;
+                    }
+
+                    if (game.selectedCard.subtype === "home_loan") {
+                        skipBtn.disabled = true;
+                        if (feedbackBox) {
+                            feedbackBox.innerHTML = `<span class="bad">This home loan card cannot be skipped because home value grows over time.</span>`;
+                        }
+                        return;
+                    }
+
+                    skipBtn.disabled = false;
+                }
+
+                function runCompound(startAmount, monthly, stepUpPct, annualReturnPct, years, withdraw = 0) {
+                    startAmount = Number(startAmount);
+                    monthly = Number(monthly);
+                    stepUpPct = Number(stepUpPct);
+                    annualReturnPct = Number(annualReturnPct);
+                    years = Number(years);
+                    withdraw = Number(withdraw);
+
+                    let balance = startAmount;
+                    let totalContrib = startAmount;
+                    let currentMonthly = monthly;
+                    const monthlyRate = annualReturnPct / 100 / 12;
+
+                    for (let y = 1; y <= years; y++) {
+                        for (let m = 1; m <= 12; m++) {
+                            balance *= (1 + monthlyRate);
+                            balance += currentMonthly;
+                            totalContrib += currentMonthly;
+                        }
+                        currentMonthly *= (1 + stepUpPct / 100);
+                    }
+
+                    balance -= withdraw;
+                    balance = Math.max(0, balance);
+
+                    return {
+                        futureValue: balance,
+                        totalContrib,
+                        growth: balance - totalContrib
+                    };
+                }
+
+                function runLoan(amount, annualRate, years, extra = 0) {
+                    amount = Number(amount);
+                    annualRate = Number(annualRate);
+                    years = Number(years);
+                    extra = Number(extra);
+
+                    const monthlyRate = annualRate / 100 / 12;
+                    const months = years * 12;
+
+                    let baseEmi;
+                    if (monthlyRate === 0) {
+                        baseEmi = amount / months;
+                    } else {
+                        baseEmi = amount * monthlyRate * Math.pow(1 + monthlyRate, months) /
+                            (Math.pow(1 + monthlyRate, months) - 1);
+                    }
+
+                    const emi = baseEmi + extra;
+                    let balance = amount;
+                    let totalPaid = 0;
+                    let monthCount = 0;
+
+                    while (balance > 0.01 && monthCount < 1000) {
+                        const interest = balance * monthlyRate;
+                        let principal = emi - interest;
+                        if (principal <= 0) break;
+                        if (principal > balance) principal = balance;
+                        balance -= principal;
+                        totalPaid += principal + interest;
+                        monthCount++;
+                    }
+
+                    return {
+                        emi,
+                        totalPaid,
+                        totalInterest: totalPaid - amount,
+                        months: monthCount
+                    };
+                }
+
+                function refreshQuickUseBox() {
+                    const parts = [];
+                    if (game.lastCompoundResult) parts.push(`Future Value ${fmt2(game.lastCompoundResult.futureValue)}`);
+                    if (game.lastLoanResult) parts.push(`EMI ${fmt2(game.lastLoanResult.emi)}`);
+                    const box = $("quickUseBox");
+                    if (box) {
+                        box.innerHTML = parts.length
+                            ? `<strong>Quick Fill Available</strong><br>${parts.join(" | ")}`
+                            : "Quick result buttons will appear here after you run a calculator.";
+                    }
+                }
+
+                function renderRoundCards() {
+                    $("roundCards").innerHTML = "";
+                    game.currentCards.forEach((card, idx) => {
+                        const div = document.createElement("div");
+                        div.className = "cardMini" + (game.selectedCard && game.selectedCard._idx === idx ? " selected" : "");
+                        div.innerHTML = `
+      <span class="typeTag ${card.type === "invest" ? "type-invest" : "type-loan"}">${card.type.toUpperCase()}</span>
+      <h4>${card.title}</h4>
+      <p>${card.shortText}</p>
+    `;
+                        $("roundCards").appendChild(div);
+                    });
+                }
+
+                function wireDynamicButtons() {
+                    const checkBtn = $("checkBtn");
+                    const applyBtn = $("applyBtn");
+                    if (checkBtn) checkBtn.addEventListener("click", checkAnswer);
+                    if (applyBtn) applyBtn.addEventListener("click", applyTurn);
+                }
+
+                function prefillSelectedCard(card) {
+                    if (card.type === "invest") {
+                        $("cStart").value = card.fields.start;
+                        $("cMonthly").value = card.fields.monthly;
+                        $("cStep").value = card.fields.step;
+                        $("cReturn").value = card.fields.ret;
+                        $("cYears").value = card.fields.years;
+                        $("cWithdraw").value = card.fields.withdraw;
+                    } else {
+                        $("lAmount").value = card.fields.amount;
+                        $("lRate").value = card.fields.rate;
+                        $("lYears").value = card.fields.years;
+                        $("lExtra").value = card.fields.extra;
+                    }
+                }
+
+                function renderSelectedCard() {
+                    const c = game.selectedCard;
+                    $("selectedCardBox").innerHTML = `
+    <span class="bigTag ${c.type === "invest" ? "invest" : "loan"}">${c.type.toUpperCase()}</span>
+    <h2 class="bigTitle">${c.title}</h2>
+    <p class="bigText">${c.shortText}</p>
+    <div class="instructionBox" id="instructionBox">${c.instructionHtml}</div>
+    <div class="noticeBox" id="noticeBox">${c.exactResultLabel}</div>
+    <div class="quickUseBox" id="quickUseBox">Quick result buttons will appear here after you run a calculator.</div>
+    <div class="resultBox" id="resultBox">${c.resultText}</div>
+    <div class="answerArea">
+      <label for="answerInput">Enter the exact result asked on the card</label>
+      <div class="answerRow">
+        <input id="answerInput" type="number" step="0.01" placeholder="Enter exact asked result">
+        <button class="btnOrange" id="checkBtn">Check Answer</button>
+        <button class="btnSoft" id="applyBtn" disabled>Apply Turn</button>
+      </div>
+      <div class="feedback" id="feedbackBox">Use the selected card’s correct calculator, then enter the exact result asked.</div>
+    </div>
+  `;
+                    wireDynamicButtons();
+                    prefillSelectedCard(c);
+                    refreshQuickUseBox();
+                    updateTop();
+                    updateSkipButtonState();
+                }
+
+                function getExpectedAnswer(card) {
+                    if (card.type === "invest") {
+                        return runCompound(
+                            card.fields.start,
+                            card.fields.monthly,
+                            card.fields.step,
+                            card.fields.ret,
+                            card.fields.years,
+                            card.fields.withdraw
+                        ).futureValue;
+                    }
+                    return runLoan(
+                        card.fields.amount,
+                        card.fields.rate,
+                        card.fields.years,
+                        card.fields.extra
+                    ).emi;
+                }
+
+                function checkAnswer() {
+                    if (!game.selectedCard) return;
+
+                    const user = Number($("answerInput").value);
+                    if (!isFinite(user)) {
+                        $("feedbackBox").innerHTML = `<span class="bad">Please enter a valid number.</span>`;
+                        return;
+                    }
+
+                    const expected = getExpectedAnswer(game.selectedCard);
+                    const tol = Number(game.selectedCard.tolerance);
+                    const diff = Math.abs(user - expected);
+
+                    if (diff <= tol) {
+                        game.answerValidated = true;
+                        game.currentExpectedAnswer = expected;
+                        $("applyBtn").disabled = false;
+                        $("feedbackBox").innerHTML = `
+      <span class="ok">Correct enough.</span><br>
+      Your entered result: <strong>${fmt2(user)}</strong><br>
+      Accepted range: ±${fmt2(tol)}
+    `;
+                    } else {
+                        game.answerValidated = false;
+                        $("applyBtn").disabled = true;
+                        $("feedbackBox").innerHTML = `<span class="bad">Incorrect result.</span>`;
+                    }
+                }
+
+                function applyYearlyWealthUpdate(player) {
+                    const yearlyLoanCost = player.loanExpenseDrag * 12;
+                    player.balance = Math.max(0, player.balance - YEARLY_BASE_EXPENSE - yearlyLoanCost);
+
+                    const effectiveMonthlyInvest = Math.max(0, player.monthlyInvest - player.loanExpenseDrag);
+                    const monthlyRate = player.annualReturn / 100 / 12;
+                    let value = player.compoundedWealth;
+
+                    for (let i = 0; i < 12; i++) {
+                        value *= (1 + monthlyRate);
+                        value += effectiveMonthlyInvest;
+                    }
+
+                    player.compoundedWealth = Math.round(value);
+                    player.monthlyInvest = Math.round(player.monthlyInvest * (1 + player.stepUp / 100));
+                    player.homeAssetValue = Math.round(player.homeAssetValue * (1 + HOME_ASSET_GROWTH));
+                }
+
+                function applyTurn() {
+                    if (!game.answerValidated || !game.selectedCard || game.turnApplied) return;
+
+                    const p = game.players[game.currentPlayerIndex];
+                    const amount = Number(game.currentExpectedAnswer);
+                    const card = game.selectedCard;
+
+                    if (card.type === "invest") {
+                        p.compoundedWealth += amount;
+                        p.lastTurnText = `Investment +${fmt(amount)}`;
+                    } else if (card.subtype === "home_loan") {
+                        p.balance -= card.fields.amount;
+                        p.loanExpenseDrag += amount;
+                        p.homeAssetValue += card.fields.amount;
+                        p.lastTurnText = `Home loan -${fmt(card.fields.amount)}`;
+                    } else {
+                        p.balance -= card.fields.amount;
+                        p.loanExpenseDrag += amount;
+                        p.lastTurnText = `Loan -${fmt(card.fields.amount)}`;
+                    }
+
+                    p.calcPoints += 10;
+                    p.turnsTaken += 1;
+                    applyYearlyWealthUpdate(p);
+
+                    game.turnApplied = true;
+
+                    // lock turn after apply
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("checkBtn").disabled = true;
+                    $("applyBtn").disabled = true;
+                    $("nextBtn").disabled = false;
+
+                    renderPlayers();
+                    updateTop();
+                }
+
+                function skipAction() {
+                    if (!game.started) return;
+
+                    const p = game.players[game.currentPlayerIndex];
+                    if (!p || game.turnApplied || p.skipChancesLeft <= 0 || !game.selectedCard) return;
+
+                    if (game.selectedCard.subtype === "home_loan") {
+                        $("feedbackBox").innerHTML = `<span class="bad">Home loan cards cannot be skipped.</span>`;
+                        return;
+                    }
+
+                    p.skipChancesLeft -= 1;
+                    p.turnsTaken += 1;
+
+                    if (game.selectedCard.type === "loan") {
+                        p.lastTurnText = "Skipped loan";
+
+                        game.players.forEach((other, idx) => {
+                            if (idx !== game.currentPlayerIndex) {
+                                other.balance += 10;
+                            }
+                        });
+
+                        $("feedbackBox").innerHTML = `<span class="ok">Loan skipped.</span><br>Every other player received <strong>$10</strong> bonus.`;
+                    } else {
+                        p.lastTurnText = "Skipped";
+                        $("feedbackBox").innerHTML = `<span class="ok">Action skipped.</span>`;
+                    }
+
+                    applyYearlyWealthUpdate(p);
+                    game.turnApplied = true;
+
+                    // lock turn after skip
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("checkBtn").disabled = true;
+                    $("applyBtn").disabled = true;
+                    $("nextBtn").disabled = false;
+
+                    renderPlayers();
+                    updateTop();
+                }
+
+                function showFourCards() {
+                    if (!game.started || game.turnApplied) return;
+
+                    game.currentCards = shuffle([
+                        ...sampleUnique(investCards, 2),
+                        ...sampleUnique(loanCards, 2)
+                    ]);
+
+                    game.selectedCard = null;
+                    game.currentExpectedAnswer = null;
+                    game.answerValidated = false;
+                    game.lastCompoundResult = null;
+                    game.lastLoanResult = null;
+
+                    $("useFutureValueBtn").disabled = true;
+                    $("useEmiBtn").disabled = true;
+                    refreshQuickUseBox();
+
+                    renderRoundCards();
+
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = false;
+                    $("skipBtn").disabled = true;
+                    $("checkBtn").disabled = true;
+                    $("applyBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+
+                    if ($("answerInput")) $("answerInput").value = "";
+
+                    const feedbackBox = $("feedbackBox");
+                    const instructionBox = $("instructionBox");
+                    const noticeBox = $("noticeBox");
+                    const resultBox = $("resultBox");
+
+                    if (feedbackBox) feedbackBox.textContent = "Now click Shuffle to let the system choose one card.";
+                    if (instructionBox) instructionBox.textContent = "Selected card instructions will appear here.";
+                    if (noticeBox) noticeBox.textContent = "The card will clearly say which exact result to type.";
+                    if (resultBox) resultBox.textContent = "The chosen card’s effect on wealth or expense will be explained here.";
+
+                    renderPlayers();
+                    updateTop();
+                }
+
+                function shuffleAndPick() {
+                    if (!game.currentCards.length || game.turnApplied) return;
+
+                    const idx = Math.floor(Math.random() * game.currentCards.length);
+                    game.selectedCard = deepClone(game.currentCards[idx]);
+                    game.selectedCard._idx = idx;
+                    game.answerValidated = false;
+                    game.lastCompoundResult = null;
+                    game.lastLoanResult = null;
+
+                    $("useFutureValueBtn").disabled = true;
+                    $("useEmiBtn").disabled = true;
+                    refreshQuickUseBox();
+
+                    renderRoundCards();
+                    renderSelectedCard();
+
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = true;
+                    $("checkBtn").disabled = false;
+                    $("applyBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+
+                    $("answerInput").value = "";
+                    $("feedbackBox").textContent = "Use the selected card’s correct calculator, then enter the exact result asked.";
+
+                    renderPlayers();
+                    updateTop();
+                    updateSkipButtonState();
+                }
+
+                function nextTurn() {
+                    if (!game.started) return;
+
+                    const totalPlayerTurns = game.totalTurns * game.players.length;
+
+                    if (game.turnIndex >= totalPlayerTurns - 1) {
+                        endGame();
+                        return;
+                    }
+
+                    game.turnIndex += 1;
+                    game.currentPlayerIndex = game.turnIndex % game.players.length;
+
+                    game.currentCards = [];
+                    game.selectedCard = null;
+                    game.currentExpectedAnswer = null;
+                    game.answerValidated = false;
+                    game.turnApplied = false;
+                    game.lastCompoundResult = null;
+                    game.lastLoanResult = null;
+
+                    $("roundCards").innerHTML = "";
+                    $("compoundOutput").textContent = "No result yet.";
+                    $("loanOutput").textContent = "No result yet.";
+                    $("useFutureValueBtn").disabled = true;
+                    $("useEmiBtn").disabled = true;
+
+                    // enable only next player's start
+                    $("generateBtn").disabled = false;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+
+                    $("selectedCardBox").innerHTML = `
+    <span class="bigTag invest">NEXT</span>
+    <h2 class="bigTitle">Next turn ready</h2>
+    <p class="bigText">Show 4 cards for the current player, then shuffle.</p>
+    <div class="instructionBox" id="instructionBox">Selected card instructions will appear here.</div>
+    <div class="noticeBox" id="noticeBox">The card will clearly say which exact result to type.</div>
+    <div class="quickUseBox" id="quickUseBox">Quick result buttons will appear here after you run a calculator.</div>
+    <div class="resultBox" id="resultBox">The chosen card’s effect on wealth or expense will be explained here.</div>
+    <div class="answerArea">
+      <label for="answerInput">Enter the exact result asked on the card</label>
+      <div class="answerRow">
+        <input id="answerInput" type="number" step="0.01" placeholder="Enter exact asked result">
+        <button class="btnOrange" id="checkBtn" disabled>Check Answer</button>
+        <button class="btnSoft" id="applyBtn" disabled>Apply Turn</button>
+      </div>
+      <div class="feedback" id="feedbackBox">After shuffle, read the selected card and type the exact result asked.</div>
+    </div>
+  `;
+
+                    wireDynamicButtons();
+                    refreshQuickUseBox();
+
+                    $("turnMessage").textContent = `${game.players[game.currentPlayerIndex].name}, click "Show 4 Cards".`;
+
+                    renderPlayers();
+                    updateTop();
+                }
+
+                function endGame() {
+                    game.started = false;
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+
+                    const ranked = [...game.players].sort((a, b) => {
+                        if (totalWealthOf(b) !== totalWealthOf(a)) return totalWealthOf(b) - totalWealthOf(a);
+                        return b.calcPoints - a.calcPoints;
+                    });
+
+                    const winner = ranked[0];
+                    $("winnerBox").style.display = "block";
+                    $("winnerBox").innerHTML = `
+    🏆 <strong>${winner.name}</strong> wins!<br><br>
+    Highest Total Wealth: <strong>${fmt(totalWealthOf(winner))}</strong><br>
+    Balance: <strong>${fmt(winner.balance)}</strong><br>
+    Remaining Amount: <strong>${fmt(remainingAmountOf(winner))}</strong><br>
+    Compounded Wealth: <strong>${fmt(winner.compoundedWealth)}</strong><br>
+    Home Asset: <strong>${fmt(winner.homeAssetValue)}</strong><br><br>
+    <strong>Final Ranking</strong><br>
+    ${ranked.map((p, i) =>
+                        `${i + 1}. ${p.name} — Total Wealth: ${fmt(totalWealthOf(p))} | Compounded Wealth: ${fmt(p.compoundedWealth)} | Remaining: ${fmt(remainingAmountOf(p))}`
+                    ).join("<br>")}
+  `;
+                    $("turnMessage").textContent = `${winner.name} wins the game.`;
+                }
+
+                function startGame() {
+                    game.started = true;
+                    game.players = createPlayers();
+                    game.turnIndex = 0;
+                    game.totalTurns = Number($("turnCount").value);
+                    game.currentPlayerIndex = 0;
+                    game.currentCards = [];
+                    game.selectedCard = null;
+                    game.currentExpectedAnswer = null;
+                    game.answerValidated = false;
+                    game.turnApplied = false;
+                    game.lastCompoundResult = null;
+                    game.lastLoanResult = null;
+
+                    $("statusBox").textContent = `Game started with ${game.players.length} player(s). Each player gets ${game.totalTurns} turns.`;
+                    $("turnMessage").textContent = `${game.players[0].name}, click "Show 4 Cards".`;
+
+                    $("generateBtn").disabled = false;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+                    $("checkBtn").disabled = true;
+                    $("applyBtn").disabled = true;
+                    $("useFutureValueBtn").disabled = true;
+                    $("useEmiBtn").disabled = true;
+
+                    if ($("answerInput")) $("answerInput").value = "";
+                    $("roundCards").innerHTML = "";
+                    $("feedbackBox").textContent = "After shuffle, read the selected card and type the exact result asked.";
+                    $("instructionBox").textContent = "Selected card instructions will appear here.";
+                    $("noticeBox").textContent = "The card will clearly say which exact result to type.";
+                    $("quickUseBox").textContent = "Quick result buttons will appear here after you run a calculator.";
+                    $("resultBox").textContent = "The chosen card’s effect on wealth or expense will be explained here.";
+                    $("compoundOutput").textContent = "No result yet.";
+                    $("loanOutput").textContent = "No result yet.";
+                    $("winnerBox").style.display = "none";
+
+                    renderPlayers();
+                    updateTop();
+                }
+
+                $("runCompoundBtn").addEventListener("click", () => {
+                    game.lastCompoundResult = runCompound(
+                        $("cStart").value,
+                        $("cMonthly").value,
+                        $("cStep").value,
+                        $("cReturn").value,
+                        $("cYears").value,
+                        $("cWithdraw").value
+                    );
+                    $("compoundOutput").innerHTML = `
+    Future Value: <strong>${fmt2(game.lastCompoundResult.futureValue)}</strong><br>
+    Total Contributions: <strong>${fmt2(game.lastCompoundResult.totalContrib)}</strong><br>
+    Growth Earned: <strong>${fmt2(game.lastCompoundResult.growth)}</strong>
+  `;
+                    $("useFutureValueBtn").disabled = false;
+                    refreshQuickUseBox();
+                });
+
+                $("runLoanBtn").addEventListener("click", () => {
+                    game.lastLoanResult = runLoan(
+                        $("lAmount").value,
+                        $("lRate").value,
+                        $("lYears").value,
+                        $("lExtra").value
+                    );
+                    $("loanOutput").innerHTML = `
+    EMI / Monthly Payment: <strong>${fmt2(game.lastLoanResult.emi)}</strong><br>
+    Total Paid: <strong>${fmt2(game.lastLoanResult.totalPaid)}</strong><br>
+    Total Interest: <strong>${fmt2(game.lastLoanResult.totalInterest)}</strong><br>
+    Months to Finish: <strong>${game.lastLoanResult.months}</strong>
+  `;
+                    $("useEmiBtn").disabled = false;
+                    refreshQuickUseBox();
+                });
+
+                $("useFutureValueBtn").addEventListener("click", () => {
+                    if (game.lastCompoundResult && $("answerInput")) {
+                        $("answerInput").value = game.lastCompoundResult.futureValue.toFixed(2);
+                    }
+                });
+
+                $("useEmiBtn").addEventListener("click", () => {
+                    if (game.lastLoanResult && $("answerInput")) {
+                        $("answerInput").value = game.lastLoanResult.emi.toFixed(2);
+                    }
+                });
+
+                $("startBtn").addEventListener("click", startGame);
+                $("generateBtn").addEventListener("click", showFourCards);
+                $("shuffleBtn").addEventListener("click", shuffleAndPick);
+                $("skipBtn").addEventListener("click", skipAction);
+                $("nextBtn").addEventListener("click", nextTurn);
+                $("playerCount").addEventListener("change", buildNames);
+
+                $("resetBtn").addEventListener("click", () => {
+                    game.started = false;
+                    game.players = [];
+                    game.turnIndex = 0;
+                    game.totalTurns = 8;
+                    game.currentPlayerIndex = 0;
+                    game.currentCards = [];
+                    game.selectedCard = null;
+                    game.currentExpectedAnswer = null;
+                    game.answerValidated = false;
+                    game.turnApplied = false;
+                    game.lastCompoundResult = null;
+                    game.lastLoanResult = null;
+
+                    buildNames();
+                    $("statusBox").textContent = "Enter player names and start the game.";
+                    $("turnMessage").textContent = "Start the game, then show the first 4 cards.";
+                    $("generateBtn").disabled = true;
+                    $("shuffleBtn").disabled = true;
+                    $("skipBtn").disabled = true;
+                    $("nextBtn").disabled = true;
+                    $("roundCards").innerHTML = "";
+                    $("compoundOutput").textContent = "No result yet.";
+                    $("loanOutput").textContent = "No result yet.";
+                    $("useFutureValueBtn").disabled = true;
+                    $("useEmiBtn").disabled = true;
+                    $("selectedCardBox").innerHTML = `
+    <span class="bigTag invest">WAITING</span>
+    <h2 class="bigTitle">No selected card yet</h2>
+    <p class="bigText">First show the 4 cards, then click Shuffle.</p>
+    <div class="instructionBox" id="instructionBox">Selected card instructions will appear here.</div>
+    <div class="noticeBox" id="noticeBox">The card will clearly say which exact result to type.</div>
+    <div class="quickUseBox" id="quickUseBox">Quick result buttons will appear here after you run a calculator.</div>
+    <div class="resultBox" id="resultBox">The chosen card’s effect on wealth or expense will be explained here.</div>
+    <div class="answerArea">
+      <label for="answerInput">Enter the exact result asked on the card</label>
+      <div class="answerRow">
+        <input id="answerInput" type="number" step="0.01" placeholder="Enter exact asked result">
+        <button class="btnOrange" id="checkBtn" disabled>Check Answer</button>
+        <button class="btnSoft" id="applyBtn" disabled>Apply Turn</button>
+      </div>
+      <div class="feedback" id="feedbackBox">After shuffle, read the selected card and type the exact result asked.</div>
+    </div>
+  `;
+                    wireDynamicButtons();
+                    refreshQuickUseBox();
+                    $("playersBoard").innerHTML = "";
+                    $("winnerBox").style.display = "none";
+                    updateTop();
+                });
+
+                buildNames();
+                updateTop();
+                refreshQuickUseBox();
+                /* PASTE JAVASCRIPT HERE */
+            </script>
+</body>
+
+</html>

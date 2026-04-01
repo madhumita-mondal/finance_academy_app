@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEALTH LADDER - Finance Academy</title>
+    <style>
+        :root {
+            --bg1: #eef5ff;
+            --bg2: #fff8ef;
+            --card: #ffffff;
+            --text: #22324c;
+            --muted: #4b5b77;
+            --line: #dfe8f2;
+            --good: #18794e;
+            --bad: #b34040;
+            --warn: #9a6500;
+            --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .topbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            margin-left: 14px;
+        }
+
+        .wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 22px 16px 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #e0f7fa, #f1f8e9, #fff9c4, #f3e5f5);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.06;
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            line-height: 1.8;
+            max-width: 880px;
+            font-size: 1.03rem;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, .75);
+            color: #22324c;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .93rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+            display: grid;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .mini-card {
+            background: linear-gradient(180deg, #fff, #f8fbff);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .mini-card .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f4ff, #f7fcff);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 18px;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .quote {
+            background: #fdf9f3;
+            border-left: 5px solid #ffcc80;
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin: 16px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        ul {
+            line-height: 1.9;
+            padding-left: 22px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        th {
+            background: #f5fbff;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 16px;
+            background: #fff;
+            margin-top: 12px;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            border: none;
+            background: #22324c;
+            color: #fff;
+            padding: 11px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s ease, opacity .15s ease, background .15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: .96;
+        }
+
+        button.alt {
+            background: #5d739b;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            display: none;
+            font-weight: 700;
+            line-height: 1.7;
+        }
+
+        .feedback.good {
+            display: block;
+            background: #e8fff0;
+            color: var(--good);
+        }
+
+        .feedback.bad {
+            display: block;
+            background: #ffeaea;
+            color: var(--bad);
+        }
+
+        .feedback.warn {
+            display: block;
+            background: #fff7e8;
+            color: var(--warn);
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #81c784, #4fc3f7, #ffb74d, #ba68c8);
+        }
+
+        .book-tag {
+            display: inline-block;
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: .82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .footer-nav a {
+            text-decoration: none;
+            background: #22324c;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .ladder-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .ladder-card {
+            background: #f9fcff;
+            border: 2px solid var(--line);
+            border-radius: 18px;
+            padding: 14px;
+            text-align: center;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .ladder-card.active {
+            opacity: 1;
+            border-color: #22324c;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .ladder-card h4 {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+        }
+
+        .ladder-card .step-num {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #5d739b;
+        }
+
+        @media (max-width:1000px) {
+            .ladder-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width:600px) {
+            .ladder-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+            <a href="cashflow.html" style="color:rgb(137, 63, 137);"> ◀︎− Cash Flow </a>
+            <a href="value.html" style="color:rgb(137, 63, 137);">  Value −▶︎ </a>
+        </div>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <section class="hero">
+            <h1>WEALTH LADDER</h1>
+            <p>
+                Wealth is not a single destination, but a series of climbs. Each step on the ladder
+                provides more safety and more control over your time. Understanding where you are
+                prevents the mistake of trying to sprint before you can walk.
+            </p>
+            <div class="pill-row">
+                <span class="pill">Dependency</span>
+                <span class="pill">Stability</span>
+                <span class="pill">Security</span>
+                <span class="pill">Flexibility</span>
+                <span class="pill">Freedom</span>
+            </div>
+        </section>
+
+        <section class="card">
+
+            <h2>1. Big Idea</h2>
+            <p>
+                Most people view wealth as "having a lot of money." In reality, wealth is better measured by
+                <strong>time and options</strong>. Each rung of the ladder represents how long you could
+                maintain your lifestyle if your primary income disappeared today. Moving up the ladder
+                requires converting your labor into assets that eventually do the work for you.
+            </p>
+            <div class="quote">
+                “True wealth is the ability to fully experience life. Each step up the ladder buys you a
+                little more of your own time back.”
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>2. Story: The Two Climbers</h2>
+            <p>
+                James and Maya both received a $10,000 bonus. James used his to buy a luxury watch and
+                a better car lease. He looked like he had moved up the ladder, but his <strong>Burn Rate</strong>
+                increased, meaning he was actually more dependent on his job than before.
+            </p>
+            <p>
+                Maya used her bonus to pay off her high-interest credit card and build a 3-month emergency fund.
+                On the outside, nothing changed. But Maya had actually climbed from "Stability" to "Security."
+                If Maya lost her job, she had 90 days of peace. If James lost his, he had 9 days. James had
+                the <em>trappings</em> of wealth; Maya had the <em>foundation</em> of wealth.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>3. The 5 Levels of the Ladder</h2>
+            <div class="grid-4">
+                <div class="mini-card">
+                    <span class="icon">🛑</span>
+                    <strong>Stability</strong>
+                    <p>All high-interest debt is gone. You are no longer "leaking" money to interest.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🛡️</span>
+                    <strong>Security</strong>
+                    <p>6 months of expenses saved. You can survive life's "surprises" without debt.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🕊️</span>
+                    <strong>Flexibility</strong>
+                    <p>Your investments cover 50% of your basic needs. You could work part-time.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🔓</span>
+                    <strong>Freedom</strong>
+                    <p>Investments cover 100% of your lifestyle. Work is now a choice, not a must.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>4. Real Explanation</h2>
+            <p>
+                The mistake most people make is "Lifestyle Creep" (from the previous lesson) which acts
+                like grease on the rungs of the ladder. If your expenses rise as fast as your income,
+                you stay on the same rung no matter how much you earn.
+            </p>
+            <p>
+                To climb, you must widen the gap between what you earn and what you spend, then
+                <strong>deploy</strong> that surplus into assets. The ladder isn't about being
+                restrictive; it's about recognizing that a "Level 4" life with a "Level 1" foundation
+                is a house of cards.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>5. The Wealth Rungs</h2>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Description</th>
+                    <th>Primary Focus</th>
+                </tr>
+                <tr>
+                    <td><strong>0: Dependency</strong></td>
+                    <td>Expenses > Income. Relying on debt or others.</td>
+                    <td>Cut spending / Increase Income</td>
+                </tr>
+                <tr>
+                    <td><strong>1: Stability</strong></td>
+                    <td>Consumer debt is $0. Positive cash flow.</td>
+                    <td>Small Emergency Fund ($2k)</td>
+                </tr>
+                <tr>
+                    <td><strong>2: Security</strong></td>
+                    <td>6+ Months of Cash. Insurance in place.</td>
+                    <td>Investing in Index Funds</td>
+                </tr>
+                <tr>
+                    <td><strong>3: Independence</strong></td>
+                    <td>Investment income = Basic survival costs.</td>
+                    <td>Tax optimization / Growth</td>
+                </tr>
+                <tr>
+                    <td><strong>4: Abundance</strong></td>
+                    <td>Investment income > Desired lifestyle.</td>
+                    <td>Legacy / Philanthropy</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>6. Scenario Thinking</h2>
+            <div class="scenario">
+                <p>
+                    A person earns $200k/year but spends $195k/year and has $50k in credit card debt.
+                    Where are they on the ladder?
+                </p>
+                <div class="choice-row">
+                    <button class="alt" onclick="showScenario('wrong')">Level 2: Security (High Income)</button>
+                    <button onclick="showScenario('correct')">Level 0: Dependency (Debt & Thin Margin)</button>
+                </div>
+                <div id="scenarioFeedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>7. Ladder Simulator</h2>
+            <p class="small">
+                Select your current milestone to see your current "Wealth Level" and your next priority.
+            </p>
+
+            <div class="ladder-grid">
+                <div class="ladder-card" id="step0">
+                    <div class="step-num">0</div>
+                    <h4>Debt</h4>
+                </div>
+                <div class="ladder-card" id="step1">
+                    <div class="step-num">1</div>
+                    <h4>Stability</h4>
+                </div>
+                <div class="ladder-card" id="step2">
+                    <div class="step-num">2</div>
+                    <h4>Security</h4>
+                </div>
+                <div class="ladder-card" id="step3">
+                    <div class="step-num">3</div>
+                    <h4>Flexibility</h4>
+                </div>
+                <div class="ladder-card" id="step4">
+                    <div class="step-num">4</div>
+                    <h4>Freedom</h4>
+                </div>
+            </div>
+
+            <div class="choice-row" style="margin-top:20px;">
+                <button onclick="setLadder(0)">I have high-interest debt</button>
+                <button onclick="setLadder(1)">I'm debt-free with a small buffer</button>
+                <button onclick="setLadder(2)">I have 6 months of savings</button>
+                <button onclick="setLadder(3)">My investments cover some bills</button>
+                <button onclick="setLadder(4)">I don't need to work for money</button>
+            </div>
+
+            <div id="ladderFeedback" class="feedback"></div>
+        </section>
+
+        <section class="card">
+            <h2>8. Quiz</h2>
+            <div class="scenario">
+                <p><strong>Q1.</strong> What is the most important metric for moving up the ladder?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(1,'a')">The Gap (Surplus) between Income and Expenses</button>
+                    <button class="alt" onclick="checkQuiz(1,'b')">The brand of car you drive</button>
+                    <button class="alt" onclick="checkQuiz(1,'c')">Your job title</button>
+                </div>
+                <div id="quiz1" class="feedback"></div>
+            </div>
+
+            <div class="scenario">
+                <p><strong>Q2.</strong> Why is "Security" (6 months savings) placed before "Investing for Freedom"?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(2,'a')">To ensure you don't have to sell investments during a market
+                        crash</button>
+                    <button class="alt" onclick="checkQuiz(2,'b')">Because savings accounts pay higher interest than
+                        stocks</button>
+                </div>
+                <div id="quiz2" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>9. Book Recommendations</h2>
+            <div class="grid-2">
+                <div class="book-card">
+                    <div class="book-tag">Mindset</div>
+                    <h4>The Psychology of Money</h4>
+                    <p>Morgan Housel explains why doing well with money has little to do with how smart you are.</p>
+                </div>
+                <div class="book-card">
+                    <div class="book-tag">The Map</div>
+                    <h4>The Simple Path to Wealth</h4>
+                    <p>JL Collins provides the literal roadmap for climbing from Step 1 to Step 4.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="card">
+            <h2>10. Next Step</h2>
+            <p>
+                The Ladder is built on assets. To move from Level 2 to Level 3, you must understand how money
+                can grow on its own. It's time to look at the engine of wealth: <strong>Investing</strong>.
+            </p>
+
+            <div class="footer-nav">
+                <a href="cashflow.html">⬅ Back to CASH FLOW</a>
+                <a href="investing.html">➡ Go to INVESTING</a>
+            </div>
+        </section> -->
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                function showScenario(type) {
+                    const box = document.getElementById("scenarioFeedback");
+                    if (type === 'correct') {
+                        box.className = "feedback good";
+                        box.innerHTML = "Correct. Income is irrelevant if you are drowning in debt and have no surplus. They are at Level 0.";
+                    } else {
+                        box.className = "feedback bad";
+                        box.innerHTML = "Incorrect. High income without a foundation is a 'Dependency' trap. One bad month could ruin them.";
+                    }
+                }
+
+                function setLadder(level) {
+                    // Reset all
+                    for (let i = 0; i <= 4; i++) {
+                        document.getElementById('step' + i).classList.remove('active');
+                    }
+                    // Set active
+                    document.getElementById('step' + level).classList.add('active');
+
+                    const box = document.getElementById("ladderFeedback");
+                    box.className = "feedback warn";
+
+                    const advice = [
+                        "<strong>Priority:</strong> Aggressively pay off debt and track every dollar. You are working for your lenders right now.",
+                        "<strong>Priority:</strong> Build a 3-6 month emergency fund. You are safe, but not yet secure.",
+                        "<strong>Priority:</strong> Start buying assets (Index funds/Real Estate). Your money needs to start working.",
+                        "<strong>Priority:</strong> Optimize your life. You have 'F-You' money. Focus on what you actually enjoy doing.",
+                        "<strong>Priority:</strong> Legacy. How do you want to impact the world? Your time is completely yours."
+                    ];
+
+                    box.innerHTML = advice[level];
+                }
+
+                function checkQuiz(q, ans) {
+                    const box = document.getElementById("quiz" + q);
+                    if (q === 1) {
+                        if (ans === 'a') {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct! The gap is what you use to buy your freedom.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Wrong. Titles and cars are often 'Level 0' traps.";
+                        }
+                    }
+                    if (q === 2) {
+                        if (ans === 'a') {
+                            box.className = "feedback good";
+                            box.innerHTML = "Exactly. Emergency funds protect your long-term investments from being liquidated at the wrong time.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Actually, savings usually pay less—but they provide the safety to hold stocks for decades.";
+                        }
+                    }
+                }
+            </script>
+</body>
+
+</html>

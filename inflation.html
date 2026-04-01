@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INFLATION - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 880px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .sim-card {
+      background: #f9fcff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .sim-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cfdceb;
+      border-radius: 10px;
+      font-size: 1rem;
+      color: #22324c;
+      background: #fff;
+    }
+
+    .sim-output {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      display: none;
+      line-height: 1.8;
+    }
+
+    .bar-wrap {
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 16px;
+      background: #edf3f8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+
+    .cash-fill {
+      background: linear-gradient(90deg, #ffd27a, #ffb869);
+    }
+
+    .save-fill {
+      background: linear-gradient(90deg, #7baeff, #5dc7ff);
+    }
+
+    .invest-fill {
+      background: linear-gradient(90deg, #8ee0c2, #4fb988);
+    }
+
+    .mix-fill {
+      background: linear-gradient(90deg, #b79cff, #ffb6d9);
+    }
+
+    @media (max-width:1000px) {
+      .sim-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <a href="insurance.html" style="color:rgb(137, 63, 137);"> ◀︎− Insurance </a>
+      <a href="mistake.html" style="color:rgb(137, 63, 137);"> Mistakes−▶︎ </a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>INFLATION</h1>
+      <p>
+        Inflation means money can lose purchasing power over time. Even if the number in your account
+        stays the same, what that money can buy may shrink. This is why earning, saving, and
+        investing are not just about collecting dollars — they are about protecting real buying power
+        across time.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Purchasing Power</span>
+        <span class="pill">Rising Prices</span>
+        <span class="pill">Real vs Nominal</span>
+        <span class="pill">Cost of Living</span>
+        <span class="pill">Silent Erosion</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Inflation is one of the quietest but most important forces in finance. It does not always
+        feel dramatic day to day, but over time it can change what money is worth in real life. If
+        your money stays still while prices rise, your financial strength may weaken even if the
+        number itself looks unchanged.
+      </p>
+      <div class="quote">
+        “Inflation is the silent enemy of money.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> real wealth is not just about how much money you have. It is
+        about what that money can still buy.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Same Salary, Harder Life</h2>
+      <p>
+        Raj earned the same monthly amount for several years. At first, life felt manageable. Rent
+        was reasonable, groceries were affordable, and there was some room to save. But over time,
+        daily life became more expensive. Rent rose. Food cost more. Transportation cost more. The
+        salary number had not changed much, but the feeling of financial ease had changed a lot.
+      </p>
+      <p>
+        Sara experienced the same economy, but she had understood something Raj had ignored: money
+        needs to grow because prices tend to rise. She worked on income growth, built investments,
+        and thought more in terms of future purchasing power than present numbers. Raj saw the same
+        number. Sara saw the shrinking power behind that number.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What Inflation Means in Real Life</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">🛒</span>
+          <strong>Higher Prices</strong>
+          <p>What you buy today may cost more later even if your money amount looks unchanged.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">💵</span>
+          <strong>Weaker Buying Power</strong>
+          <p>The same dollars may buy fewer goods and services over time.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📉</span>
+          <strong>Idle Money Risk</strong>
+          <p>Money that does not grow may quietly lose real strength.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📈</span>
+          <strong>Need for Growth</strong>
+          <p>Earnings and investments often need to rise to keep pace with changing prices.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        Inflation matters because finance is about real life, not only numbers on a screen. A person
+        may feel safe simply because their account balance is unchanged, but if prices rise, that
+        balance may represent less actual value. This is why strong financial planning looks beyond
+        the visible number and asks what that number can still do.
+      </p>
+      <p>
+        This also connects directly to investing. If money grows more slowly than inflation, then the
+        growth may not be as powerful as it first appears. A 5% return sounds positive, but if
+        inflation is high, the real improvement may be much smaller. That is why people often talk
+        about real return, not only nominal return.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Inflation</td>
+          <td>A rise in prices over time that reduces purchasing power.</td>
+        </tr>
+        <tr>
+          <td>Purchasing Power</td>
+          <td>What your money can actually buy in real life.</td>
+        </tr>
+        <tr>
+          <td>Nominal Value</td>
+          <td>The visible number amount without adjusting for inflation.</td>
+        </tr>
+        <tr>
+          <td>Real Value</td>
+          <td>The actual value after considering inflation and buying power.</td>
+        </tr>
+        <tr>
+          <td>Cost of Living</td>
+          <td>The ongoing cost of maintaining daily life.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Nominal vs Real</h2>
+      <table>
+        <tr>
+          <th>Situation</th>
+          <th>Nominal View</th>
+          <th>Real View</th>
+        </tr>
+        <tr>
+          <td>Money stays the same</td>
+          <td>Looks stable</td>
+          <td>May buy less over time</td>
+        </tr>
+        <tr>
+          <td>Investment grows 5%</td>
+          <td>Looks like strong growth</td>
+          <td>Real gain depends on inflation</td>
+        </tr>
+        <tr>
+          <td>Salary unchanged for years</td>
+          <td>Looks consistent</td>
+          <td>May feel weaker if living costs rise</td>
+        </tr>
+      </table>
+
+      <div class="info-box">
+        <strong>Simple example:</strong> if money grows 5% but inflation is 4%, the real improvement
+        is much smaller than the visible number suggests.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ “My money is safe because the number is unchanged.”</strong>
+          <p>If prices rise, unchanged money may still mean weaker real power.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Ignoring real return</strong>
+          <p>Growth matters, but what matters more is growth after inflation is considered.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Saving long-term without any growth plan</strong>
+          <p>Short-term security is useful, but long-term stillness can lose value.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Confusing salary stability with financial progress</strong>
+          <p>If costs rise while pay stays flat, life may actually become tighter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          If prices keep rising for years, which path is usually stronger?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('growth')">Grow income and invest over time</button>
+          <button class="alt" onclick="showScenario('still')">Keep money unchanged and assume everything is
+            fine</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Inflation Survival Simulator</h2>
+      <p class="small">
+        Compare four simple choices over time: keep money in cash, keep it in savings, invest it,
+        or use a mixed approach. This is a teaching tool to show how inflation can affect real value.
+      </p>
+
+      <div class="sim-grid">
+        <div class="sim-card">
+          <strong>Starting Amount</strong>
+          <input type="number" id="infStart" value="5000" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Years</strong>
+          <input type="number" id="infYears" value="10" min="1">
+        </div>
+        <div class="sim-card">
+          <strong>Inflation %</strong>
+          <input type="number" id="infRate" value="3" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Savings Return %</strong>
+          <input type="number" id="saveRate" value="1.5" min="0">
+        </div>
+
+        <div class="sim-card">
+          <strong>Invest Return %</strong>
+          <input type="number" id="investRate" value="8" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Mixed Return %</strong>
+          <input type="number" id="mixRate" value="5" min="0">
+        </div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="runInflationSim()">Run Inflation Simulator</button>
+        <button class="alt" onclick="resetInflationSim()">Reset</button>
+      </div>
+
+      <div id="inflationSummary" class="sim-output"></div>
+      <div id="inflationBars" class="sim-output"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What does inflation do over time?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">It can reduce what money can buy</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">It always increases buying power</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">It affects only businesses, not people</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> What is real value?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">The actual value after considering buying power</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Only the visible number on a statement</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">A type of tax</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> Which is usually a stronger long-term response to inflation?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">Building growth through income and investing</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Ignoring it and assuming unchanged money means unchanged
+            strength</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Only looking at sticker prices once</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Compare the price of one everyday item today versus a few years ago.</li>
+          <li>Ask whether your money would need to grow just to keep up with that difference.</li>
+          <li>Write one reason why long-term money plans should consider inflation.</li>
+          <li>Use the simulator to compare idle money with growing money.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Money Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Helpful for understanding why visible numbers can be misleading and why long-term money
+            thinking matters.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Economic Thinking</div>
+          <h4>Freakonomics</h4>
+          <p>
+            Useful for building the habit of asking deeper questions about incentives, systems, and
+            what is really happening behind the surface.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "growth") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Inflation is usually handled better when income and investments are allowed to grow over time.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That can feel safe at first, but unchanged money can lose real buying power as prices rise.";
+          }
+        }
+
+        function runInflationSim() {
+          const start = Number(document.getElementById("infStart").value);
+          const years = Number(document.getElementById("infYears").value);
+          const inflation = Number(document.getElementById("infRate").value) / 100;
+          const saveRate = Number(document.getElementById("saveRate").value) / 100;
+          const investRate = Number(document.getElementById("investRate").value) / 100;
+          const mixRate = Number(document.getElementById("mixRate").value) / 100;
+
+          const summary = document.getElementById("inflationSummary");
+          const bars = document.getElementById("inflationBars");
+
+          if (start < 0 || years < 1 || inflation < 0 || saveRate < 0 || investRate < 0 || mixRate < 0) {
+            summary.style.display = "block";
+            summary.innerHTML = "Please enter valid values.";
+            bars.style.display = "none";
+            return;
+          }
+
+          let cashNominal = start;
+          let saveNominal = start;
+          let investNominal = start;
+          let mixNominal = start;
+
+          for (let y = 0; y < years; y++) {
+            saveNominal *= (1 + saveRate);
+            investNominal *= (1 + investRate);
+            mixNominal *= (1 + mixRate);
+          }
+
+          const inflationFactor = Math.pow(1 + inflation, years);
+
+          const cashReal = cashNominal / inflationFactor;
+          const saveReal = saveNominal / inflationFactor;
+          const investReal = investNominal / inflationFactor;
+          const mixReal = mixNominal / inflationFactor;
+
+          const maxReal = Math.max(cashReal, saveReal, investReal, mixReal);
+
+          summary.style.display = "block";
+          summary.innerHTML = `
+        <strong>Inflation Summary</strong><br><br>
+        Starting Amount: $${start.toFixed(2)}<br>
+        Years: ${years}<br>
+        Inflation Rate: ${(inflation * 100).toFixed(2)}%<br><br>
+
+        <strong>Nominal Values</strong><br>
+        Cash: $${cashNominal.toFixed(2)}<br>
+        Savings: $${saveNominal.toFixed(2)}<br>
+        Invested: $${investNominal.toFixed(2)}<br>
+        Mixed: $${mixNominal.toFixed(2)}<br><br>
+
+        <strong>Real Purchasing Power After Inflation</strong><br>
+        Cash: $${cashReal.toFixed(2)}<br>
+        Savings: $${saveReal.toFixed(2)}<br>
+        Invested: $${investReal.toFixed(2)}<br>
+        Mixed: $${mixReal.toFixed(2)}<br><br>
+
+        This shows why unchanged money can quietly weaken in real-life buying power.
+      `;
+
+          bars.style.display = "block";
+          bars.innerHTML = `
+        <strong>Real Purchasing Power Comparison</strong>
+        <div class="bar-wrap">
+          <div class="bar-row">
+            <div class="bar-label"><span>Cash</span><span>$${cashReal.toFixed(2)}</span></div>
+            <div class="bar-track"><div class="bar-fill cash-fill" style="width:${(cashReal / maxReal) * 100}%"></div></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Savings</span><span>$${saveReal.toFixed(2)}</span></div>
+            <div class="bar-track"><div class="bar-fill save-fill" style="width:${(saveReal / maxReal) * 100}%"></div></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Invested</span><span>$${investReal.toFixed(2)}</span></div>
+            <div class="bar-track"><div class="bar-fill invest-fill" style="width:${(investReal / maxReal) * 100}%"></div></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Mixed</span><span>$${mixReal.toFixed(2)}</span></div>
+            <div class="bar-track"><div class="bar-fill mix-fill" style="width:${(mixReal / maxReal) * 100}%"></div></div>
+          </div>
+        </div>
+      `;
+        }
+
+        function resetInflationSim() {
+          document.getElementById("infStart").value = 5000;
+          document.getElementById("infYears").value = 10;
+          document.getElementById("infRate").value = 3;
+          document.getElementById("saveRate").value = 1.5;
+          document.getElementById("investRate").value = 8;
+          document.getElementById("mixRate").value = 5;
+
+          document.getElementById("inflationSummary").style.display = "none";
+          document.getElementById("inflationSummary").innerHTML = "";
+          document.getElementById("inflationBars").style.display = "none";
+          document.getElementById("inflationBars").innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Inflation can reduce how much your money can actually buy.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Inflation usually weakens buying power rather than increasing it.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Real value means value after considering purchasing power.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. The visible number alone is nominal, not real, value.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Long-term growth in earnings and investing is usually a stronger response to inflation.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Ignoring inflation can quietly weaken financial strength.";
+            }
+          }
+        }
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAX - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 820px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <!-- <a href="home.html">🏠 Home</a> -->
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <a href="mistake.html" style="color:rgb(137, 63, 137);"> ◀︎− Mistake </a>
+      <!-- <a href="strategy.html">⬅ Strategy</a> -->
+      <!-- <a href="system.html" style="color:rgb(137, 63, 137);"> ➡ System </a> -->
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>TAX</h1>
+      <p>
+        One of the biggest money surprises in real life is discovering that the money you earn is
+        not always the money you keep. Tax changes paychecks, business profits, spending decisions,
+        and investment outcomes. This page helps you understand the basic idea clearly: gross money
+        and usable money are not the same thing.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Gross Pay</span>
+        <span class="pill">Net Pay</span>
+        <span class="pill">Deductions</span>
+        <span class="pill">Sales Tax</span>
+        <span class="pill">Revenue vs Profit</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Many people make financial plans based on the first big number they see — salary, sales,
+        or revenue. But the number that matters most in day-to-day life is often the amount left
+        after deductions, taxes, and required costs. A person who plans using the wrong number can
+        feel richer than they really are and spend beyond what is actually safe.
+      </p>
+      <div class="quote">
+        “The money that reaches you is more important for planning than the money first promised to you.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> tax is not just a technical topic. It changes how much
+        money is truly available for saving, spending, and investing.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Raj’s First Paycheck Shock</h2>
+      <p>
+        Raj was excited when he received his first job offer. The salary looked strong, and he began
+        imagining what his monthly life would look like. He mentally allocated money to rent,
+        eating out, travel, and savings. But when his first paycheck arrived, it was lower than the
+        number he had been using in his head. At first he thought there had been a mistake.
+      </p>
+      <p>
+        Then he looked more closely and saw deductions. Taxes and other required amounts had reduced
+        what he actually took home. Suddenly, his plan no longer worked the way he expected. The
+        lesson hit hard: planning from gross income makes life look more affordable than it really
+        is. Real planning begins with what is actually available after required deductions.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What TAX Means in Real Life</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">💼</span>
+          <strong>Income Tax</strong>
+          <p>Part of earned income may not stay fully in your hands.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🧾</span>
+          <strong>Deductions</strong>
+          <p>Some amounts may be removed before you receive your final pay.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🛍️</span>
+          <strong>Sales Tax</strong>
+          <p>What something costs at checkout may be more than the sticker price.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🏪</span>
+          <strong>Business Reality</strong>
+          <p>Revenue is not the same as profit, and profit is not always fully spendable either.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Important:</strong> tax changes both personal life and business life. The more real
+        your money decisions become, the more important this understanding becomes.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        Tax affects how much spending power you truly have. If a person is paid a certain amount on
+        paper, that is not always the amount they can safely build a life around. This is why gross
+        and net matter. Gross is the larger starting number. Net is the more usable number after
+        deductions. In everyday planning, net is often the number that matters more.
+      </p>
+      <p>
+        Tax also matters in business thinking. A company can have high revenue and still have weak
+        profit if costs are high. Even profit does not always mean “freely spend everything,”
+        because obligations and taxes can still shape what remains. This is why strong financial
+        thinkers do not get distracted by the biggest number. They ask: what is actually left?
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Gross Pay</td>
+          <td>The total amount before deductions.</td>
+        </tr>
+        <tr>
+          <td>Net Pay</td>
+          <td>The amount actually received after deductions.</td>
+        </tr>
+        <tr>
+          <td>Deductions</td>
+          <td>Amounts taken out before final pay reaches you.</td>
+        </tr>
+        <tr>
+          <td>Sales Tax</td>
+          <td>Extra amount added to a purchase at checkout in many cases.</td>
+        </tr>
+        <tr>
+          <td>Revenue</td>
+          <td>The total money a business brings in before expenses.</td>
+        </tr>
+        <tr>
+          <td>Profit</td>
+          <td>What remains after business expenses are removed.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Numbers That Sound Big vs Numbers That Matter</h2>
+      <table>
+        <tr>
+          <th>Number</th>
+          <th>What it means</th>
+          <th>Why it can mislead</th>
+        </tr>
+        <tr>
+          <td>Gross Salary</td>
+          <td>The starting income figure</td>
+          <td>It may look bigger than what can actually be spent</td>
+        </tr>
+        <tr>
+          <td>Net Pay</td>
+          <td>The money that reaches you</td>
+          <td>This is usually more realistic for budgeting</td>
+        </tr>
+        <tr>
+          <td>Revenue</td>
+          <td>All money a business brings in</td>
+          <td>It ignores business costs</td>
+        </tr>
+        <tr>
+          <td>Profit</td>
+          <td>Money left after expenses</td>
+          <td>It still may not equal fully free personal spending money</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ Budgeting from gross income</strong>
+          <p>This makes life seem cheaper than it really is.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Confusing revenue with profit</strong>
+          <p>Big sales numbers do not automatically mean strong personal income.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Ignoring tax when planning purchases</strong>
+          <p>The amount paid at checkout can be higher than expected.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Thinking tax is only an adult problem</strong>
+          <p>Understanding it early improves realism and decision-making later.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          You receive a job offer with a strong-looking salary. Which number should guide your real
+          monthly budget?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('net')">Use the take-home amount after deductions</button>
+          <button class="alt" onclick="showScenario('gross')">Use the larger gross number because it looks
+            better</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Mini Game: Paycheck Breakdown</h2>
+      <p class="small">
+        Start with a gross paycheck and see what really remains after deductions and tax-like
+        reductions. The goal is to plan from reality.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Gross: $<span id="grossScore">1000</span></div>
+        <div class="score-pill">Deductions: $<span id="deductionScore">0</span></div>
+        <div class="score-pill">Net: $<span id="netScore">1000</span></div>
+        <div class="score-pill">Planning Quality: <span id="qualityScore">Weak</span></div>
+      </div>
+
+      <div class="choice-row" style="margin-top:16px;">
+        <button onclick="playTaxGame('tax')">Apply tax-like deduction</button>
+        <button onclick="playTaxGame('benefit')">Apply other deduction</button>
+        <button onclick="playTaxGame('planGross')">Plan from gross</button>
+        <button onclick="playTaxGame('planNet')">Plan from net</button>
+        <button class="alt" onclick="resetTaxGame()">Reset Game</button>
+      </div>
+
+      <div id="gameFeedback" class="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> Which number is usually more useful for monthly budgeting?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">Net pay</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">Gross pay only</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">The highest number shown anywhere</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why is revenue not the same as profit?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">Because revenue does not remove expenses first</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Because revenue and profit are always identical</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">Because profit is always bigger than revenue</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> What is a common mistake in money planning?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">Ignoring deductions and planning from the biggest number</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Using the amount that actually reaches you</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Thinking about checkout cost carefully</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Take a sample paycheck number and estimate what might really be spendable.</li>
+          <li>Practice the difference between gross and net using simple made-up examples.</li>
+          <li>If you imagine a business, write revenue and then subtract likely costs to understand profit.</li>
+          <li>Get used to asking: “What is actually left?”</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Practical Money Systems</div>
+          <h4>I Will Teach You to Be Rich</h4>
+          <p>
+            Helpful for understanding real-world money systems, automation, and planning from what
+            is actually available.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Money Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Useful for seeing how people often misunderstand money because they focus on the wrong
+            numbers or the wrong signals.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "net") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Real budgeting usually works better when it is based on what actually reaches you after deductions.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That feels bigger, but it can cause unrealistic planning because not all of that money is fully available.";
+          }
+        }
+
+        let gross = 1000;
+        let deductions = 0;
+        let net = 1000;
+        let planningQuality = "Weak";
+
+        function updateGame() {
+          document.getElementById("grossScore").textContent = gross;
+          document.getElementById("deductionScore").textContent = deductions;
+          document.getElementById("netScore").textContent = net;
+          document.getElementById("qualityScore").textContent = planningQuality;
+        }
+
+        function playTaxGame(action) {
+          const box = document.getElementById("gameFeedback");
+
+          if (action === "tax") {
+            const amount = 120;
+            deductions += amount;
+            net -= amount;
+            if (net < 0) net = 0;
+            box.className = "feedback warn";
+            box.innerHTML = "A tax-like deduction was applied. The usable amount is now lower than the original gross figure.";
+          }
+
+          if (action === "benefit") {
+            const amount = 60;
+            deductions += amount;
+            net -= amount;
+            if (net < 0) net = 0;
+            box.className = "feedback warn";
+            box.innerHTML = "Another deduction reduced the final amount available to you.";
+          }
+
+          if (action === "planGross") {
+            planningQuality = "Weak";
+            box.className = "feedback bad";
+            box.innerHTML = "Planning from gross can make your budget unrealistic because it ignores what is removed first.";
+          }
+
+          if (action === "planNet") {
+            planningQuality = "Strong";
+            box.className = "feedback good";
+            box.innerHTML = "Good thinking. Planning from net is usually closer to real life because it uses the amount actually available.";
+          }
+
+          if (net < gross && planningQuality === "Strong") {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. You now see why the smaller realistic number often matters more than the larger starting number.";
+          }
+
+          updateGame();
+        }
+
+        function resetTaxGame() {
+          gross = 1000;
+          deductions = 0;
+          net = 1000;
+          planningQuality = "Weak";
+          updateGame();
+          const box = document.getElementById("gameFeedback");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Net pay is usually the stronger budgeting number because it is closer to what you truly control.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Gross can be useful for understanding total pay, but net is usually more realistic for day-to-day planning.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Revenue is the larger incoming amount before costs are removed. Profit is what remains after expenses.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Revenue and profit are not the same, and profit is not bigger than revenue.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Many people build unrealistic plans because they focus on the largest number instead of the most usable one.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Using real available money is stronger than planning from inflated assumptions.";
+            }
+          }
+        }
+
+        updateGame();
+      </script>
+</body>
+
+</html>

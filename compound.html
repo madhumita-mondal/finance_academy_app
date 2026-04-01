@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COMPOUND - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    /* .topbar{
+      background:#22324c;
+      color:#fff;
+      padding:14px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    } */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 860px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .sim-card {
+      background: #f9fcff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .sim-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cfdceb;
+      border-radius: 10px;
+      font-size: 1rem;
+      color: #22324c;
+      background: #fff;
+    }
+
+    .sim-output {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      display: none;
+      line-height: 1.8;
+      overflow: auto;
+    }
+
+    .sim-output table {
+      margin-top: 14px;
+    }
+
+    @media (max-width:1000px) {
+      .sim-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Growing Money" style="color:rgb(137, 63, 137);"> 🏠 Home</a>
+      <!-- <a href="home.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a> -->
+      <a href="invest.html" style="color:rgb(137, 63, 137);"> ◀︎− Invest </a>
+      <a href="fund.html" style="color:rgb(137, 63, 137);"> Fund −▶︎ </a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>COMPOUND</h1>
+      <p>
+        Compounding is one of the most powerful ideas in all of finance. It means growth begins to
+        grow on top of earlier growth. At first, results look small. Later, the same process can
+        become surprisingly powerful. This page shows why time, consistency, and patience matter so
+        much in building money.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Time</span>
+        <span class="pill">Consistency</span>
+        <span class="pill">Growth on Growth</span>
+        <span class="pill">Early Start</span>
+        <span class="pill">Recurring Contributions</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Compounding happens when money earns returns, and then those returns begin earning returns
+        too. That is why early years may look quiet, but later years can look dramatic. The more
+        time and consistency you add, the more powerful compounding becomes.
+      </p>
+      <div class="quote">
+        “Compounding often looks slow at first, then surprisingly powerful later.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> in compounding, time is not just helpful — it is one of
+        the strongest forces in the entire system.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Mia Starts Early, Aarav Starts Late</h2>
+      <p>
+        Mia began investing small amounts early. Aarav waited because he thought small numbers did
+        not matter. Years later, Aarav started contributing more than Mia did at the beginning, but
+        he had lost something difficult to replace: time. Mia’s money had spent years building on
+        itself. Even though her starting contributions were smaller, compounding had a long runway
+        to work with.
+      </p>
+      <p>
+        Aarav was surprised to learn that starting earlier with modest consistency can sometimes
+        outperform starting later with larger effort. The lesson was not that bigger contributions
+        do not matter. They do. But compounding rewards time so strongly that delay can become very
+        expensive.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What Makes Compounding Powerful?</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">⏳</span>
+          <strong>Time</strong>
+          <p>The longer money stays invested, the more chances it has to build on earlier growth.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📅</span>
+          <strong>Consistency</strong>
+          <p>Regular investing keeps feeding the compounding process.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📈</span>
+          <strong>Return Rate</strong>
+          <p>The rate matters, but it works best when combined with time.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🧠</span>
+          <strong>Patience</strong>
+          <p>People often quit before compounding becomes easy to notice.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        If money grows once, that is helpful. But if growth itself becomes part of the base that
+        keeps growing, something more powerful begins. This is why compounding is often described as
+        “growth on growth.” It also explains why stopping too early can be costly. Much of the power
+        of compounding appears later, not at the beginning.
+      </p>
+      <p>
+        Compounding works for investing, but it also works against people when debt has high
+        interest. That means compounding can be positive or negative. In wealth building, the goal
+        is to put compounding on your side through regular investing and long time horizons while
+        preventing high-interest debt from using the same force against you.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Compounding</td>
+          <td>Growth building on earlier growth.</td>
+        </tr>
+        <tr>
+          <td>Contribution</td>
+          <td>New money added regularly to the investment.</td>
+        </tr>
+        <tr>
+          <td>Rate of Return</td>
+          <td>The percentage at which money grows over time.</td>
+        </tr>
+        <tr>
+          <td>Time Horizon</td>
+          <td>How long money can stay invested before being needed.</td>
+        </tr>
+        <tr>
+          <td>Negative Compounding</td>
+          <td>When interest on debt grows against you over time.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Early vs Late</h2>
+      <table>
+        <tr>
+          <th>Path</th>
+          <th>Starting Pattern</th>
+          <th>Long-Term Effect</th>
+        </tr>
+        <tr>
+          <td>Early Start</td>
+          <td>Smaller amounts, longer time</td>
+          <td>Time gives compounding room to become powerful</td>
+        </tr>
+        <tr>
+          <td>Late Start</td>
+          <td>Larger amounts, shorter time</td>
+          <td>Still useful, but often harder to catch up</td>
+        </tr>
+        <tr>
+          <td>Inconsistent Start</td>
+          <td>Stop-and-go pattern</td>
+          <td>Weakens the long-term effect of compounding</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ Waiting too long</strong>
+          <p>Delay reduces the power of time, which is one of compounding’s strongest ingredients.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Stopping because early results look small</strong>
+          <p>Compounding often becomes more visible later than people expect.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Ignoring recurring contributions</strong>
+          <p>Regular additions can strengthen compounding significantly.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Forgetting that debt can compound too</strong>
+          <p>High-interest debt can use the same force against financial progress.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          Which is usually stronger for long-term wealth building?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('early')">Start earlier with smaller regular amounts</button>
+          <button class="alt" onclick="showScenario('late')">Wait many years and hope to catch up later</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Advanced Compound Simulator</h2>
+      <p class="small">
+        This version includes starting age, ending age, monthly contributions, yearly step-up,
+        expected annual return, one-time withdrawal age, lump-sum withdrawal, and yearly withdrawal
+        after a chosen age.
+      </p>
+
+      <div class="sim-grid">
+        <div class="sim-card">
+          <strong>Current Age</strong>
+          <input type="number" id="advCurrentAge" value="16" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>End Age</strong>
+          <input type="number" id="advEndAge" value="60" min="1">
+        </div>
+        <div class="sim-card">
+          <strong>Start Amount</strong>
+          <input type="number" id="advStartAmount" value="1000" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Monthly Contribution</strong>
+          <input type="number" id="advMonthlyContribution" value="100" min="0">
+        </div>
+
+        <div class="sim-card">
+          <strong>Yearly Step-Up %</strong>
+          <input type="number" id="advStepUp" value="5" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Annual Return %</strong>
+          <input type="number" id="advAnnualReturn" value="8" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Withdraw Age</strong>
+          <input type="number" id="advWithdrawAge" value="50" min="0">
+        </div>
+        <div class="sim-card">
+          <strong>Lump Withdrawal</strong>
+          <input type="number" id="advLumpWithdraw" value="10000" min="0">
+        </div>
+
+        <div class="sim-card">
+          <strong>Yearly Withdrawal</strong>
+          <input type="number" id="advYearlyWithdraw" value="5000" min="0">
+        </div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="runAdvancedCompoundSim()">Run Advanced Simulator</button>
+        <button class="alt" onclick="resetAdvancedCompoundSim()">Reset</button>
+      </div>
+
+      <div id="advSimSummary" class="sim-output"></div>
+      <div id="advSimTableWrap" class="sim-output"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What is compounding?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">Growth building on earlier growth</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">One-time growth only</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">A fee charged by the bank</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why does starting earlier matter so much?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">Because time gives compounding more room to work</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Because early money always doubles immediately</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">Because later contributions never matter</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> What is an example of negative compounding?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">High-interest debt growing over time</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Regular saving</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Lower spending</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Pick a small monthly amount and test it in the simulator.</li>
+          <li>Compare starting early with starting later using the same rate.</li>
+          <li>Notice how yearly step-up changes long-term results.</li>
+          <li>Use the withdrawal settings to understand how taking money out changes the ending balance.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Long-Term Wealth</div>
+          <h4>The Richest Man in Babylon</h4>
+          <p>
+            Reinforces the power of keeping part of what you earn and letting it grow over time.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Disciplined Investing</div>
+          <h4>The Intelligent Investor</h4>
+          <p>
+            Helps readers understand why patience and rationality matter more than excitement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "early") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Starting earlier usually gives compounding more time to work, which can be extremely powerful.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "Waiting may still allow growth later, but losing time makes compounding much weaker than it could have been.";
+          }
+        }
+
+        function runAdvancedCompoundSim() {
+          const currentAge = Number(document.getElementById("advCurrentAge").value);
+          const endAge = Number(document.getElementById("advEndAge").value);
+          const startAmount = Number(document.getElementById("advStartAmount").value);
+          let monthlyContribution = Number(document.getElementById("advMonthlyContribution").value);
+          const stepUpRate = Number(document.getElementById("advStepUp").value) / 100;
+          const annualReturn = Number(document.getElementById("advAnnualReturn").value) / 100;
+          const withdrawAge = Number(document.getElementById("advWithdrawAge").value);
+          const lumpWithdraw = Number(document.getElementById("advLumpWithdraw").value);
+          const yearlyWithdraw = Number(document.getElementById("advYearlyWithdraw").value);
+
+          const summary = document.getElementById("advSimSummary");
+          const tableWrap = document.getElementById("advSimTableWrap");
+
+          if (
+            currentAge < 0 ||
+            endAge <= currentAge ||
+            startAmount < 0 ||
+            monthlyContribution < 0 ||
+            stepUpRate < 0 ||
+            annualReturn < 0 ||
+            withdrawAge < currentAge ||
+            lumpWithdraw < 0 ||
+            yearlyWithdraw < 0
+          ) {
+            summary.style.display = "block";
+            summary.innerHTML = "Please enter valid values.";
+            tableWrap.style.display = "none";
+            return;
+          }
+
+          let balance = startAmount;
+          let totalInvested = startAmount;
+          const monthlyRate = annualReturn / 12;
+          let rows = [];
+          let lumpWithdrawalDone = false;
+
+          for (let age = currentAge; age < endAge; age++) {
+            const yearStartBalance = balance;
+            const contributionThisYear = monthlyContribution * 12;
+            let withdrawalThisYear = 0;
+
+            for (let m = 0; m < 12; m++) {
+              balance += monthlyContribution;
+              totalInvested += monthlyContribution;
+              balance *= (1 + monthlyRate);
+            }
+
+            if (age + 1 === withdrawAge && !lumpWithdrawalDone && lumpWithdraw > 0) {
+              const actualLump = Math.min(balance, lumpWithdraw);
+              balance -= actualLump;
+              withdrawalThisYear += actualLump;
+              lumpWithdrawalDone = true;
+            }
+
+            if (age + 1 >= withdrawAge && yearlyWithdraw > 0) {
+              const actualYearly = Math.min(balance, yearlyWithdraw);
+              balance -= actualYearly;
+              withdrawalThisYear += actualYearly;
+            }
+
+            const growthThisYear = balance - yearStartBalance - contributionThisYear + withdrawalThisYear;
+
+            rows.push({
+              age: age + 1,
+              startBalance: yearStartBalance,
+              yearlyContribution: contributionThisYear,
+              growth: growthThisYear,
+              withdrawal: withdrawalThisYear,
+              endBalance: balance
+            });
+
+            monthlyContribution *= (1 + stepUpRate);
+          }
+
+          const finalBalance = balance;
+          const totalWithdrawn = rows.reduce((sum, r) => sum + r.withdrawal, 0);
+
+          summary.style.display = "block";
+          summary.innerHTML = `
+        <strong>Simulation Summary</strong><br><br>
+        Starting Age: ${currentAge}<br>
+        End Age: ${endAge}<br>
+        Total Invested: $${totalInvested.toFixed(2)}<br>
+        Total Withdrawn: $${totalWithdrawn.toFixed(2)}<br>
+        Final Balance: <strong>$${finalBalance.toFixed(2)}</strong><br><br>
+        This simulation assumes a fixed annual return and regular deposits. Real markets do not move in a straight line, but this helps show the power of time, step-up investing, and withdrawals.
+      `;
+
+          let tableHTML = `
+        <strong>Year-by-Year Breakdown</strong><br><br>
+        <table>
+          <tr>
+            <th>Age</th>
+            <th>Start Balance</th>
+            <th>Yearly Contribution</th>
+            <th>Growth</th>
+            <th>Withdrawal</th>
+            <th>End Balance</th>
+          </tr>
+      `;
+
+          rows.forEach(r => {
+            tableHTML += `
+          <tr>
+            <td>${r.age}</td>
+            <td>$${r.startBalance.toFixed(2)}</td>
+            <td>$${r.yearlyContribution.toFixed(2)}</td>
+            <td>$${r.growth.toFixed(2)}</td>
+            <td>$${r.withdrawal.toFixed(2)}</td>
+            <td>$${r.endBalance.toFixed(2)}</td>
+          </tr>
+        `;
+          });
+
+          tableHTML += `</table>`;
+
+          tableWrap.style.display = "block";
+          tableWrap.innerHTML = tableHTML;
+        }
+
+        function resetAdvancedCompoundSim() {
+          document.getElementById("advCurrentAge").value = 16;
+          document.getElementById("advEndAge").value = 60;
+          document.getElementById("advStartAmount").value = 1000;
+          document.getElementById("advMonthlyContribution").value = 100;
+          document.getElementById("advStepUp").value = 5;
+          document.getElementById("advAnnualReturn").value = 8;
+          document.getElementById("advWithdrawAge").value = 50;
+          document.getElementById("advLumpWithdraw").value = 10000;
+          document.getElementById("advYearlyWithdraw").value = 5000;
+
+          document.getElementById("advSimSummary").style.display = "none";
+          document.getElementById("advSimSummary").innerHTML = "";
+          document.getElementById("advSimTableWrap").style.display = "none";
+          document.getElementById("advSimTableWrap").innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Compounding means growth begins building on earlier growth.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Compounding is not one-time growth. It is growth continuing on top of what already grew.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Time gives compounding more room to work, which is why early starts are so powerful.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Starting early does not create instant doubling, but it greatly improves long-term results.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. High-interest debt is a classic example of compounding working against you.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Saving and lower spending are not examples of negative compounding.";
+            }
+          }
+        }
+      </script>
+</body>
+
+</html>

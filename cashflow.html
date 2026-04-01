@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> CASH FLOW - Finance Academy</title>
+    <style>
+        :root {
+            --bg1: #eef5ff;
+            --bg2: #fff8ef;
+            --card: #ffffff;
+            --text: #22324c;
+            --muted: #4b5b77;
+            --line: #dfe8f2;
+            --good: #18794e;
+            --bad: #b34040;
+            --warn: #9a6500;
+            --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .topbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            margin-left: 14px;
+        }
+
+        .wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 22px 16px 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.06;
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            line-height: 1.8;
+            max-width: 880px;
+            font-size: 1.03rem;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, .75);
+            color: #22324c;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .93rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+            display: grid;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .mini-card {
+            background: linear-gradient(180deg, #fff, #f8fbff);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .mini-card .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fffce8, #f7fcff);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 18px;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .quote {
+            background: #f6fbff;
+            border-left: 5px solid #7baeff;
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin: 16px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        ul {
+            line-height: 1.9;
+            padding-left: 22px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        th {
+            background: #f5fbff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 16px;
+            background: #fff;
+            margin-top: 12px;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            border: none;
+            background: #22324c;
+            color: #fff;
+            padding: 11px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s ease, opacity .15s ease, background .15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: .96;
+        }
+
+        button.alt {
+            background: #5d739b;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            display: none;
+            font-weight: 700;
+            line-height: 1.7;
+        }
+
+        .feedback.good {
+            display: block;
+            background: #e8fff0;
+            color: var(--good);
+        }
+
+        .feedback.bad {
+            display: block;
+            background: #ffeaea;
+            color: var(--bad);
+        }
+
+        .feedback.warn {
+            display: block;
+            background: #fff7e8;
+            color: var(--warn);
+        }
+
+        .score-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .score-pill {
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 9px 14px;
+            font-weight: 700;
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+        }
+
+        .book-tag {
+            display: inline-block;
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: .82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .book-card h4 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+        }
+
+        .book-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .footer-nav a {
+            text-decoration: none;
+            background: #22324c;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: .96rem;
+        }
+
+        .cash-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .cash-card {
+            background: #f9fcff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .cash-card h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+        }
+
+        .cash-card div {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        @media (max-width:1000px) {
+            .cash-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width:900px) {
+
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .cash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+            <a href="business.html" style="color:rgb(137, 63, 137);"> ◀︎− Business </a>
+            <a href="wealth_ladder.html" style="color:rgb(137, 63, 137);">  Wealth Ladder −▶︎ </a>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <section class="hero">
+            <h1>CASH FLOW</h1>
+            <p>
+                Cash flow is the movement of money in and out of your life. It is one of the clearest ways
+                to understand financial strength because high income alone does not guarantee progress. If
+                almost everything that comes in goes right back out, financial power stays weak. Strong cash
+                flow creates surplus, and surplus creates options.
+            </p>
+            <div class="pill-row">
+                <span class="pill">Income In</span>
+                <span class="pill">Expenses Out</span>
+                <span class="pill">Surplus</span>
+                <span class="pill">Burn Rate</span>
+                <span class="pill">Lifestyle Creep</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>1. Big Idea</h2>
+            <p>
+                Financial strength is not only about how much money you earn. It is about what remains after
+                the money moves through your life. Cash flow reveals whether your system is feeding future
+                growth or only funding the present. A person with a smaller income but strong surplus can be
+                in a better position than a person with higher income and almost no money left.
+            </p>
+            <div class="quote">
+                “It is not only income that matters. It is what is left after life takes its share.”
+            </div>
+            <div class="info-box">
+                <strong>Core principle:</strong> surplus is one of the most important building blocks of
+                long-term financial strength.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>2. Story: Aarav Earns More, Sara Keeps More</h2>
+            <p>
+                Aarav earned more than Sara, and from the outside that seemed like an obvious advantage. But
+                Aarav spent almost all of it. His housing cost had risen, his subscriptions had multiplied,
+                and he treated each increase in income as permission to increase lifestyle. Sara earned less,
+                but she was more careful about how money moved. She tracked spending, watched recurring
+                costs, and protected a larger monthly surplus.
+            </p>
+            <p>
+                At the end of each month, Aarav looked successful but had little left. Sara looked quieter,
+                but her system was stronger. Over time, Sara could save, invest, and respond to shocks more
+                easily because her cash flow was better. Aarav had a higher income number. Sara had a better
+                money system.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>3. What Cash Flow Means</h2>
+            <div class="grid-4">
+                <div class="mini-card">
+                    <span class="icon">⬇️</span>
+                    <strong>Money In</strong>
+                    <p>Salary, freelance income, business income, or investment cash flow.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">⬆️</span>
+                    <strong>Money Out</strong>
+                    <p>Housing, food, bills, subscriptions, transport, and lifestyle spending.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">➕</span>
+                    <strong>Surplus</strong>
+                    <p>What remains after expenses. Surplus becomes future power.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🔥</span>
+                    <strong>Burn Rate</strong>
+                    <p>How quickly money is being consumed by monthly life.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>4. Real Explanation</h2>
+            <p>
+                Cash flow is one of the clearest financial truths because it reveals whether money is moving
+                in a way that creates future strength or future stress. A strong cash flow system does not
+                require perfection. It requires awareness. If money comes in and almost all of it disappears,
+                then the system leaves little room for saving, investing, or recovery when life changes.
+            </p>
+            <p>
+                This is where lifestyle creep becomes important. When income rises, many people automatically
+                raise spending to match it. That can make progress feel invisible even though earnings are
+                increasing. Strong cash flow often improves not when income changes alone, but when money
+                movement becomes intentional.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>5. Key Concepts</h2>
+            <table>
+                <tr>
+                    <th>Concept</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td>Cash Flow</td>
+                    <td>The movement of money in and out of your system.</td>
+                </tr>
+                <tr>
+                    <td>Surplus</td>
+                    <td>Money left after expenses.</td>
+                </tr>
+                <tr>
+                    <td>Burn Rate</td>
+                    <td>The speed at which money is being consumed.</td>
+                </tr>
+                <tr>
+                    <td>Recurring Expense</td>
+                    <td>A cost that returns regularly each month or cycle.</td>
+                </tr>
+                <tr>
+                    <td>Lifestyle Creep</td>
+                    <td>Spending more automatically as income rises.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>6. Comparison: High Income vs Strong Flow</h2>
+            <table>
+                <tr>
+                    <th>Situation</th>
+                    <th>Looks Like</th>
+                    <th>Likely Result</th>
+                </tr>
+                <tr>
+                    <td>High income, weak surplus</td>
+                    <td>Money comes in, but almost all of it goes out</td>
+                    <td>Low progress despite strong earnings</td>
+                </tr>
+                <tr>
+                    <td>Moderate income, strong surplus</td>
+                    <td>Some money remains each month</td>
+                    <td>Better savings, investing, and stability</td>
+                </tr>
+                <tr>
+                    <td>High income, strong surplus</td>
+                    <td>Money comes in and meaningful money remains</td>
+                    <td>Very strong long-term position</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>7. Common Mistakes</h2>
+            <div class="grid-2">
+                <div class="mini-card">
+                    <strong>❌ Thinking income alone makes you strong</strong>
+                    <p>If almost nothing remains, the system is still weak.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Ignoring small recurring expenses</strong>
+                    <p>Repeated small costs can quietly destroy surplus.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Lifestyle creep after every raise</strong>
+                    <p>More income does not always create more progress if spending expands too.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Not tracking where money goes</strong>
+                    <p>Untracked flow often becomes uncontrolled flow.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>8. Scenario Thinking</h2>
+            <div class="scenario">
+                <p>
+                    Which person is usually stronger financially?
+                </p>
+                <div class="choice-row">
+                    <button onclick="showScenario('surplus')">The one who keeps a strong monthly surplus</button>
+                    <button class="alt" onclick="showScenario('incomeOnly')">The one with the bigger income number but
+                        almost nothing left</button>
+                </div>
+                <div id="scenarioFeedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>9. Cash Flow Builder</h2>
+            <p class="small">
+                Build a healthier monthly system. Your goal is to create surplus without ignoring real needs.
+            </p>
+
+            <div class="cash-grid">
+                <div class="cash-card">
+                    <h4>Monthly Income</h4>
+                    <div id="flowIncome">$3000</div>
+                </div>
+                <div class="cash-card">
+                    <h4>Total Expenses</h4>
+                    <div id="flowExpenses">$0</div>
+                </div>
+                <div class="cash-card">
+                    <h4>Surplus</h4>
+                    <div id="flowSurplus">$3000</div>
+                </div>
+                <div class="cash-card">
+                    <h4>Status</h4>
+                    <div id="flowStatus">Strong Start</div>
+                </div>
+            </div>
+
+            <div class="choice-row">
+                <button onclick="playFlowGame('rent')">Add Rent $1200</button>
+                <button onclick="playFlowGame('food')">Add Food $400</button>
+                <button onclick="playFlowGame('transport')">Add Transport $250</button>
+                <button onclick="playFlowGame('subscriptions')">Add Subscriptions $120</button>
+                <button onclick="playFlowGame('luxury')">Add Lifestyle $500</button>
+                <button onclick="playFlowGame('saveDiscipline')">Reduce $150 leakage</button>
+                <button class="alt" onclick="resetFlowGame()">Reset</button>
+            </div>
+
+            <div id="gameFeedback" class="feedback"></div>
+        </section>
+
+        <section class="card">
+            <h2>10. Quiz</h2>
+
+            <div class="scenario">
+                <p><strong>Q1.</strong> What is surplus?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(1,'a')">Money left after expenses</button>
+                    <button class="alt" onclick="checkQuiz(1,'b')">All the money that comes in</button>
+                    <button class="alt" onclick="checkQuiz(1,'c')">Only debt payments</button>
+                </div>
+                <div id="quiz1" class="feedback"></div>
+            </div>
+
+            <div class="scenario">
+                <p><strong>Q2.</strong> Why can lifestyle creep be dangerous?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(2,'a')">Because raises can disappear into spending instead of building
+                        strength</button>
+                    <button class="alt" onclick="checkQuiz(2,'b')">Because income always drops when spending
+                        rises</button>
+                    <button class="alt" onclick="checkQuiz(2,'c')">Because it means saving becomes impossible for
+                        everyone forever</button>
+                </div>
+                <div id="quiz2" class="feedback"></div>
+            </div>
+
+            <div class="scenario">
+                <p><strong>Q3.</strong> Which is often the stronger financial position?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(3,'a')">Moderate income with strong monthly surplus</button>
+                    <button class="alt" onclick="checkQuiz(3,'b')">Higher income with almost nothing left each
+                        month</button>
+                    <button class="alt" onclick="checkQuiz(3,'c')">High spending with no tracking</button>
+                </div>
+                <div id="quiz3" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>11. Real-Life Action</h2>
+            <div class="info-box">
+                <strong>Try this now:</strong>
+                <ul>
+                    <li>Write your monthly income and estimated monthly expenses.</li>
+                    <li>Circle 3 recurring expenses that may be weaker than they look.</li>
+                    <li>Estimate your current surplus, even if it is small.</li>
+                    <li>Choose one leak you can reduce this month to improve your flow.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>12. Book Recommendations</h2>
+            <div class="grid-2">
+                <div class="book-card">
+                    <div class="book-tag">Practical Systems</div>
+                    <h4>I Will Teach You to Be Rich</h4>
+                    <p>
+                        Helpful for building realistic money systems and turning cash flow into consistent
+                        progress.
+                    </p>
+                </div>
+                <div class="book-card">
+                    <div class="book-tag">Habit Building</div>
+                    <h4>Atomic Habits</h4>
+                    <p>
+                        Strong for understanding how small repeated choices can quietly improve or damage money
+                        flow over time.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="card">
+            <h2>13. Next Step</h2>
+            <p>
+                Once you understand how money moves through your life, the next major danger becomes easier
+                to see: borrowing can pull future money into the present and reshape your entire system. That
+                is the purpose of the next page.
+            </p>
+
+            <div class="footer-nav">
+                <a href="inflation.html">⬅ Back to INFLATION</a>
+                <a href="debt.html">➡ Go to DEBT</a>
+            </div>
+        </section> -->
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                let flowIncome = 3000;
+                let flowExpenses = 0;
+
+                function updateFlowBoard() {
+                    const surplus = flowIncome - flowExpenses;
+                    document.getElementById("flowIncome").textContent = "$" + flowIncome;
+                    document.getElementById("flowExpenses").textContent = "$" + flowExpenses;
+                    document.getElementById("flowSurplus").textContent = "$" + surplus;
+
+                    let status = "Strong Start";
+                    if (surplus < 1200) status = "Moderate";
+                    if (surplus < 700) status = "Tight";
+                    if (surplus < 300) status = "Fragile";
+                    document.getElementById("flowStatus").textContent = status;
+                }
+
+                function playFlowGame(action) {
+                    const box = document.getElementById("gameFeedback");
+
+                    if (action === "rent") {
+                        flowExpenses += 1200;
+                        box.className = "feedback good";
+                        box.innerHTML = "Rent is a major real-life expense and often the biggest monthly cost.";
+                    }
+
+                    if (action === "food") {
+                        flowExpenses += 400;
+                        box.className = "feedback good";
+                        box.innerHTML = "Food is essential, and essential costs must be planned clearly.";
+                    }
+
+                    if (action === "transport") {
+                        flowExpenses += 250;
+                        box.className = "feedback good";
+                        box.innerHTML = "Transport is another real recurring cost that shapes monthly flow.";
+                    }
+
+                    if (action === "subscriptions") {
+                        flowExpenses += 120;
+                        box.className = "feedback warn";
+                        box.innerHTML = "Small recurring costs can quietly weaken surplus more than people expect.";
+                    }
+
+                    if (action === "luxury") {
+                        flowExpenses += 500;
+                        box.className = "feedback warn";
+                        box.innerHTML = "Lifestyle spending can quickly shrink surplus if it grows too freely.";
+                    }
+
+                    if (action === "saveDiscipline") {
+                        flowExpenses = Math.max(0, flowExpenses - 150);
+                        box.className = "feedback good";
+                        box.innerHTML = "Good move. Reducing small leaks improves cash flow without needing more income.";
+                    }
+
+                    const surplus = flowIncome - flowExpenses;
+                    if (surplus <= 300) {
+                        box.className = "feedback bad";
+                        box.innerHTML = "Your surplus is very weak now. High income alone is not enough if almost nothing remains.";
+                    } else if (surplus >= 1000) {
+                        box.className = "feedback good";
+                        box.innerHTML = "Strong. A healthy surplus creates room for saving, investing, and stability.";
+                    }
+
+                    updateFlowBoard();
+                }
+
+                function resetFlowGame() {
+                    flowIncome = 3000;
+                    flowExpenses = 0;
+                    updateFlowBoard();
+                    const box = document.getElementById("gameFeedback");
+                    box.className = "feedback";
+                    box.innerHTML = "";
+                }
+
+                function showScenario(type) {
+                    const box = document.getElementById("scenarioFeedback");
+                    if (type === "surplus") {
+                        box.className = "feedback good";
+                        box.innerHTML = "Correct. A stronger monthly surplus often creates more real financial power than a higher income number alone.";
+                    } else {
+                        box.className = "feedback warn";
+                        box.innerHTML = "That may look impressive from the outside, but weak surplus usually means weak financial progress.";
+                    }
+                }
+
+                function checkQuiz(q, ans) {
+                    const box = document.getElementById("quiz" + q);
+
+                    if (q === 1) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. Surplus is what remains after expenses, and it becomes future power.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. Surplus is not all income — it is what is left after money goes out.";
+                        }
+                    }
+
+                    if (q === 2) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. Lifestyle creep can quietly absorb raises that could have strengthened savings or investments.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. The danger is not automatic income loss — it is the disappearance of surplus.";
+                        }
+                    }
+
+                    if (q === 3) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. Strong surplus often creates more real progress than a bigger income number with no money left.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. High income without surplus can still be financially weak.";
+                        }
+                    }
+                }
+
+                updateFlowBoard();
+            </script>
+</body>
+
+</html>

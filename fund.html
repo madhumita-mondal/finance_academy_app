@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FUND - Finance Academy</title>
+
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 12px;
+      font-weight: 700;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d8f7ff, #ffe8a6, #ffdede, #e7ddff);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.85;
+      max-width: 930px;
+      font-size: 1.04rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .8);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .quote {
+      background: #f4f8ff;
+      padding: 14px 16px;
+      border-left: 5px solid #7baeff;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mini {
+      border: 1px solid #dfe8f2;
+      padding: 18px;
+      border-radius: 16px;
+      transition: .2s;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .mini:hover {
+      transform: translateY(-4px);
+    }
+
+    .fund-stock {
+      background: #eef5ff;
+    }
+
+    .fund-etf {
+      background: #e8fff0;
+    }
+
+    .fund-bond {
+      background: #fff7e8;
+    }
+
+    .fund-mutual {
+      background: #f9efff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      background: #22324c;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    button:hover {
+      background: #1a263a;
+      transform: scale(1.03);
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: #18794e;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: #b34040;
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: #9a6500;
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .footer-nav a:hover {
+      background: #1a263a;
+      transform: scale(1.03);
+    }
+
+    @media(max-width:950px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Growing Money" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <!-- <a href="home.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a> -->
+      <a href="compound.html" style="color:rgb(137, 63, 137);"> ◀︎− Compound </a>
+      <a href="strategy.html" style="color:rgb(137, 63, 137);"> Strategy −▶︎ </a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>Stocks, ETFs, Bonds, and Mutual Funds</h1>
+      <p>
+        These are some of the most important building blocks in modern investing. Many people hear
+        these words often, but do not fully understand what each one does, why it exists, and how much
+        it matters in everyday financial life. This page explains how they work, how they differ, and
+        why they matter so much today for long-term financial growth, stability, and planning.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill">Ownership</span>
+        <span class="pill">Diversification</span>
+        <span class="pill">Stability</span>
+        <span class="pill">Growth</span>
+        <span class="pill">Long-Term Investing</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Why These Matter in Today’s Life</h2>
+
+      <p>
+        In earlier times, many people relied mainly on income, savings, and property to build
+        financial strength. Today, that is often not enough. Inflation, rising costs, long life spans,
+        and changing work patterns make it harder to depend only on wages or cash savings. For many
+        people, some form of investing has become increasingly important because money that sits still
+        may lose real power over time.
+      </p>
+
+      <p>
+        Stocks, ETFs, bonds, and mutual funds matter because they give ordinary people ways to
+        participate in growth, ownership, diversification, and long-term wealth building without
+        needing to start a business or buy large real estate immediately.
+      </p>
+
+      <div class="quote">
+        In today’s world, understanding these investment tools is becoming less like an optional skill
+        and more like a basic part of financial literacy.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. A Real Story</h2>
+
+      <p>
+        Two people both work hard for years. One keeps all extra money in cash because investing feels
+        confusing. The other learns the basics and begins slowly with simple diversified investing.
+        Neither person becomes wealthy overnight, but over time their financial lives begin to look
+        very different. One depends mostly on labor and savings. The other starts to build ownership in
+        businesses and long-term assets.
+      </p>
+
+      <p>
+        The deeper lesson is not that everyone must become an expert trader. It is that understanding
+        these tools can change how future money is built.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. The Four Main Categories</h2>
+
+      <div class="grid-4">
+
+        <div class="mini fund-stock">
+          <h3>Stocks</h3>
+          <p>
+            A stock represents ownership in a company. If you own stock, you own a small piece of that
+            business and participate in its growth or decline.
+          </p>
+        </div>
+
+        <div class="mini fund-etf">
+          <h3>ETFs</h3>
+          <p>
+            An ETF is a basket of investments that trades like a stock. It often gives broad exposure
+            to many holdings at once.
+          </p>
+        </div>
+
+        <div class="mini fund-bond">
+          <h3>Bonds</h3>
+          <p>
+            Bonds are more about lending than owning. They are often used for income, stability, or
+            lower volatility relative to stocks.
+          </p>
+        </div>
+
+        <div class="mini fund-mutual">
+          <h3>Mutual Funds</h3>
+          <p>
+            Mutual funds are pooled investment vehicles that collect money from many investors and
+            place it into a managed portfolio.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Stocks: Why They Matter</h2>
+
+      <p>
+        Stocks matter because they connect individual investors to business growth. When companies
+        grow, become more profitable, or become more valuable over time, stock owners may benefit.
+        This makes stocks one of the most powerful long-term growth vehicles available to ordinary
+        investors.
+      </p>
+
+      <p>
+        But stocks also come with volatility. Prices move. Expectations change. Markets react. This is
+        why stocks are powerful, but also why they require time horizon and emotional discipline.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>5. ETFs: Why They Matter</h2>
+
+      <p>
+        ETFs matter because they make diversification easier. Instead of choosing one company, an
+        investor can buy exposure to a broad group of companies, sectors, or markets at once. This can
+        reduce concentration risk and make long-term investing simpler for many people.
+      </p>
+
+      <p>
+        For today’s life, ETFs are especially important because many people do not want or need to
+        analyze single companies in great depth. A broad ETF can become a practical foundation for
+        long-term investing.
+      </p>
+
+      <div class="info-box">
+        For many modern investors, ETFs are one of the most useful “everyday life” tools because they
+        combine simplicity, diversification, and liquidity.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6. Bonds: Why They Matter</h2>
+
+      <p>
+        Bonds matter because not every part of a financial plan should behave like a growth engine.
+        Some parts should support stability, income, or balance. Bonds are often used for that role.
+        They may not have the same long-term growth upside as stocks, but they can help reduce the
+        violence of market swings in some portfolios.
+      </p>
+
+      <p>
+        In today’s life, bonds matter more as people become more focused on preserving capital,
+        balancing risk, or preparing for shorter-term needs.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>7. Mutual Funds: Why They Matter</h2>
+
+      <p>
+        Mutual funds matter because they are another way to gain diversified exposure through pooled
+        investing. They are often professionally managed and can serve people who prefer structured
+        investing through a fund rather than choosing individual holdings directly.
+      </p>
+
+      <p>
+        In practical life, mutual funds and ETFs often serve related goals, though the details of how
+        they trade and operate can differ. The bigger lesson is that both can help investors move from
+        isolated picks toward broader portfolio thinking.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>8. Comparison Table</h2>
+
+      <table>
+        <tr>
+          <th>Type</th>
+          <th>Main Role</th>
+          <th>Strength</th>
+          <th>Main Limitation</th>
+        </tr>
+        <tr>
+          <td>Stocks</td>
+          <td>Growth and ownership</td>
+          <td>Strong upside if the company grows well</td>
+          <td>Higher volatility and concentration risk</td>
+        </tr>
+        <tr>
+          <td>ETFs</td>
+          <td>Diversified growth</td>
+          <td>Broad exposure with simplicity</td>
+          <td>Still exposed to market movement</td>
+        </tr>
+        <tr>
+          <td>Bonds</td>
+          <td>Stability and income support</td>
+          <td>Can reduce portfolio risk</td>
+          <td>Usually lower long-term growth than stocks</td>
+        </tr>
+        <tr>
+          <td>Mutual Funds</td>
+          <td>Pooled diversified investing</td>
+          <td>Professional structure and diversification</td>
+          <td>May feel less flexible depending on structure</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>9. How Much Are They Needed Today?</h2>
+
+      <p>
+        The answer depends on life stage, goals, income stability, risk tolerance, and time horizon.
+        Not everyone needs the same mix, and not every person needs exposure to all four in equal
+        amounts. But for many people today, having no understanding of these tools at all can be a
+        disadvantage because inflation and long-term cost growth make pure cash dependence weaker over
+        time.
+      </p>
+
+      <p>
+        Stocks and ETFs are often highly relevant for long-term growth. Bonds may become more relevant
+        when stability and capital preservation matter more. Mutual funds can also be practical for
+        people who prefer fund-based investing. The real issue is not whether every person needs every
+        product in the same way. The real issue is that modern financial life increasingly rewards at
+        least basic understanding of these tools.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>10. Common Mistakes</h2>
+
+      <ul>
+        <li>Thinking investing means only picking random stocks</li>
+        <li>Avoiding all investing because markets feel confusing</li>
+        <li>Expecting bonds to behave like high-growth assets</li>
+        <li>Ignoring diversification and putting everything in one company</li>
+        <li>Using long-term growth assets for money needed very soon</li>
+        <li>Judging investments only by short-term price movement</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>11. Scenario Thinking</h2>
+
+      <div class="scenario">
+        <p>
+          Which is usually the stronger response for someone building long-term financial knowledge?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="choose('learn')">Learn how these tools work and use them thoughtfully over time</button>
+          <button onclick="choose('ignore')">Ignore them completely and depend only on cash forever</button>
+        </div>
+
+        <div id="result" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>12. Portfolio Builder Game</h2>
+
+      <p>
+        Build a balanced learning portfolio. Try to improve ownership, diversification, and stability.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Ownership: <span id="ownershipScore">0</span></div>
+        <div class="score-pill">Diversification: <span id="diversifyScore">0</span></div>
+        <div class="score-pill">Stability: <span id="stabilityScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="fundGame('stock')">Add Stock</button>
+        <button onclick="fundGame('etf')">Add ETF</button>
+        <button onclick="fundGame('bond')">Add Bond</button>
+        <button onclick="fundGame('mutual')">Add Mutual Fund</button>
+        <button onclick="fundGame('single')">Put Everything in One Stock</button>
+        <button class="alt" onclick="resetFundGame()">Reset</button>
+      </div>
+
+      <div id="gameBox" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>13. Quick Check</h2>
+
+      <div class="scenario">
+        <p>
+          Which statement reflects stronger financial thinking today?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="quiz('a')">Understanding stocks, ETFs, bonds, and mutual funds is increasingly useful in
+            modern financial life</button>
+          <button onclick="quiz('b')">There is almost no reason to understand these tools at all</button>
+        </div>
+
+        <div id="quiz" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>14. Real Life Reflection</h2>
+
+      <p>
+        Think honestly about your current level of understanding. Do these words still feel like vague
+        financial language, or are they becoming real tools in your mind? Which one feels most aligned
+        with your current learning stage: stock ownership, ETF diversification, bond stability, or
+        broader mutual fund structure?
+      </p>
+
+      <p>
+        Clarity about these tools matters because investing has become a larger part of modern life
+        than many people realize.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>15. Book Recommendations</h2>
+
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Investing Foundations</div>
+          <h4>The Intelligent Investor</h4>
+          <p>
+            Strong for understanding disciplined long-term investing, rationality, and the difference
+            between speculation and investment.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Business Ownership Thinking</div>
+          <h4>Common Stocks and Uncommon Profits</h4>
+          <p>
+            Helpful for thinking more deeply about stock ownership and what makes businesses valuable
+            over time.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        let ownership = 0;
+        let diversify = 0;
+        let stability = 0;
+
+        function updateFundBoard() {
+          document.getElementById("ownershipScore").textContent = ownership;
+          document.getElementById("diversifyScore").textContent = diversify;
+          document.getElementById("stabilityScore").textContent = stability;
+        }
+
+        function choose(type) {
+          let box = document.getElementById("result");
+          box.style.display = "block";
+
+          if (type === "learn") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Understanding these tools creates stronger long-term financial literacy and better decision-making.";
+          } else {
+            box.className = "feedback bad";
+            box.innerHTML = "This is weaker thinking. Cash may feel simple, but ignoring investing tools completely can limit future growth and understanding.";
+          }
+        }
+
+        function fundGame(type) {
+          let box = document.getElementById("gameBox");
+          box.style.display = "block";
+
+          if (type === "stock") {
+            ownership += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Good move. Stocks build direct ownership, though they also require awareness of volatility.";
+          }
+
+          if (type === "etf") {
+            ownership += 1;
+            diversify += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Strong move. ETFs often combine growth exposure with broad diversification.";
+          }
+
+          if (type === "bond") {
+            stability += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Good move. Bonds can support portfolio stability and lower overall risk.";
+          }
+
+          if (type === "mutual") {
+            diversify += 2;
+            stability += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Strong move. Mutual funds can provide structured diversified exposure.";
+          }
+
+          if (type === "single") {
+            ownership += 2;
+            diversify -= 2;
+            stability -= 1;
+            box.className = "feedback warn";
+            box.innerHTML = "This builds ownership, but concentration risk becomes much higher when everything depends on one stock only.";
+          }
+
+          updateFundBoard();
+        }
+
+        function resetFundGame() {
+          ownership = 0;
+          diversify = 0;
+          stability = 0;
+          updateFundBoard();
+
+          let box = document.getElementById("gameBox");
+          box.style.display = "none";
+          box.innerHTML = "";
+          box.className = "feedback";
+        }
+
+        function quiz(ans) {
+          let box = document.getElementById("quiz");
+          box.style.display = "block";
+
+          if (ans === "a") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Modern financial life increasingly rewards at least a working understanding of these tools.";
+          } else {
+            box.className = "feedback bad";
+            box.innerHTML = "Not quite. These tools are becoming a more important part of long-term planning, growth, and financial literacy.";
+          }
+        }
+
+        updateFundBoard();
+      </script>
+
+</body>
+
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STRATEGY - Finance Academy</title>
+
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 12px;
+      font-weight: bold;
+    }
+
+    .wrap {
+      max-width: 1140px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d8f7ff, #ffe8a6, #ffdede, #e7ddff);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.85;
+      max-width: 920px;
+      font-size: 1.04rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .8);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .mini .icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      background: #22324c;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 4px 4px 0 0;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: #18794e;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: #b34040;
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: #9a6500;
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .footer-nav a:hover {
+      transform: scale(1.04);
+      background: #1a263a;
+    }
+
+    @media(max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Growing Money" style="color:rgb(137, 63, 137);"> 🏠 Home</a>
+      <!-- <a href="invest.html">⬅ INVEST</a> -->
+      <a href="fund.html" style="color:rgb(137, 63, 137);"> ◀︎− Fund</a>
+      <a href="wealth.html" style="color:rgb(137, 63, 137);"> Wealth −▶︎</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>STRATEGY</h1>
+      <p>
+        Strategy is the point where every financial concept connects into one whole system. Earning
+        matters, but earning alone is not enough. Saving matters, but saving alone is not enough.
+        Investing matters, but investing alone is not enough. A strong financial life comes from
+        building a connected structure where money is earned, protected, directed, grown, and managed
+        with intention over time.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill">System Thinking</span>
+        <span class="pill">Planning</span>
+        <span class="pill">Long-Term</span>
+        <span class="pill">Resilience</span>
+        <span class="pill">Direction</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Most people do not fail financially because they never heard a money tip. They struggle because
+        their financial life is unconnected. They may earn without protecting, save without growing,
+        invest without understanding risk, or spend without direction. Strategy means building a
+        financial life where each part supports the others.
+      </p>
+
+      <div class="quote">
+        “Wealth is rarely built by one lucky move. It is built by a system of repeated good decisions.”
+      </div>
+
+      <div class="info-box">
+        <strong>Core principle:</strong> strategy is not one action. It is the design that connects
+        your actions together.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Story: Random Decisions vs Connected Decisions</h2>
+      <p>
+        Vikram made money decisions one at a time without a bigger plan. When income rose, he spent
+        more. When he felt nervous, he stopped investing. When a problem happened, he borrowed. He was
+        not careless in one dramatic way, but his decisions did not work together. Because there was
+        no strategy, every surprise knocked him off course.
+      </p>
+      <p>
+        Aisha worked differently. She focused first on value and income. Then she built security.
+        After that, she learned about tax, investing, compounding, inflation, cash flow, debt, risk,
+        and insurance. But most importantly, she connected them. She knew why she was saving, what she
+        was protecting, where her money was supposed to go, and how each decision supported the next
+        one. Over time, her system got stronger even before her income became extraordinary.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. What Strategy Really Means</h2>
+      <div class="grid-4">
+        <div class="mini">
+          <span class="icon">🧭</span>
+          <strong>Direction</strong>
+          <p>Your money should move according to a plan, not only according to mood or pressure.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🧱</span>
+          <strong>Structure</strong>
+          <p>Each money decision should support the rest of your system.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🔁</span>
+          <strong>Consistency</strong>
+          <p>Repeated good actions often matter more than occasional dramatic actions.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🛡️</span>
+          <strong>Resilience</strong>
+          <p>A strong strategy survives mistakes, delays, and shocks better than a weak one.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. The Strategy Chain</h2>
+      <p>
+        A strong financial strategy often follows an order. Not because life is perfectly neat, but
+        because certain layers support the next ones.
+      </p>
+
+      <table>
+        <tr>
+          <th>Step</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td>Become useful enough to earn more strongly over time.</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td>Create money coming in from stronger and more stable sources.</td>
+        </tr>
+        <tr>
+          <td>Security</td>
+          <td>Build buffers so life does not collapse under pressure.</td>
+        </tr>
+        <tr>
+          <td>Tax Awareness</td>
+          <td>Understand what money is actually yours to use.</td>
+        </tr>
+        <tr>
+          <td>Investing</td>
+          <td>Turn money into assets that can grow over time.</td>
+        </tr>
+        <tr>
+          <td>Compounding</td>
+          <td>Use time to make growth build on itself.</td>
+        </tr>
+        <tr>
+          <td>Inflation Awareness</td>
+          <td>Protect real buying power, not just visible numbers.</td>
+        </tr>
+        <tr>
+          <td>Cash Flow</td>
+          <td>Make sure money movement leaves enough surplus to build strength.</td>
+        </tr>
+        <tr>
+          <td>Debt Control</td>
+          <td>Prevent future money from being drained too heavily.</td>
+        </tr>
+        <tr>
+          <td>Risk Management</td>
+          <td>Reduce avoidable dangers and take only proportional risk.</td>
+        </tr>
+        <tr>
+          <td>Insurance</td>
+          <td>Protect against large financial shocks that are too heavy alone.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>5. Real Explanation</h2>
+      <p>
+        Strategy is what stops finance from becoming random. Without strategy, people often react to
+        whatever is loudest in the moment. A purchase feels urgent. An investment trend feels exciting.
+        A debt payment feels manageable. A paycheck feels big. But isolated feelings are not the same
+        as a system.
+      </p>
+      <p>
+        A strategy asks bigger questions: What is this money for? What does this decision do to my
+        future? Is this improving my resilience or weakening it? Is this building an asset or funding
+        a temporary feeling? These questions create structure. And structure is what turns financial
+        knowledge into financial progress.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>6. Common Strategy Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini">
+          <strong>❌ Looking for one magic solution</strong>
+          <p>No single trick replaces a connected money system.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Building growth without protection</strong>
+          <p>Investing without security and insurance can leave the system fragile.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Earning more without directing more</strong>
+          <p>Income growth alone does not guarantee financial strength.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Treating all decisions as separate</strong>
+          <p>Debt, cash flow, risk, and investing all affect one another.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>7. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          You receive a raise. Which is usually the stronger strategic move?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="scenario('system')">Use part of it to strengthen savings, investing, and protection</button>
+          <button onclick="scenario('spend')">Let the entire raise disappear into lifestyle growth</button>
+        </div>
+
+        <div id="scenarioBox" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>8. Strategy Builder Game</h2>
+      <p>
+        Build a strong financial system. Try to balance earning, protection, and growth.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Income Strength: <span id="incomeScore">0</span></div>
+        <div class="score-pill">Protection: <span id="protectionScore">0</span></div>
+        <div class="score-pill">Growth: <span id="growthScore">0</span></div>
+        <div class="score-pill">System Score: <span id="systemScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="strategyGame('income')">Increase Skill / Income</button>
+        <button onclick="strategyGame('save')">Build Emergency Fund</button>
+        <button onclick="strategyGame('invest')">Invest Consistently</button>
+        <button onclick="strategyGame('insure')">Add Protection</button>
+        <button onclick="strategyGame('debt')">Reduce Harmful Debt</button>
+        <button onclick="strategyGame('overspend')">Overspend Raise</button>
+        <button class="alt" onclick="resetStrategyGame()">Reset</button>
+      </div>
+
+      <div id="gameBox" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>9. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What is strategy in finance?</p>
+        <button onclick="quiz(1,'a')">A connected system of money decisions</button>
+        <button onclick="quiz(1,'b')">One lucky investment</button>
+        <div id="q1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why is protection part of strategy?</p>
+        <button onclick="quiz(2,'a')">Because growth alone can be fragile without it</button>
+        <button onclick="quiz(2,'b')">Because protection replaces the need for income</button>
+        <div id="q2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> Which is usually stronger?</p>
+        <button onclick="quiz(3,'a')">A planned system with savings, investing, and risk control</button>
+        <button onclick="quiz(3,'b')">Random reactions to whatever happens each month</button>
+        <div id="q3" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Write your current money system in 5 lines: income, savings, debt, protection, growth.</li>
+          <li>Circle the weakest part.</li>
+          <li>Write one improvement that would make the whole system stronger.</li>
+          <li>Ask yourself: if a shock happens tomorrow, does my current strategy survive?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>11. Book Recommendations</h2>
+      <div class="grid-3">
+        <div class="book-card">
+          <div class="book-tag">Money Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Excellent for seeing why long-term behavior matters more than short-term excitement.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Money Habits</div>
+          <h4>The Richest Man in Babylon</h4>
+          <p>
+            Reinforces timeless principles of keeping, protecting, and growing money with discipline.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Practical Systems</div>
+          <h4>I Will Teach You to Be Rich</h4>
+          <p>
+            Strong for turning financial ideas into actual repeatable systems.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>12. Final Thought</h2>
+      <p>
+        Finance is not one topic. It is a living system. Value helps create income. Income supports
+        security. Security protects investing. Investing and compounding fight inflation. Cash flow
+        determines surplus. Debt can weaken everything if misused. Risk must be managed. Insurance
+        protects against major shocks. Strategy is the design that makes all of those parts work
+        together.
+      </p>
+
+      <div class="quote">
+        “Strong financial lives are not built by accident. They are designed.”
+      </div>
+    </div>
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        let incomeStrength = 0;
+        let protection = 0;
+        let growth = 0;
+        let system = 0;
+
+        function updateStrategyBoard() {
+          document.getElementById("incomeScore").textContent = incomeStrength;
+          document.getElementById("protectionScore").textContent = protection;
+          document.getElementById("growthScore").textContent = growth;
+          document.getElementById("systemScore").textContent = system;
+        }
+
+        function scenario(type) {
+          const box = document.getElementById("scenarioBox");
+
+          if (type === "system") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. A raise becomes powerful when part of it strengthens the system instead of disappearing entirely into lifestyle.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That may feel good now, but strategy weakens when every increase in income turns immediately into more spending.";
+          }
+        }
+
+        function strategyGame(type) {
+          const box = document.getElementById("gameBox");
+
+          if (type === "income") {
+            incomeStrength += 2;
+            system += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Good move. Stronger value and stronger earning ability support the whole system.";
+          }
+
+          if (type === "save") {
+            protection += 2;
+            system += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. Security is one of the strongest foundations of a resilient strategy.";
+          }
+
+          if (type === "invest") {
+            growth += 2;
+            system += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Good. Investing gives money a long-term growth role inside the system.";
+          }
+
+          if (type === "insure") {
+            protection += 2;
+            system += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Strong choice. Insurance helps the system survive large shocks.";
+          }
+
+          if (type === "debt") {
+            protection += 1;
+            system += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. Reducing harmful debt strengthens future cash flow and flexibility.";
+          }
+
+          if (type === "overspend") {
+            growth -= 1;
+            protection -= 1;
+            system -= 2;
+            box.className = "feedback bad";
+            box.innerHTML = "Overspending weakens the system because it removes resources that could have strengthened the future.";
+          }
+
+          if (incomeStrength >= 2 && protection >= 3 && growth >= 2 && system >= 5) {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent! You are building a connected money system instead of making random isolated decisions.";
+          }
+
+          updateStrategyBoard();
+        }
+
+        function resetStrategyGame() {
+          incomeStrength = 0;
+          protection = 0;
+          growth = 0;
+          system = 0;
+          updateStrategyBoard();
+
+          const box = document.getElementById("gameBox");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function quiz(q, a) {
+          const box = document.getElementById("q" + q);
+
+          if (q === 1) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Strategy is a connected money system, not one isolated move.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. One lucky event is not the same as a durable strategy.";
+            }
+          }
+
+          if (q === 2) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Growth without protection can be fragile and easily disrupted.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Protection supports strategy, but it does not replace income.";
+            }
+          }
+
+          if (q === 3) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Strong finance usually comes from a connected, repeatable system.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Random reaction is the opposite of strategy.";
+            }
+          }
+        }
+
+        updateStrategyBoard();
+      </script>
+
+</body>
+
+</html>

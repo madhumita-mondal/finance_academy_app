@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Forward - High School Finance</title>
+  <style>
+    :root {
+      --bg1: #eef4ff;
+      --bg2: #fff5ea;
+      --card: #ffffff;
+      --text: #22324c;
+      --line: #dde7f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    }
+
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 8px 14px;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #22324c;
+    }
+
+    .nav-links a:hover {
+      background: #e6f0ff;
+    }
+
+    .nav-links a.active {
+      background: rgb(137, 63, 137);
+      color: white;
+    }
+
+    body {
+      margin: 0;
+    }
+
+
+
+
+
+
+
+
+
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 650px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .hero-mascot {
+      flex: 0 0 260px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .hero-mascot .big {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, .92);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat h3 {
+      margin: 0;
+      font-size: .92rem;
+    }
+
+    .stat .num {
+      margin-top: 8px;
+      font-size: 1.45rem;
+      font-weight: 800;
+    }
+
+    .main {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 18px;
+    }
+
+    .sidebar,
+    .content {
+      background: rgba(255, 255, 255, .82);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar h2,
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 82vh;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .menu button {
+      border: none;
+      border-radius: 18px;
+      background: #fff;
+      padding: 13px 14px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      transition: .18s ease;
+    }
+
+    .menu button:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu button.active {
+      background: linear-gradient(90deg, #edf5ff, #fff1c9);
+      font-weight: 700;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eef5ff;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffbe6, #f7fcff);
+      border: 1px solid #edf3f8;
+      border-radius: 18px;
+      padding: 15px;
+      line-height: 1.68;
+      margin-top: 14px;
+    }
+
+    .warn-box {
+      background: #fff7e8;
+      border: 1px solid #ffe1a9;
+      color: #7f5400;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .item,
+    .sim-card,
+    .shop-item,
+    .risk-card {
+      background: #fff;
+      border: 1px solid #eef3f8;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      border: none;
+      border-radius: 18px;
+      background: #f7fbff;
+      padding: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      transition: .18s ease;
+    }
+
+    .choice-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .game-area {
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 18px;
+      background: #eaf2f8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #72d39b, #6ea8fe);
+      transition: .3s ease;
+    }
+
+    .score-board {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .score-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .score-box h4 {
+      margin: 0 0 6px;
+      font-size: .95rem;
+    }
+
+    .money-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .money-btns button,
+    .shop-item button,
+    .risk-card button,
+    .sim-card button {
+      border: none;
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: #f4fbff;
+      box-shadow: var(--shadow);
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .quiz-q {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .small {
+      font-size: .95rem;
+      opacity: .87;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: .95rem;
+      opacity: .8;
+      padding: 20px 0 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    input[type="number"] {
+      width: 130px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #dbe6f2;
+      font-size: 1rem;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .mini-pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f1f6ff;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+
+    ul.tight li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 1120px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-4,
+      .score-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+
+      .stats,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .score-board {
+        grid-template-columns: 1fr;
+      }
+
+      input[type="number"] {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+
+
+
+<body>
+  <div class="topnav">
+    <div class="nav-title">💰 Finance Academy</div>
+
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="index1.html">🧸 Little Kids</a>
+      <a href="index2.html">📚 Upper Elementary</a>
+      <a href="index3.html">🧠 Middle School</a>
+      <a href="index5.html" class="active">🎓 High School</a>
+    </div>
+  </div>
+
+  <div class="app">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>🎓 Finance Forward</h1>
+        <p><strong>High School Finance App</strong></p>
+        <p>Learn the money skills that connect directly to adult life: paychecks, taxes, credit, loans, investing,
+          renting, insurance, and long-term planning.</p>
+        <p class="small">Built for high school learners preparing for real financial decisions.</p>
+      </div>
+      <div class="hero-mascot">
+        <span class="big">🚀</span>
+        <strong>Riley the Guide</strong>
+        <div>“Understand money before money starts demanding decisions from you.”</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <h3>⭐ Stars</h3>
+        <div class="num" id="starsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>💰 Coins</h3>
+        <div class="num" id="coinsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>📘 Lessons Done</h3>
+        <div class="num" id="lessonsDone">0</div>
+      </div>
+      <div class="stat">
+        <h3>🏦 Savings</h3>
+        <div class="num" id="savingsCount">$0</div>
+      </div>
+      <div class="stat">
+        <h3>📈 Portfolio</h3>
+        <div class="num" id="portfolioCount">$0</div>
+      </div>
+      <div class="stat">
+        <h3>💳 Credit Score</h3>
+        <div class="num" id="creditScoreCount">680</div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="sidebar">
+        <h2>🧭 Modules</h2>
+        <div class="menu">
+          <button class="tab-btn active" data-tab="welcome">🏡 Welcome</button>
+          <button class="tab-btn" data-tab="lesson1">📒 Real-Life Budgeting</button>
+          <button class="tab-btn" data-tab="lesson2">🏦 Checking vs Savings</button>
+          <button class="tab-btn" data-tab="lesson3">💵 Paychecks & Taxes</button>
+          <button class="tab-btn" data-tab="lesson4">💳 Credit Score & Credit Cards</button>
+          <button class="tab-btn" data-tab="lesson5">🏛️ Loans & Interest</button>
+          <button class="tab-btn" data-tab="lesson6">📈 Investing Deeper</button>
+          <button class="tab-btn" data-tab="lesson7">🌱 Compound Growth</button>
+          <button class="tab-btn" data-tab="lesson8">🧺 Diversification & Index Funds</button>
+          <button class="tab-btn" data-tab="lesson9">🏠 Renting, Housing, Insurance</button>
+          <button class="tab-btn" data-tab="lesson10">🛡️ Fraud, Scams, Smart Decisions</button>
+          <button class="tab-btn" data-tab="story">📖 Story Mode</button>
+          <button class="tab-btn" data-tab="game1">🧾 Adult Budget Challenge</button>
+          <button class="tab-btn" data-tab="game2">💳 Credit Card Game</button>
+          <button class="tab-btn" data-tab="game3">📈 Portfolio Builder</button>
+          <button class="tab-btn" data-tab="game4">🏠 Rent Life Challenge</button>
+          <button class="tab-btn" data-tab="simulator1">🧮 Advanced Compound Simulator</button>
+          <button class="tab-btn" data-tab="simulator2">💸 Loan Cost Simulator</button>
+          <button class="tab-btn" data-tab="quiz">🧠 Quiz Time</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div id="tabContent"></div>
+      </main>
+    </section>
+
+    <div class="footer">High School Version • Built to prepare learners for real money decisions</div>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+
+
+
+      <script>
+        const state = {
+          stars: 0,
+          coins: 0,
+          lessonsDone: 0,
+          savings: 0,
+          portfolio: 0,
+          creditScore: 680,
+          completedLessons: new Set(),
+          storyStep: 0,
+          currentQuiz: 0,
+          quizScore: 0
+        };
+
+        const statsEls = {
+          stars: document.getElementById("starsCount"),
+          coins: document.getElementById("coinsCount"),
+          lessonsDone: document.getElementById("lessonsDone"),
+          savings: document.getElementById("savingsCount"),
+          portfolio: document.getElementById("portfolioCount"),
+          creditScore: document.getElementById("creditScoreCount")
+        };
+
+        function updateStats() {
+          statsEls.stars.textContent = state.stars;
+          statsEls.coins.textContent = state.coins;
+          statsEls.lessonsDone.textContent = state.lessonsDone;
+          statsEls.savings.textContent = "$" + state.savings;
+          statsEls.portfolio.textContent = "$" + state.portfolio;
+          statsEls.creditScore.textContent = state.creditScore;
+        }
+
+        function reward(stars = 1, coins = 1) {
+          state.stars += stars;
+          state.coins += coins;
+          updateStats();
+        }
+
+        function completeLesson(id) {
+          if (!state.completedLessons.has(id)) {
+            state.completedLessons.add(id);
+            state.lessonsDone += 1;
+            reward(2, 2);
+            updateStats();
+          }
+        }
+
+        function lessonCheck(id, correct) {
+          const box = document.getElementById("feedback-" + id);
+          if (correct) {
+            box.className = "feedback good";
+            box.textContent = "Great job! That is correct. ⭐";
+            reward(2, 1);
+            completeLesson(id);
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Nice try. Review the lesson and think again.";
+          }
+        }
+
+        const tabs = {
+          welcome: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🏡 Welcome to Finance Forward</h2>
+          <span class="pill">High School Start</span>
+        </div>
+        <p>This level focuses on decisions that matter in late teen years and adulthood.</p>
+
+        <div class="grid-4">
+          <div class="item">
+            <span class="emoji">💵</span>
+            <strong>Income</strong>
+            <div class="small">Understand paychecks and taxes</div>
+          </div>
+          <div class="item">
+            <span class="emoji">💳</span>
+            <strong>Credit</strong>
+            <div class="small">Learn how debt and credit work</div>
+          </div>
+          <div class="item">
+            <span class="emoji">📈</span>
+            <strong>Investing</strong>
+            <div class="small">Grow money carefully over time</div>
+          </div>
+          <div class="item">
+            <span class="emoji">🏠</span>
+            <strong>Living Costs</strong>
+            <div class="small">Rent, insurance, and adult expenses</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <strong>Big idea:</strong><br>
+          Financial success is often less about being lucky and more about understanding tradeoffs, avoiding traps, and making steady decisions over time.
+        </div>
+
+        <div style="margin-top:14px;">
+          <strong>Progress</strong>
+          <div class="progress" style="margin-top:8px;">
+            <div class="progress-bar" style="width:${Math.min((state.lessonsDone / 16) * 100, 100)}%"></div>
+          </div>
+        </div>
+      </div>
+      `,
+
+          lesson1: `
+      <div class="card">
+        <div class="title-row">
+          <h2>📒 Lesson 1: Real-Life Budgeting</h2>
+          <span class="pill">Money Plan for Adult Life</span>
+        </div>
+        <p>A real-life budget includes recurring expenses and long-term goals.</p>
+
+        <table>
+          <tr><th>Category</th><th>Examples</th></tr>
+          <tr><td>Housing</td><td>Rent, utilities</td></tr>
+          <tr><td>Transportation</td><td>Gas, transit, insurance</td></tr>
+          <tr><td>Food</td><td>Groceries, occasional meals out</td></tr>
+          <tr><td>Fixed bills</td><td>Phone, subscriptions</td></tr>
+          <tr><td>Savings</td><td>Emergency fund, goals</td></tr>
+          <tr><td>Investing</td><td>Long-term growth money</td></tr>
+        </table>
+
+        <div class="info-box">
+          A strong budget pays essentials first, then savings, then flexible spending. Budgeting is about priorities, not perfection.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson1', true)">A real budget includes essentials, savings, and flexible spending ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson1', false)">A budget should ignore fixed bills</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson1', false)">Budgeting is only for rich people</button>
+        </div>
+        <div id="feedback-lesson1" class="feedback"></div>
+      </div>
+      `,
+
+          lesson2: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🏦 Lesson 2: Checking vs Savings</h2>
+          <span class="pill">Use Each Account Well</span>
+        </div>
+        <div class="grid-2">
+          <div class="item">
+            <span class="emoji">💳</span>
+            <strong>Checking</strong>
+            <div class="small">Used for regular spending, bills, debit card use</div>
+          </div>
+          <div class="item">
+            <span class="emoji">🐷</span>
+            <strong>Savings</strong>
+            <div class="small">Used for goals, emergencies, and money not needed immediately</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          Checking is for movement. Savings is for protection and future plans. Keeping them separate can prevent overspending.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson2', true)">Checking is usually for spending, savings for storing money longer ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson2', false)">Checking and savings have no practical difference</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson2', false)">Savings should always be spent first</button>
+        </div>
+        <div id="feedback-lesson2" class="feedback"></div>
+      </div>
+      `,
+
+          lesson3: `
+      <div class="card">
+        <div class="title-row">
+          <h2>💵 Lesson 3: Paychecks & Taxes</h2>
+          <span class="pill">Gross vs Net</span>
+        </div>
+        <table>
+          <tr><th>Term</th><th>Meaning</th></tr>
+          <tr><td>Gross Pay</td><td>Total earnings before deductions</td></tr>
+          <tr><td>Net Pay</td><td>What you actually take home</td></tr>
+          <tr><td>Deductions</td><td>Taxes and other amounts removed</td></tr>
+        </table>
+
+        <div class="info-box">
+          Example: You earn $500 gross, but after taxes and deductions, your take-home pay might be $420. Planning based on net pay is usually smarter.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson3', true)">Net pay is usually lower than gross pay ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson3', false)">Gross pay is what always lands in your bank account</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson3', false)">Taxes never affect paychecks</button>
+        </div>
+        <div id="feedback-lesson3" class="feedback"></div>
+      </div>
+      `,
+
+          lesson4: `
+      <div class="card">
+        <div class="title-row">
+          <h2>💳 Lesson 4: Credit Score & Credit Cards</h2>
+          <span class="pill">Borrowing Reputation</span>
+        </div>
+        <p>A <strong>credit score</strong> is a number that helps show how responsibly a person has handled borrowing.</p>
+
+        <table>
+          <tr><th>Helpful Habit</th><th>Why it matters</th></tr>
+          <tr><td>Pay on time</td><td>Late payments can hurt credit</td></tr>
+          <tr><td>Keep balances manageable</td><td>Very high balances can be risky</td></tr>
+          <tr><td>Avoid careless borrowing</td><td>Too much debt can create trouble</td></tr>
+        </table>
+
+        <div class="warn-box info-box">
+          Credit cards are useful tools, but carrying debt can become expensive because of interest. Paying the full balance each month avoids many problems.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson4', true)">Paying on time helps credit health ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson4', false)">Credit cards are free money</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson4', false)">Late payments never matter</button>
+        </div>
+        <div id="feedback-lesson4" class="feedback"></div>
+      </div>
+      `,
+
+          lesson5: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🏛️ Lesson 5: Loans & Interest</h2>
+          <span class="pill">The Cost of Borrowing</span>
+        </div>
+        <p>A loan gives money now, but repayment later usually includes extra cost called interest.</p>
+
+        <table>
+          <tr><th>Loan Type</th><th>Example Use</th></tr>
+          <tr><td>Student Loan</td><td>Education cost</td></tr>
+          <tr><td>Car Loan</td><td>Vehicle purchase</td></tr>
+          <tr><td>Personal Loan</td><td>General borrowing</td></tr>
+        </table>
+
+        <div class="info-box">
+          The important question is not only “What is the monthly payment?” but also “What is the total amount paid in the end?”
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson5', true)">A lower monthly payment can still cost more overall if it lasts longer ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson5', false)">Interest never changes total loan cost</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson5', false)">Loans are always harmless</button>
+        </div>
+        <div id="feedback-lesson5" class="feedback"></div>
+      </div>
+      `,
+
+          lesson6: `
+      <div class="card">
+        <div class="title-row">
+          <h2>📈 Lesson 6: Investing Deeper</h2>
+          <span class="pill">Long-Term Thinking</span>
+        </div>
+        <div class="grid-4">
+          <div class="item"><span class="emoji">🏢</span><strong>Stocks</strong></div>
+          <div class="item"><span class="emoji">📄</span><strong>Bonds</strong></div>
+          <div class="item"><span class="emoji">🧺</span><strong>Funds / ETFs</strong></div>
+          <div class="item"><span class="emoji">🏠</span><strong>Real Estate</strong></div>
+        </div>
+
+        <div class="info-box">
+          Many long-term investors prefer broad funds because they spread money across many companies. Investing is usually strongest when done consistently over time, not by chasing hype.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson6', true)">Long-term investing usually works better with patience than hype chasing ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson6', false)">The best strategy is always random guessing</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson6', false)">Investing should be based only on excitement</button>
+        </div>
+        <div id="feedback-lesson6" class="feedback"></div>
+      </div>
+      `,
+
+          lesson7: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🌱 Lesson 7: Compound Growth</h2>
+          <span class="pill">Growth on Growth</span>
+        </div>
+        <p><strong>Compounding</strong> means earnings begin earning their own earnings.</p>
+
+        <table>
+          <tr><th>Year</th><th>Example at 10%</th></tr>
+          <tr><td>Start</td><td>$100</td></tr>
+          <tr><td>After 1 year</td><td>$110</td></tr>
+          <tr><td>After 2 years</td><td>$121</td></tr>
+          <tr><td>After 3 years</td><td>$133.10</td></tr>
+        </table>
+
+        <div class="info-box">
+          Time is one of the most powerful ingredients in finance. Starting earlier, even with smaller amounts, can matter a lot.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson7', true)">Compounding means money can grow on past growth ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson7', false)">Compounding only works for one year</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson7', false)">Time does not matter in compounding</button>
+        </div>
+        <div id="feedback-lesson7" class="feedback"></div>
+      </div>
+      `,
+
+          lesson8: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🧺 Lesson 8: Diversification & Index Funds</h2>
+          <span class="pill">Spread Risk Smarter</span>
+        </div>
+        <p><strong>Diversification</strong> spreads money across different investments.</p>
+        <p><strong>Index funds</strong> usually aim to follow a broad market index instead of trying to pick only a few winners.</p>
+
+        <div class="info-box">
+          One company can fail. A broad basket is usually steadier than betting everything on one name.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson8', true)">Broad funds can reduce single-company risk ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson8', false)">Diversification means owning just one hot stock</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson8', false)">Index funds remove all risk forever</button>
+        </div>
+        <div id="feedback-lesson8" class="feedback"></div>
+      </div>
+      `,
+
+          lesson9: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🏠 Lesson 9: Renting, Housing, Insurance</h2>
+          <span class="pill">Adult Cost Reality</span>
+        </div>
+        <table>
+          <tr><th>Expense</th><th>Example</th></tr>
+          <tr><td>Rent</td><td>Monthly housing payment</td></tr>
+          <tr><td>Deposit</td><td>Upfront money for move-in</td></tr>
+          <tr><td>Utilities</td><td>Power, water, internet</td></tr>
+          <tr><td>Insurance</td><td>Protection from large losses</td></tr>
+        </table>
+
+        <div class="info-box">
+          Insurance is not exciting, but it exists because some losses are too large to easily handle alone. Adult budgeting often includes many expenses people forget at first.
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson9', true)">Adult living costs include more than just rent ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson9', false)">Housing costs only involve one monthly number</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson9', false)">Insurance is the same as a savings account</button>
+        </div>
+        <div id="feedback-lesson9" class="feedback"></div>
+      </div>
+      `,
+
+          lesson10: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🛡️ Lesson 10: Fraud, Scams, Smart Decisions</h2>
+          <span class="pill">Protect Your Future</span>
+        </div>
+        <div class="pill-row">
+          <span class="mini-pill">Urgency</span>
+          <span class="mini-pill">Guaranteed riches</span>
+          <span class="mini-pill">Unknown links</span>
+          <span class="mini-pill">Private info requests</span>
+          <span class="mini-pill">Pressure and secrecy</span>
+        </div>
+
+        <div class="warn-box info-box">
+          Smart protection habits:
+          <ul class="tight">
+            <li>Pause before acting</li>
+            <li>Verify websites and messages</li>
+            <li>Never rush under pressure</li>
+            <li>Use strong passwords and secure habits</li>
+            <li>Ask questions before sending money</li>
+          </ul>
+        </div>
+
+        <div class="choices">
+          <button class="choice-btn" onclick="lessonCheck('lesson10', true)">Pressure + secrecy + guaranteed money can be major warning signs ✅</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson10', false)">Fast pressure makes offers more trustworthy</button>
+          <button class="choice-btn" onclick="lessonCheck('lesson10', false)">It is smart to send money before checking details</button>
+        </div>
+        <div id="feedback-lesson10" class="feedback"></div>
+      </div>
+      `,
+
+          story: `
+      <div class="card">
+        <div class="title-row">
+          <h2>📖 Story Mode: Jordan's First-Year Money Plan</h2>
+          <span class="pill">Interactive Story</span>
+        </div>
+        <div id="storyArea"></div>
+      </div>
+      `,
+
+          game1: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🧾 Adult Budget Challenge</h2>
+          <span class="pill">Make Net Pay Work</span>
+        </div>
+
+        <p>You take home <strong>$2,200</strong> per month.</p>
+
+        <div class="game-area">
+          <div class="score-board">
+            <div class="score-box">
+              <h4>Net Pay</h4>
+              <div id="abStart">$2200</div>
+            </div>
+
+            <div class="score-box">
+              <h4>Spent</h4>
+              <div id="abSpent">$0</div>
+            </div>
+
+            <div class="score-box">
+              <h4>Left</h4>
+              <div id="abLeft">$2200</div>
+            </div>
+
+            <div class="score-box">
+              <h4>Savings</h4>
+              <div id="abSave">$0</div>
+            </div>
+
+            <div class="score-box">
+              <h4>Needs Chosen</h4>
+              <div id="abNeeds">0</div>
+            </div>
+          </div>
+
+          <div class="shop-grid">
+            <div class="shop-item">
+              🏠 Rent ($900)
+              <button onclick="buyAdultBudget('Rent',900,true,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              🍎 Groceries ($300)
+              <button onclick="buyAdultBudget('Groceries',300,true,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              📱 Phone ($70)
+              <button onclick="buyAdultBudget('Phone',70,true,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              🚗 Transport ($200)
+              <button onclick="buyAdultBudget('Transport',200,true,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              🛡️ Insurance ($120)
+              <button onclick="buyAdultBudget('Insurance',120,true,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              🎉 Entertainment ($180)
+              <button onclick="buyAdultBudget('Entertainment',180,false,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              🛍️ Shopping ($150)
+              <button onclick="buyAdultBudget('Shopping',150,false,false)">Choose</button>
+            </div>
+
+            <div class="shop-item">
+              💵 Emergency Savings ($250)
+              <button onclick="buyAdultBudget('Emergency Savings',250,false,true)">Save</button>
+            </div>
+          </div>
+
+          <div class="money-btns">
+            <button onclick="finishAdultBudget()">✅ Finish Budget</button>
+            <button onclick="resetAdultBudget()">🔄 Reset</button>
+          </div>
+
+          <div id="adultBudgetFeedback" class="feedback"></div>
+        </div>
+      </div>
+      `,
+
+          game2: `
+      <div class="card">
+        <div class="title-row">
+          <h2>💳 Credit Card Game</h2>
+          <span class="pill">Use Carefully</span>
+        </div>
+        <p>Start with a card balance of <strong>$0</strong>. Decide how to use and repay it.</p>
+        <div class="game-area">
+          <div class="score-board">
+            <div class="score-box">
+              <h4>Card Balance</h4>
+              <div id="ccBalance">$0</div>
+            </div>
+            <div class="score-box">
+              <h4>Available Cash</h4>
+              <div id="ccCash">$500</div>
+            </div>
+            <div class="score-box">
+              <h4>Credit Score</h4>
+              <div id="ccScore">680</div>
+            </div>
+            <div class="score-box">
+              <h4>Interest Added</h4>
+              <div id="ccInterest">$0</div>
+            </div>
+            <div class="score-box">
+              <h4>Status</h4>
+              <div id="ccStatus">Healthy</div>
+            </div>
+          </div>
+
+          <div class="money-btns">
+            <button onclick="cardSpend(80)">Buy $80 item</button>
+            <button onclick="cardSpend(200)">Buy $200 item</button>
+            <button onclick="cardPay(80)">Pay $80</button>
+            <button onclick="cardPayFull()">Pay Full Balance</button>
+            <button onclick="cardAddInterest()">Add Monthly Interest</button>
+            <button onclick="resetCardGame()">🔄 Reset</button>
+          </div>
+          <div id="cardFeedback" class="feedback"></div>
+        </div>
+      </div>
+      `,
+
+          game3: `
+      <div class="card">
+        <div class="title-row">
+          <h2>📈 Portfolio Builder</h2>
+          <span class="pill">Balance Growth and Risk</span>
+        </div>
+        <p>You have <strong>$1,000</strong> to allocate.</p>
+        <div class="game-area">
+          <div class="score-board">
+            <div class="score-box"><h4>Money Left</h4><div id="pbLeft">$1000</div></div>
+            <div class="score-box"><h4>Cash</h4><div id="pbCash">$0</div></div>
+            <div class="score-box"><h4>Bonds</h4><div id="pbBonds">$0</div></div>
+            <div class="score-box"><h4>Index Fund</h4><div id="pbIndex">$0</div></div>
+            <div class="score-box"><h4>Single Stock</h4><div id="pbStock">$0</div></div>
+          </div>
+
+          <div class="grid-4" style="margin-top:14px;">
+            <div class="risk-card"><span class="emoji">💵</span><strong>Cash</strong><div class="small">Low risk, low growth</div><button onclick="allocatePortfolio('cash',100)">Add $100</button></div>
+            <div class="risk-card"><span class="emoji">📄</span><strong>Bonds</strong><div class="small">Lower volatility</div><button onclick="allocatePortfolio('bonds',100)">Add $100</button></div>
+            <div class="risk-card"><span class="emoji">🧺</span><strong>Index Fund</strong><div class="small">Broad diversification</div><button onclick="allocatePortfolio('index',100)">Add $100</button></div>
+            <div class="risk-card"><span class="emoji">🏢</span><strong>Single Stock</strong><div class="small">Higher concentration risk</div><button onclick="allocatePortfolio('stock',100)">Add $100</button></div>
+          </div>
+
+          <div class="money-btns">
+            <button onclick="testPortfolio()">🧪 Test Year</button>
+            <button onclick="resetPortfolio()">🔄 Reset</button>
+          </div>
+          <div id="portfolioFeedback" class="feedback"></div>
+        </div>
+      </div>
+      `,
+
+          game4: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🏠 Rent Life Challenge</h2>
+          <span class="pill">What Counts as Housing Cost?</span>
+        </div>
+        <p>You want to move into a place with monthly rent of <strong>$1,100</strong>. Choose what other costs matter too.</p>
+        <div class="game-area">
+          <div class="choices">
+            <button class="choice-btn" onclick="rentChoice('deposit', true)">Security deposit matters</button>
+            <button class="choice-btn" onclick="rentChoice('utilities', true)">Utilities matter</button>
+            <button class="choice-btn" onclick="rentChoice('insurance', true)">Renter's insurance can matter</button>
+            <button class="choice-btn" onclick="rentChoice('onlyRent', false)">Only the rent number matters</button>
+            <button class="choice-btn" onclick="rentChoice('internet', true)">Internet may matter</button>
+            <button class="choice-btn" onclick="rentChoice('moveFree', false)">Moving is always free</button>
+          </div>
+          <div id="rentFeedback" class="feedback"></div>
+          <div class="money-btns">
+            <button onclick="finishRentChallenge()">✅ Finish Challenge</button>
+            <button onclick="resetRentChallenge()">🔄 Reset</button>
+          </div>
+        </div>
+      </div>
+      `,
+
+          simulator1: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🧮 Advanced Compound Simulator</h2>
+          <span class="pill">Step-Up + Withdrawal</span>
+        </div>
+        <p>See how money can grow with a lump sum, monthly investing, yearly step-up, and later withdrawals.</p>
+
+        <div class="game-area">
+          <div class="grid-4">
+            <div class="sim-card">
+              <strong>Current Age</strong>
+              <div style="margin-top:10px;"><input type="number" id="advCurrentAge" value="18" min="0" max="100"></div>
+            </div>
+            <div class="sim-card">
+              <strong>End Age</strong>
+              <div style="margin-top:10px;"><input type="number" id="advEndAge" value="60" min="1" max="120"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Starting Lump Sum</strong>
+              <div style="margin-top:10px;"><input type="number" id="advStartAmount" value="1000" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Monthly Contribution</strong>
+              <div style="margin-top:10px;"><input type="number" id="advMonthlyContribution" value="200" min="0"></div>
+            </div>
+
+            <div class="sim-card">
+              <strong>Yearly Step-Up %</strong>
+              <div style="margin-top:10px;"><input type="number" id="advStepUp" value="5" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Annual Return %</strong>
+              <div style="margin-top:10px;"><input type="number" id="advAnnualReturn" value="8" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Withdrawal Start Age</strong>
+              <div style="margin-top:10px;"><input type="number" id="advWithdrawAge" value="45" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Lump-Sum Withdrawal</strong>
+              <div style="margin-top:10px;"><input type="number" id="advLumpWithdraw" value="20000" min="0"></div>
+            </div>
+
+            <div class="sim-card">
+              <strong>Yearly Withdrawal After Start</strong>
+              <div style="margin-top:10px;"><input type="number" id="advYearlyWithdraw" value="12000" min="0"></div>
+            </div>
+          </div>
+
+          <div class="money-btns">
+            <button onclick="runAdvancedCompoundSim()">▶️ Run Advanced Simulation</button>
+          </div>
+
+          <div id="advSimSummary" class="info-box" style="display:none;"></div>
+          <div id="advSimTableWrap" class="info-box" style="display:none; overflow:auto;"></div>
+        </div>
+      </div>
+      `,
+
+          simulator2: `
+      <div class="card">
+        <div class="title-row">
+          <h2>💸 Loan Cost Simulator</h2>
+          <span class="pill">Monthly Payment vs Total Cost</span>
+        </div>
+        <div class="game-area">
+          <div class="grid-3">
+            <div class="sim-card">
+              <strong>Loan Amount</strong>
+              <div style="margin-top:10px;"><input type="number" id="loanAmount" value="10000" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Annual Rate %</strong>
+              <div style="margin-top:10px;"><input type="number" id="loanRate" value="6" min="0"></div>
+            </div>
+            <div class="sim-card">
+              <strong>Years</strong>
+              <div style="margin-top:10px;"><input type="number" id="loanYears" value="5" min="1"></div>
+            </div>
+          </div>
+
+          <div class="money-btns">
+            <button onclick="runLoanSim()">▶️ Calculate Loan</button>
+          </div>
+
+          <div id="loanOutput" class="info-box" style="display:none;"></div>
+        </div>
+      </div>
+      `,
+
+          quiz: `
+      <div class="card">
+        <div class="title-row">
+          <h2>🧠 Quiz Time</h2>
+          <span class="pill">High School Review</span>
+        </div>
+        <div id="quizArea"></div>
+      </div>
+      `
+        };
+
+        const tabContent = document.getElementById("tabContent");
+
+        function renderTab(tabName) {
+          document.querySelectorAll(".tab-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.tab === tabName);
+          });
+
+          tabContent.innerHTML = tabs[tabName];
+
+          if (tabName === "story") renderStory();
+          if (tabName === "game1") renderAdultBudget();
+          if (tabName === "game2") renderCardGame();
+          if (tabName === "game3") renderPortfolioGame();
+          if (tabName === "game4") renderRentGame();
+          if (tabName === "quiz") renderQuiz();
+        }
+
+        const storyPages = [
+          {
+            text: `
+        <div class="info-box">
+          Jordan just started a first part-time job. The paycheck looked great at first, but after taxes the amount landing in the bank was lower than expected.
+        </div>
+        `,
+            choices: [
+              { text: "Plan with take-home pay, not gross pay", good: true, msg: "Correct. Net pay is what actually arrives." },
+              { text: "Ignore deductions and budget with the bigger number", good: false, msg: "That can make the budget fail fast." }
+            ]
+          },
+          {
+            text: `
+        <div class="info-box">
+          Jordan wanted a new phone, but also needed to build savings and prepare for transportation costs.
+        </div>
+        `,
+            choices: [
+              { text: "Cover needs and savings before extra wants", good: true, msg: "Yes. Priorities matter." },
+              { text: "Spend first and hope everything works out later", good: false, msg: "That often creates stress." }
+            ]
+          },
+          {
+            text: `
+        <div class="info-box">
+          A credit card offer arrived. Jordan learned that paying the full balance each month helps avoid expensive interest.
+        </div>
+        `,
+            choices: [
+              { text: "Paying in full can prevent interest charges", good: true, msg: "Exactly. That is one of the safest habits." },
+              { text: "Minimum payments are always just as good", good: false, msg: "Minimum payments can drag debt out and cost much more." }
+            ]
+          },
+          {
+            text: `
+        <div class="info-box">
+          Jordan also started learning about investing and realized that a diversified index fund looked less risky than betting everything on one exciting company.
+        </div>
+        `,
+            choices: [
+              { text: "Diversification can reduce single-company risk", good: true, msg: "Correct. Broad baskets are often steadier." },
+              { text: "One hot stock is always the smartest move", good: false, msg: "Concentrated bets can go badly." }
+            ]
+          },
+          {
+            text: `
+        <div class="info-box">
+          Finally, Jordan started comparing the true cost of renting: deposit, utilities, insurance, internet, and monthly rent.
+        </div>
+        `,
+            choices: [
+              { text: "Housing costs include more than rent", good: true, msg: "Exactly. Adult costs are broader than one number." },
+              { text: "The rent number tells the whole story", good: false, msg: "Not usually. Many extra costs appear." }
+            ]
+          }
+        ];
+
+        function renderStory() {
+          const area = document.getElementById("storyArea");
+          const page = storyPages[state.storyStep];
+
+          area.innerHTML = `
+        ${page.text}
+        <div class="choices">
+          ${page.choices.map((c, i) => `<button class="choice-btn" onclick="storyChoice(${i})">${c.text}</button>`).join("")}
+        </div>
+        <div id="storyFeedback" class="feedback"></div>
+      `;
+        }
+
+        function storyChoice(i) {
+          const page = storyPages[state.storyStep];
+          const choice = page.choices[i];
+          const box = document.getElementById("storyFeedback");
+
+          if (choice.good) {
+            box.className = "feedback good";
+            box.textContent = choice.msg;
+            reward(2, 2);
+
+            setTimeout(() => {
+              state.storyStep++;
+              if (state.storyStep >= storyPages.length) {
+                completeLesson("story");
+                document.getElementById("storyArea").innerHTML = `
+              <div class="info-box">
+                <h3>🎉 Story Complete</h3>
+                <p>You helped Jordan navigate take-home pay, budgeting, credit cards, investing, and housing costs.</p>
+              </div>
+            `;
+              } else {
+                renderStory();
+              }
+            }, 900);
+          } else {
+            box.className = "feedback bad";
+            box.textContent = choice.msg;
+          }
+        }
+
+        let adultBudget = {
+          start: 2200,
+          spent: 0,
+          left: 2200,
+          saved: 0,
+          needs: 0,
+          chosen: []
+        };
+
+        function renderAdultBudget() {
+          updateAdultBudgetBoard();
+          const box = document.getElementById("adultBudgetFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function updateAdultBudgetBoard() {
+          document.getElementById("abStart").textContent = "$" + adultBudget.start;
+          document.getElementById("abSpent").textContent = "$" + adultBudget.spent;
+          document.getElementById("abLeft").textContent = "$" + adultBudget.left;
+          document.getElementById("abSave").textContent = "$" + adultBudget.saved;
+          document.getElementById("abNeeds").textContent = adultBudget.needs;
+        }
+
+        function buyAdultBudget(name, cost, isNeed, isSave) {
+          const box = document.getElementById("adultBudgetFeedback");
+          if (adultBudget.chosen.includes(name) && !isSave) {
+            box.className = "feedback bad";
+            box.textContent = "You already chose that.";
+            return;
+          }
+          if (cost > adultBudget.left) {
+            box.className = "feedback bad";
+            box.textContent = "That goes over budget.";
+            return;
+          }
+          if (!isSave) adultBudget.chosen.push(name);
+          adultBudget.spent += cost;
+          adultBudget.left -= cost;
+          if (isNeed) adultBudget.needs += 1;
+          if (isSave) adultBudget.saved += cost;
+
+          reward(1, 1);
+          updateAdultBudgetBoard();
+          box.className = "feedback good";
+          box.textContent = isSave ? `Saved $${cost}.` : `${name} added.`;
+        }
+
+        function finishAdultBudget() {
+          const box = document.getElementById("adultBudgetFeedback");
+          if (adultBudget.needs >= 4 && adultBudget.saved >= 200 && adultBudget.left >= 0) {
+            box.className = "feedback good";
+            box.textContent = "Excellent. You covered key needs and built savings too.";
+            state.savings += adultBudget.saved;
+            reward(5, 5);
+            completeLesson("game1");
+            updateStats();
+          } else if (adultBudget.needs >= 4) {
+            box.className = "feedback warn";
+            box.textContent = "Good coverage of essentials. Try to build more savings too.";
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Try choosing more essential costs before optional spending.";
+          }
+        }
+
+        function resetAdultBudget() {
+          adultBudget = {
+            start: 2200,
+            spent: 0,
+            left: 2200,
+            saved: 0,
+            needs: 0,
+            chosen: []
+          };
+          renderAdultBudget();
+        }
+
+        let cardGame = {
+          balance: 0,
+          cash: 500,
+          interestAdded: 0,
+          status: "Healthy"
+        };
+
+        function renderCardGame() {
+          document.getElementById("ccBalance").textContent = "$" + cardGame.balance;
+          document.getElementById("ccCash").textContent = "$" + cardGame.cash;
+          document.getElementById("ccScore").textContent = state.creditScore;
+          document.getElementById("ccInterest").textContent = "$" + cardGame.interestAdded;
+          document.getElementById("ccStatus").textContent = cardGame.status;
+          const box = document.getElementById("cardFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function cardSpend(amount) {
+          const box = document.getElementById("cardFeedback");
+          cardGame.balance += amount;
+
+          if (cardGame.balance > 400) {
+            state.creditScore -= 30;
+            cardGame.status = "Risky";
+          } else {
+            cardGame.status = "Active";
+          }
+
+          renderCardGame();
+          updateStats();
+          box.className = "feedback good";
+          box.textContent = `Card used for $${amount}. Remember: this bill must be repaid.`;
+        }
+
+        function cardPay(amount) {
+          const box = document.getElementById("cardFeedback");
+          if (amount > cardGame.cash) {
+            box.className = "feedback bad";
+            box.textContent = "Not enough cash to make that payment.";
+            return;
+          }
+          if (cardGame.balance <= 0) {
+            box.className = "feedback bad";
+            box.textContent = "No balance to pay.";
+            return;
+          }
+
+          const payment = Math.min(amount, cardGame.balance);
+          cardGame.cash -= payment;
+          cardGame.balance -= payment;
+
+          if (payment > 0) {
+            state.creditScore += 5;
+          }
+          if (cardGame.balance === 0) {
+            cardGame.status = "Healthy";
+          }
+
+          renderCardGame();
+          updateStats();
+          box.className = "feedback good";
+          box.textContent = `Paid $${payment} toward the balance.`;
+        }
+
+        function cardPayFull() {
+          const box = document.getElementById("cardFeedback");
+          if (cardGame.balance === 0) {
+            box.className = "feedback bad";
+            box.textContent = "No balance to pay.";
+            return;
+          }
+          if (cardGame.cash < cardGame.balance) {
+            box.className = "feedback bad";
+            box.textContent = "Not enough cash to pay the full balance.";
+            return;
+          }
+
+          cardGame.cash -= cardGame.balance;
+          cardGame.balance = 0;
+          state.creditScore += 15;
+          cardGame.status = "Healthy";
+          renderCardGame();
+          updateStats();
+
+          reward(4, 4);
+          completeLesson("game2");
+          box.className = "feedback good";
+          box.textContent = "Great habit. You paid the full balance and avoided extra interest.";
+        }
+
+        function cardAddInterest() {
+          const box = document.getElementById("cardFeedback");
+          if (cardGame.balance <= 0) {
+            box.className = "feedback bad";
+            box.textContent = "No balance, so no interest added.";
+            return;
+          }
+
+          const interest = Math.round(cardGame.balance * 0.02);
+          cardGame.balance += interest;
+          cardGame.interestAdded += interest;
+          state.creditScore -= 10;
+          cardGame.status = "Costly";
+          renderCardGame();
+          updateStats();
+
+          box.className = "feedback warn";
+          box.textContent = `Interest of $${interest} was added. Carrying debt can get expensive.`;
+        }
+
+        function resetCardGame() {
+          cardGame = {
+            balance: 0,
+            cash: 500,
+            interestAdded: 0,
+            status: "Healthy"
+          };
+          state.creditScore = 680;
+          renderCardGame();
+          updateStats();
+        }
+
+        let portfolioGame = {
+          left: 1000,
+          cash: 0,
+          bonds: 0,
+          index: 0,
+          stock: 0
+        };
+
+        function renderPortfolioGame() {
+          document.getElementById("pbLeft").textContent = "$" + portfolioGame.left;
+          document.getElementById("pbCash").textContent = "$" + portfolioGame.cash;
+          document.getElementById("pbBonds").textContent = "$" + portfolioGame.bonds;
+          document.getElementById("pbIndex").textContent = "$" + portfolioGame.index;
+          document.getElementById("pbStock").textContent = "$" + portfolioGame.stock;
+          const box = document.getElementById("portfolioFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function allocatePortfolio(type, amount) {
+          const box = document.getElementById("portfolioFeedback");
+          if (amount > portfolioGame.left) {
+            box.className = "feedback bad";
+            box.textContent = "Not enough money left.";
+            return;
+          }
+          portfolioGame.left -= amount;
+          portfolioGame[type] += amount;
+          reward(1, 1);
+          renderPortfolioGame();
+          box.className = "feedback good";
+          box.textContent = `$${amount} added to ${type}.`;
+        }
+
+        function testPortfolio() {
+          const box = document.getElementById("portfolioFeedback");
+          if (portfolioGame.left === 1000) {
+            box.className = "feedback bad";
+            box.textContent = "Allocate money first.";
+            return;
+          }
+
+          const cashVal = Math.round(portfolioGame.cash * 1.01);
+          const bondVal = Math.round(portfolioGame.bonds * 1.04);
+          const indexVal = Math.round(portfolioGame.index * 1.09);
+          const stockOptions = [0.85, 0.95, 1.12, 1.25];
+          const stockVal = Math.round(portfolioGame.stock * stockOptions[Math.floor(Math.random() * stockOptions.length)]);
+          const total = cashVal + bondVal + indexVal + stockVal + portfolioGame.left;
+
+          state.portfolio = total;
+          updateStats();
+
+          const buckets = [portfolioGame.cash, portfolioGame.bonds, portfolioGame.index, portfolioGame.stock].filter(v => v > 0).length;
+          if (buckets >= 3 && portfolioGame.index > 0) {
+            box.className = "feedback good";
+            box.textContent = `Sample year result: $${total}. Nice diversification and broad-market exposure.`;
+            reward(5, 5);
+            completeLesson("game3");
+          } else if (buckets >= 2) {
+            box.className = "feedback good";
+            box.textContent = `Sample year result: $${total}. Better spread than concentrating everything in one place.`;
+            reward(3, 3);
+          } else {
+            box.className = "feedback warn";
+            box.textContent = `Sample year result: $${total}. Consider spreading across more than one category next time.`;
+          }
+        }
+
+        function resetPortfolio() {
+          portfolioGame = {
+            left: 1000,
+            cash: 0,
+            bonds: 0,
+            index: 0,
+            stock: 0
+          };
+          state.portfolio = 0;
+          renderPortfolioGame();
+          updateStats();
+        }
+
+        let rentGame = {
+          correct: new Set(),
+          wrong: new Set()
+        };
+
+        function renderRentGame() {
+          const box = document.getElementById("rentFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function rentChoice(key, isCorrect) {
+          const box = document.getElementById("rentFeedback");
+          if (isCorrect) {
+            rentGame.correct.add(key);
+            box.className = "feedback good";
+            box.textContent = "Yes, that can be part of the real housing picture.";
+          } else {
+            rentGame.wrong.add(key);
+            box.className = "feedback warn";
+            box.textContent = "That is a common mistake. Housing costs often include more than that.";
+          }
+        }
+
+        function finishRentChallenge() {
+          const box = document.getElementById("rentFeedback");
+          if (rentGame.correct.size >= 4 && rentGame.wrong.size === 0) {
+            box.className = "feedback good";
+            box.textContent = "Excellent. You identified the hidden parts of housing cost.";
+            reward(5, 5);
+            completeLesson("game4");
+          } else if (rentGame.correct.size >= 3) {
+            box.className = "feedback warn";
+            box.textContent = "Good start. Remember that housing usually includes several extra costs beyond rent.";
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Try again and think about move-in and monthly extras.";
+          }
+        }
+
+        function resetRentChallenge() {
+          rentGame = {
+            correct: new Set(),
+            wrong: new Set()
+          };
+          renderRentGame();
+        }
+
+        function runAdvancedCompoundSim() {
+          const currentAge = Number(document.getElementById("advCurrentAge").value);
+          const endAge = Number(document.getElementById("advEndAge").value);
+          const startAmount = Number(document.getElementById("advStartAmount").value);
+          let monthlyContribution = Number(document.getElementById("advMonthlyContribution").value);
+          const stepUpRate = Number(document.getElementById("advStepUp").value) / 100;
+          const annualReturn = Number(document.getElementById("advAnnualReturn").value) / 100;
+          const withdrawAge = Number(document.getElementById("advWithdrawAge").value);
+          const lumpWithdraw = Number(document.getElementById("advLumpWithdraw").value);
+          const yearlyWithdraw = Number(document.getElementById("advYearlyWithdraw").value);
+
+          const summary = document.getElementById("advSimSummary");
+          const tableWrap = document.getElementById("advSimTableWrap");
+
+          if (
+            currentAge < 0 ||
+            endAge <= currentAge ||
+            startAmount < 0 ||
+            monthlyContribution < 0 ||
+            stepUpRate < 0 ||
+            annualReturn < 0 ||
+            withdrawAge < currentAge ||
+            lumpWithdraw < 0 ||
+            yearlyWithdraw < 0
+          ) {
+            summary.style.display = "block";
+            summary.innerHTML = "Please enter valid values.";
+            tableWrap.style.display = "none";
+            return;
+          }
+
+          let balance = startAmount;
+          let totalInvested = startAmount;
+          const monthlyRate = annualReturn / 12;
+
+          const rows = [];
+          let lumpWithdrawalDone = false;
+
+          for (let age = currentAge; age < endAge; age++) {
+            const yearStartBalance = balance;
+            const contributionThisYear = monthlyContribution * 12;
+            let withdrawalThisYear = 0;
+
+            for (let m = 0; m < 12; m++) {
+              balance += monthlyContribution;
+              totalInvested += monthlyContribution;
+              balance *= (1 + monthlyRate);
+            }
+
+            if (age + 1 === withdrawAge && !lumpWithdrawalDone && lumpWithdraw > 0) {
+              const actualLump = Math.min(balance, lumpWithdraw);
+              balance -= actualLump;
+              withdrawalThisYear += actualLump;
+              lumpWithdrawalDone = true;
+            }
+
+            if (age + 1 >= withdrawAge && yearlyWithdraw > 0) {
+              const actualYearly = Math.min(balance, yearlyWithdraw);
+              balance -= actualYearly;
+              withdrawalThisYear += actualYearly;
+            }
+
+            const growthThisYear = balance - yearStartBalance - contributionThisYear + withdrawalThisYear;
+
+            rows.push({
+              age: age + 1,
+              startBalance: yearStartBalance,
+              yearlyContribution: contributionThisYear,
+              growth: growthThisYear,
+              withdrawal: withdrawalThisYear,
+              endBalance: balance
+            });
+
+            monthlyContribution *= (1 + stepUpRate);
+          }
+
+          const finalBalance = balance;
+          const totalWithdrawn = rows.reduce((sum, r) => sum + r.withdrawal, 0);
+
+          summary.style.display = "block";
+          summary.innerHTML = `
+        <strong>Simulation Summary</strong><br><br>
+        Starting Age: ${currentAge}<br>
+        End Age: ${endAge}<br>
+        Total Invested: $${totalInvested.toFixed(2)}<br>
+        Total Withdrawn: $${totalWithdrawn.toFixed(2)}<br>
+        Final Balance: <strong>$${finalBalance.toFixed(2)}</strong><br><br>
+        This simulation assumes fixed annual return and regular deposits. Real markets do not grow in a straight line.
+      `;
+
+          let tableHTML = `
+        <strong>Year-by-Year Breakdown</strong><br><br>
+        <table>
+          <tr>
+            <th>Age</th>
+            <th>Start Balance</th>
+            <th>Yearly Contribution</th>
+            <th>Growth</th>
+            <th>Withdrawal</th>
+            <th>End Balance</th>
+          </tr>
+      `;
+
+          rows.forEach(r => {
+            tableHTML += `
+          <tr>
+            <td>${r.age}</td>
+            <td>$${r.startBalance.toFixed(2)}</td>
+            <td>$${r.yearlyContribution.toFixed(2)}</td>
+            <td>$${r.growth.toFixed(2)}</td>
+            <td>$${r.withdrawal.toFixed(2)}</td>
+            <td>$${r.endBalance.toFixed(2)}</td>
+          </tr>
+        `;
+          });
+
+          tableHTML += `</table>`;
+
+          tableWrap.style.display = "block";
+          tableWrap.innerHTML = tableHTML;
+
+          state.portfolio = Math.round(finalBalance);
+          reward(3, 3);
+          updateStats();
+        }
+
+        function runLoanSim() {
+          const principal = Number(document.getElementById("loanAmount").value);
+          const annualRate = Number(document.getElementById("loanRate").value) / 100;
+          const years = Number(document.getElementById("loanYears").value);
+          const output = document.getElementById("loanOutput");
+
+          if (principal <= 0 || annualRate < 0 || years < 1) {
+            output.style.display = "block";
+            output.innerHTML = "Please enter valid numbers.";
+            return;
+          }
+
+          const n = years * 12;
+          const r = annualRate / 12;
+
+          let monthlyPayment;
+          if (r === 0) {
+            monthlyPayment = principal / n;
+          } else {
+            monthlyPayment = principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+          }
+
+          const totalPaid = monthlyPayment * n;
+          const totalInterest = totalPaid - principal;
+
+          output.style.display = "block";
+          output.innerHTML = `
+        <strong>Estimated monthly payment:</strong> $${monthlyPayment.toFixed(2)}<br>
+        <strong>Total paid over time:</strong> $${totalPaid.toFixed(2)}<br>
+        <strong>Total interest cost:</strong> $${totalInterest.toFixed(2)}<br><br>
+        A longer loan can lower the monthly payment but increase total cost.
+      `;
+          reward(2, 2);
+        }
+
+        const quizQuestions = [
+          {
+            q: "Which number is usually smarter to budget from?",
+            options: ["Net pay", "Gross pay", "Sticker price only"],
+            answer: 0
+          },
+          {
+            q: "What is the main job of a savings account?",
+            options: ["Store money for goals and protection", "Handle every daily bill", "Create free spending"],
+            answer: 0
+          },
+          {
+            q: "What is true about credit cards?",
+            options: ["Paying the full balance usually avoids interest", "They are free money", "Minimum payments always cost the least"],
+            answer: 0
+          },
+          {
+            q: "What matters most when comparing loans?",
+            options: ["Total cost, not just monthly payment", "Only the first bill", "The logo on the paperwork"],
+            answer: 0
+          },
+          {
+            q: "What is compounding?",
+            options: ["Growth on past growth", "One-time growth only", "A fee for spending"],
+            answer: 0
+          },
+          {
+            q: "Why do many people like broad index funds?",
+            options: ["They spread risk across many companies", "They remove all risk forever", "They guarantee huge profits quickly"],
+            answer: 0
+          },
+          {
+            q: "Which is part of real housing cost?",
+            options: ["Utilities and deposits can matter too", "Only rent matters", "Housing has no extra costs"],
+            answer: 0
+          },
+          {
+            q: "What is a major scam warning sign?",
+            options: ["Guaranteed fast riches with pressure", "Clear terms and time to think", "Verified details"],
+            answer: 0
+          }
+        ];
+
+        function renderQuiz() {
+          const area = document.getElementById("quizArea");
+
+          if (state.currentQuiz >= quizQuestions.length) {
+            area.innerHTML = `
+          <div class="info-box">
+            <h3>🏆 Quiz Complete</h3>
+            <p>Your score: <strong>${state.quizScore} / ${quizQuestions.length}</strong></p>
+            <p>You are building a strong high-school-level finance foundation.</p>
+          </div>
+          <div class="money-btns">
+            <button onclick="restartQuiz()">🔄 Restart Quiz</button>
+          </div>
+        `;
+            completeLesson("quiz");
+            return;
+          }
+
+          const q = quizQuestions[state.currentQuiz];
+          area.innerHTML = `
+        <div class="quiz-q"><strong>Q${state.currentQuiz + 1}.</strong> ${q.q}</div>
+        <div class="choices">
+          ${q.options.map((opt, i) => `<button class="choice-btn" onclick="answerQuiz(${i})">${opt}</button>`).join("")}
+        </div>
+        <div id="quizFeedback" class="feedback"></div>
+      `;
+        }
+
+        function answerQuiz(i) {
+          const q = quizQuestions[state.currentQuiz];
+          const box = document.getElementById("quizFeedback");
+
+          if (i === q.answer) {
+            state.quizScore++;
+            reward(2, 1);
+            box.className = "feedback good";
+            box.textContent = "Correct!";
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Nice try. Keep learning!";
+          }
+
+          setTimeout(() => {
+            state.currentQuiz++;
+            renderQuiz();
+          }, 800);
+        }
+
+        function restartQuiz() {
+          state.currentQuiz = 0;
+          state.quizScore = 0;
+          renderQuiz();
+        }
+
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          btn.addEventListener("click", () => renderTab(btn.dataset.tab));
+        });
+
+        updateStats();
+        renderTab("welcome");
+
+        window.lessonCheck = lessonCheck;
+        window.storyChoice = storyChoice;
+        window.buyAdultBudget = buyAdultBudget;
+        window.finishAdultBudget = finishAdultBudget;
+        window.resetAdultBudget = resetAdultBudget;
+        window.cardSpend = cardSpend;
+        window.cardPay = cardPay;
+        window.cardPayFull = cardPayFull;
+        window.cardAddInterest = cardAddInterest;
+        window.resetCardGame = resetCardGame;
+        window.allocatePortfolio = allocatePortfolio;
+        window.testPortfolio = testPortfolio;
+        window.resetPortfolio = resetPortfolio;
+        window.rentChoice = rentChoice;
+        window.finishRentChallenge = finishRentChallenge;
+        window.resetRentChallenge = resetRentChallenge;
+        window.runAdvancedCompoundSim = runAdvancedCompoundSim;
+        window.runLoanSim = runLoanSim;
+        window.answerQuiz = answerQuiz;
+        window.restartQuiz = restartQuiz;
+      </script>
+</body>
+
+</html>

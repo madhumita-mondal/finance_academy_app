@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RISK - Finance Academy</title>
+
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 12px;
+      font-weight: bold;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffdede, #ffe8a6, #d8f7ff, #e7ddff);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 880px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .mini .icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      background: #22324c;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 4px 4px 0 0;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: #18794e;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: #b34040;
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: #9a6500;
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .footer-nav a:hover {
+      transform: scale(1.04);
+      background: #1a263a;
+    }
+
+    @media(max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <!-- <a href="strategy.html">⬅ Strategy</a> -->
+      <a href="debt.html" style="color:rgb(137, 63, 137);">◀︎− Debt </a>
+      <a href="security.html" style="color:rgb(137, 63, 137);"> Security −▶︎</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>RISK</h1>
+      <p>
+        Risk is one of the most important ideas in finance because every money decision involves
+        uncertainty. You face risk when you invest, when you borrow, when you choose a job, when you
+        start a business, and even when you decide to do nothing. Strong financial thinking does not
+        mean running away from all risk. It means understanding which risks are worth taking, which
+        risks are avoidable, and how to protect yourself from risks that could cause serious damage.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Uncertainty</span>
+        <span class="pill">Risk vs Reward</span>
+        <span class="pill">Diversification</span>
+        <span class="pill">Downside</span>
+        <span class="pill">Protection</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        No financial path is completely risk-free. Keeping all money in cash has inflation risk.
+        Investing everything in one speculative idea has concentration risk. Depending on a single job
+        has income risk. Borrowing carelessly creates debt risk. The real goal is not “zero risk.”
+        The real goal is to understand risk clearly enough to avoid weak decisions and build stronger,
+        more resilient ones.
+      </p>
+
+      <div class="quote">
+        “No risk can mean no growth. Too much risk can mean damage. Smart risk creates progress.”
+      </div>
+
+      <div class="info-box">
+        <strong>Core principle:</strong> risk should not be ignored, feared blindly, or chased
+        carelessly. It should be measured, balanced, and matched to your goals.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Story: Three People, Three Risk Styles</h2>
+      <p>
+        Rohan feared risk so much that he kept almost everything in cash. He felt safe because the
+        number in his account did not fall, but over time inflation quietly reduced what that money
+        could buy. He avoided visible volatility, but he accepted hidden erosion.
+      </p>
+      <p>
+        Meera took the opposite path. She loved the idea of fast gains and put most of her money into
+        risky opportunities she barely understood. When prices rose, she felt smart. When they fell,
+        she panicked. Because she had concentrated too much in one place, the downside hit hard.
+      </p>
+      <p>
+        Arjun did something more balanced. He accepted that uncertainty was part of finance, but he
+        also understood that not all risks deserve equal space in his life. He diversified. He kept
+        some stability. He allowed for growth, but not through reckless concentration. He built a
+        system that could survive more than one outcome.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. Types of Risk</h2>
+
+      <div class="grid-4">
+        <div class="mini">
+          <span class="icon">📉</span>
+          <strong>Market Risk</strong>
+          <p>Prices of investments can rise and fall. Short-term movement can be unpredictable.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">💼</span>
+          <strong>Income Risk</strong>
+          <p>A job, client base, or business income can weaken or disappear.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🛒</span>
+          <strong>Inflation Risk</strong>
+          <p>Money can lose purchasing power if prices rise while growth stays weak.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">💳</span>
+          <strong>Debt Risk</strong>
+          <p>Borrowing can become dangerous when payments and interest grow too heavy.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🧺</span>
+          <strong>Concentration Risk</strong>
+          <p>Putting too much in one place makes one bad outcome more damaging.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">💧</span>
+          <strong>Liquidity Risk</strong>
+          <p>Money may be hard to access when needed quickly.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🏢</span>
+          <strong>Business Risk</strong>
+          <p>Customers, costs, demand, and competition can all shift unexpectedly.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">🧠</span>
+          <strong>Behavior Risk</strong>
+          <p>Fear, greed, overconfidence, and panic can create poor decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Risk vs Reward</h2>
+      <p>
+        In general, higher potential reward often comes with higher uncertainty. But this does not
+        mean the riskiest option is automatically the best one. A strong decision weighs both upside
+        and downside. A person who only asks, “How much can I make?” is thinking only half the
+        problem through. A stronger question is: “How much can I lose, and can my system survive it?”
+      </p>
+
+      <table>
+        <tr>
+          <th>Approach</th>
+          <th>Possible Benefit</th>
+          <th>Main Danger</th>
+        </tr>
+        <tr>
+          <td>Very low risk</td>
+          <td>More stability, fewer shocks</td>
+          <td>Weak growth, inflation damage</td>
+        </tr>
+        <tr>
+          <td>Balanced risk</td>
+          <td>Moderate growth with protection</td>
+          <td>Still requires patience and discipline</td>
+        </tr>
+        <tr>
+          <td>Very high risk</td>
+          <td>Large upside possible</td>
+          <td>Large losses, emotional stress, instability</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>5. What Smart Risk Management Looks Like</h2>
+      <div class="grid-3">
+        <div class="mini">
+          <strong>Diversification</strong>
+          <p>Spread exposure instead of depending on one idea, one asset, or one source.</p>
+        </div>
+        <div class="mini">
+          <strong>Preparation</strong>
+          <p>Emergency savings and insurance reduce the damage of bad events.</p>
+        </div>
+        <div class="mini">
+          <strong>Position Size</strong>
+          <p>Even a good idea can become dangerous if too much money depends on it.</p>
+        </div>
+        <div class="mini">
+          <strong>Time Horizon</strong>
+          <p>Short-term volatility matters less when the time horizon is long and planned.</p>
+        </div>
+        <div class="mini">
+          <strong>Understanding First</strong>
+          <p>Taking risk without understanding it is closer to guessing than strategy.</p>
+        </div>
+        <div class="mini">
+          <strong>Downside Thinking</strong>
+          <p>Always ask what happens if the result is worse than expected.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini">
+          <strong>❌ Avoiding all risk forever</strong>
+          <p>This can quietly create other risks such as inflation and weak long-term growth.</p>
+        </div>
+        <div class="mini">
+          <strong>❌ Confusing excitement with opportunity</strong>
+          <p>Something feeling thrilling does not make it financially smart.</p>
+        </div>
+        <div class="mini">
+          <strong>❌ Putting too much in one place</strong>
+          <p>Concentration magnifies damage when things go wrong.</p>
+        </div>
+        <div class="mini">
+          <strong>❌ Ignoring behavior risk</strong>
+          <p>Fear and greed can destroy otherwise reasonable financial plans.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>7. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          You are building a long-term money plan. Which is usually stronger?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="scenario('safe')">Keep everything in cash forever</button>
+          <button onclick="scenario('balanced')">Use a balanced plan with growth + protection</button>
+        </div>
+
+        <div id="scenarioBox" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>8. Risk Game: Build a Stronger Decision</h2>
+      <p class="small">
+        Choose how you respond to risk. Try to build a smarter balance of safety and growth.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Safety: <span id="safetyScore">0</span></div>
+        <div class="score-pill">Growth: <span id="growthScore">0</span></div>
+        <div class="score-pill">Balance: <span id="balanceScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="riskGame('low')">All Low Risk</button>
+        <button onclick="riskGame('medium')">Balanced Risk</button>
+        <button onclick="riskGame('high')">All High Risk</button>
+        <button onclick="riskGame('diversify')">Diversify</button>
+        <button onclick="riskGame('panic')">Panic Sell</button>
+        <button class="alt" onclick="resetRiskGame()">Reset</button>
+      </div>
+
+      <div id="riskResult" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>9. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What does risk mean in finance?</p>
+        <button onclick="quiz(1,'a')">Uncertainty</button>
+        <button onclick="quiz(1,'b')">Guaranteed loss</button>
+        <div id="q1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Which is usually the strongest approach?</p>
+        <button onclick="quiz(2,'a')">Avoid all risk forever</button>
+        <button onclick="quiz(2,'b')">Manage risk intelligently</button>
+        <div id="q2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> What is concentration risk?</p>
+        <button onclick="quiz(3,'a')">Putting too much money in one place</button>
+        <button onclick="quiz(3,'b')">Keeping some emergency savings</button>
+        <div id="q3" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Write down 3 financial risks in your life right now.</li>
+          <li>Mark which are avoidable and which are unavoidable.</li>
+          <li>Write one step you could take to reduce each major risk.</li>
+          <li>Ask: what would hurt me most if it went wrong?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>11. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Decision-Making</div>
+          <h4>Thinking, Fast and Slow</h4>
+          <p>
+            Helps explain why people often make emotional money decisions and how mental shortcuts can
+            create risk.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Disciplined Investing</div>
+          <h4>The Intelligent Investor</h4>
+          <p>
+            A strong guide to rational risk-taking, avoiding crowd behavior, and protecting against
+            serious mistakes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        let safety = 0;
+        let growth = 0;
+        let balance = 0;
+
+        function updateRiskBoard() {
+          document.getElementById("safetyScore").textContent = safety;
+          document.getElementById("growthScore").textContent = growth;
+          document.getElementById("balanceScore").textContent = balance;
+        }
+
+        function scenario(type) {
+          let box = document.getElementById("scenarioBox");
+
+          if (type === "balanced") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Balanced risk usually gives stronger long-term growth while reducing avoidable damage.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "Keeping everything in cash may feel safe, but it can create inflation risk and weak long-term growth.";
+          }
+        }
+
+        function riskGame(type) {
+          let box = document.getElementById("riskResult");
+
+          if (type === "low") {
+            safety += 2;
+            growth += 0;
+            balance += 0;
+            box.className = "feedback warn";
+            box.innerHTML = "Very safe, but long-term growth may be too weak.";
+          }
+
+          if (type === "medium") {
+            safety += 2;
+            growth += 2;
+            balance += 3;
+            box.className = "feedback good";
+            box.innerHTML = "Strong choice. Balanced risk usually supports both stability and progress.";
+          }
+
+          if (type === "high") {
+            safety += 0;
+            growth += 3;
+            balance -= 1;
+            box.className = "feedback bad";
+            box.innerHTML = "High risk may offer high upside, but it can become dangerous without control or knowledge.";
+          }
+
+          if (type === "diversify") {
+            safety += 2;
+            growth += 2;
+            balance += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. Diversification is one of the strongest ways to reduce avoidable risk.";
+          }
+
+          if (type === "panic") {
+            safety -= 1;
+            growth -= 2;
+            balance -= 2;
+            box.className = "feedback bad";
+            box.innerHTML = "Panic behavior often creates more damage than the original problem.";
+          }
+
+          if (balance >= 5) {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. You are building a smart risk profile: enough safety to survive, enough growth to progress.";
+          }
+
+          updateRiskBoard();
+        }
+
+        function resetRiskGame() {
+          safety = 0;
+          growth = 0;
+          balance = 0;
+          updateRiskBoard();
+          let box = document.getElementById("riskResult");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function quiz(q, a) {
+          let box = document.getElementById("q" + q);
+
+          if (q === 1) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct! Risk means uncertainty, not automatic loss.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Risk means the result may not go as expected.";
+            }
+          }
+
+          if (q === 2) {
+            if (a === "b") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct! Smart finance manages risk rather than pretending it does not exist.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Avoiding all risk can also create other problems such as inflation and weak growth.";
+            }
+          }
+
+          if (q === 3) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct! Concentration risk means too much depends on one place, one asset, or one idea.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Emergency savings reduce fragility; concentration risk is about overexposure to one thing.";
+            }
+          }
+        }
+
+        updateRiskBoard();
+      </script>
+
+</body>
+
+</html>

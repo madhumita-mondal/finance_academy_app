@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journey | Finance Academy</title>
+  <style>
+    :root{
+      --orange-1:#ff8a2a;
+      --orange-2:#ffb11f;
+      --orange-3:#ffd15a;
+      --blue:#1ea7e1;
+      --blue-dark:#0d7fc2;
+      --green:#7ac943;
+      --green-soft:#a7e46f;
+      --purple:#a95ae8;
+      --purple-dark:#8a3fd4;
+      --white:#ffffff;
+      --text:#24324b;
+      --muted:#51627d;
+      --line:rgba(255,255,255,.45);
+      --shadow:0 14px 30px rgba(0,0,0,.12);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top center, #ffb547 0%, #ff9d26 32%, #ff8a2a 58%, #ffb11f 100%);
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:14px 20px;
+      background:rgba(255,255,255,.16);
+      backdrop-filter:blur(10px);
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .brand{
+      font-weight:800;
+      font-size:1.15rem;
+      color:#fff;
+      text-shadow:0 2px 6px rgba(0,0,0,.18);
+    }
+
+    .topbar a{
+      text-decoration:none;
+      color:#fff;
+      font-weight:700;
+      margin-left:12px;
+      text-shadow:0 2px 4px rgba(0,0,0,.18);
+    }
+
+    .wrap{
+      max-width:1160px;
+      margin:auto;
+      padding:24px 16px 44px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:34px;
+      padding:34px 28px 36px;
+      color:#fff;
+      background:
+        linear-gradient(180deg, #ff8a2a 0%, #ff9c24 45%, #ffb923 100%);
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      left:-10%;
+      right:-10%;
+      bottom:-95px;
+      height:230px;
+      background:rgba(255,221,120,.38);
+      border-radius:50%;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:8%;
+      right:8%;
+      bottom:-110px;
+      height:220px;
+      background:rgba(255,240,178,.24);
+      border-radius:50%;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      text-align:center;
+    }
+
+    .hero-badge{
+      display:inline-block;
+      background:#fff;
+      color:var(--blue-dark);
+      padding:10px 18px;
+      border-radius:18px;
+      font-weight:800;
+      box-shadow:0 8px 16px rgba(0,0,0,.12);
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(2.1rem, 4.5vw, 4rem);
+      line-height:1.12;
+      font-weight:900;
+      color:#fff;
+      text-shadow:0 4px 0 rgba(0,0,0,.10);
+    }
+
+    .hero p{
+      max-width:920px;
+      margin:0 auto;
+      line-height:1.9;
+      font-size:1.08rem;
+      color:#fffaf0;
+      text-shadow:0 2px 6px rgba(0,0,0,.10);
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.92);
+      color:var(--blue-dark);
+      border-radius:999px;
+      padding:9px 14px;
+      font-size:.9rem;
+      font-weight:800;
+      box-shadow:0 6px 12px rgba(0,0,0,.08);
+    }
+
+    .section-title{
+      color:#fff;
+      font-size:1.55rem;
+      font-weight:900;
+      margin:28px 0 14px;
+      text-shadow:0 2px 5px rgba(0,0,0,.16);
+      padding-left:6px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.95);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+      border:3px solid rgba(255,255,255,.45);
+    }
+
+    .card h2{
+      margin-top:0;
+      margin-bottom:10px;
+      color:var(--blue-dark);
+      font-size:1.5rem;
+    }
+
+    .card p{
+      line-height:1.88;
+      color:var(--text);
+    }
+
+    .quote{
+      background:linear-gradient(135deg,#fff7d6,#fffdf2);
+      border-left:8px solid var(--orange-1);
+      border-radius:16px;
+      padding:16px 18px;
+      margin-top:14px;
+      font-style:italic;
+      line-height:1.8;
+      color:#5c4b1e;
+    }
+
+    .info-box{
+      background:linear-gradient(135deg,#eef9ff,#fffbe8);
+      border:2px solid #dff2ff;
+      border-left:8px solid var(--blue);
+      padding:16px;
+      border-radius:18px;
+      line-height:1.8;
+      margin-top:14px;
+    }
+
+    .grid-2,
+    .grid-3{
+      display:grid;
+      gap:16px;
+      margin-top:16px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .mini{
+      border-radius:24px;
+      padding:20px;
+      color:#fff;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      min-height:100%;
+    }
+
+    .mini h3{
+      margin-top:0;
+      margin-bottom:10px;
+      font-size:1.18rem;
+    }
+
+    .mini p{
+      margin:0;
+      color:#fff;
+      line-height:1.8;
+    }
+
+    .mini-orange{
+      background:linear-gradient(180deg,#ff9b33,#ff7f2e);
+    }
+
+    .mini-blue{
+      background:linear-gradient(180deg,#59bdf0,#1ea7e1);
+    }
+
+    .mini-green{
+      background:linear-gradient(180deg,#95dd54,#7ac943);
+    }
+
+    .mini-purple{
+      background:linear-gradient(180deg,#b36ef0,#9a4fe5);
+    }
+
+    .path-card{
+      background:#fff;
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 10px 20px rgba(0,0,0,.08);
+      border:2px solid #f1f3f8;
+      transition:.2s;
+    }
+
+    .path-card:hover{
+      transform:translateY(-4px);
+    }
+
+    .path-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+      font-weight:800;
+      color:var(--blue-dark);
+      font-size:1.08rem;
+    }
+
+    .icon-circle{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:1.35rem;
+      flex-shrink:0;
+      box-shadow:0 6px 12px rgba(0,0,0,.12);
+    }
+
+    .bg-green{ background:linear-gradient(180deg,#8dd84f,#68b934); }
+    .bg-blue{ background:linear-gradient(180deg,#59bdf0,#1ea7e1); }
+    .bg-purple{ background:linear-gradient(180deg,#b36ef0,#9347df); }
+    .bg-orange{ background:linear-gradient(180deg,#ffad3a,#ff812f); }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 8px 16px rgba(0,0,0,.05);
+    }
+
+    th, td{
+      padding:13px 11px;
+      text-align:left;
+      vertical-align:top;
+      border-bottom:1px solid #edf1f6;
+      line-height:1.75;
+    }
+
+    th{
+      background:#f6fbff;
+      color:var(--blue-dark);
+      text-transform:uppercase;
+      font-size:.8rem;
+      letter-spacing:.6px;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    ul{
+      padding-left:22px;
+      line-height:1.9;
+      color:var(--text);
+    }
+
+    .book-card{
+      background:#fff;
+      border-radius:24px;
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 10px 22px rgba(0,0,0,.08);
+      border:2px solid #eef2f7;
+    }
+
+    .book-card::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:8px;
+      background:linear-gradient(90deg,var(--green),var(--blue),var(--purple),var(--orange-1));
+    }
+
+    .book-tag{
+      display:inline-block;
+      margin-bottom:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eef8ff;
+      color:var(--blue-dark);
+      font-size:.82rem;
+      font-weight:800;
+    }
+
+    .book-card h4{
+      margin:0 0 8px;
+      color:var(--text);
+      font-size:1.05rem;
+    }
+
+    .book-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.72;
+    }
+
+    .timeline{
+      border-left:6px solid var(--blue);
+      padding-left:16px;
+      margin-top:12px;
+    }
+
+    .timeline-step{
+      margin-bottom:16px;
+    }
+
+    .timeline-step:last-child{
+      margin-bottom:0;
+    }
+
+    .timeline-step strong{
+      display:block;
+      color:var(--blue-dark);
+      margin-bottom:4px;
+    }
+
+    .choice-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .score-strip{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .score-pill{
+      background:#eef8ff;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      color:var(--blue-dark);
+    }
+
+    button{
+      padding:11px 16px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      color:#fff;
+      box-shadow:0 8px 14px rgba(0,0,0,.12);
+      transition:.2s;
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-blue{ background:linear-gradient(180deg,#45b7ee,#159fdc); }
+    .btn-green{ background:linear-gradient(180deg,#91da51,#73c33e); }
+    .btn-purple{ background:linear-gradient(180deg,#b26cf0,#9549e1); }
+    .btn-orange{ background:linear-gradient(180deg,#ffac39,#ff842f); }
+    .btn-gray{ background:linear-gradient(180deg,#6f86ad,#50698f); }
+
+    .feedback{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:16px;
+      display:none;
+      font-weight:700;
+      line-height:1.75;
+    }
+
+    .feedback.good{
+      display:block;
+      background:#e8fff0;
+      color:#18794e;
+    }
+
+    .feedback.bad{
+      display:block;
+      background:#ffeaea;
+      color:#b34040;
+    }
+
+    .feedback.warn{
+      display:block;
+      background:#fff7e8;
+      color:#9a6500;
+    }
+
+    .footer-nav{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .footer-nav a{
+      text-decoration:none;
+      color:#fff;
+      font-weight:800;
+      padding:13px 18px;
+      border-radius:999px;
+      box-shadow:0 10px 18px rgba(0,0,0,.12);
+    }
+
+    .footer-nav a:first-child{
+      background:linear-gradient(180deg,#9f6cec,#8d47df);
+    }
+
+    .footer-nav a:last-child{
+      background:linear-gradient(180deg,#3eb6ee,#169fdc);
+    }
+
+    @media (max-width:900px){
+      .grid-2, .grid-3{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">💰 Finance Academy</div>
+    <div>
+      <a href="index.html">🏠 Home</a>
+      <a href="legacy.html">⬅ Legacy</a>
+      <a href="strategy.html">➡ Strategy</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-badge">JOURNEY PAGE</div>
+        <h1>Build a Financial Journey<br>that has everything!</h1>
+        <p>
+          A serious finance journey is not just about earning money. It is about learning when to start,
+          which pathway fits your strengths, which subjects build real expertise, which institutions
+          support serious growth, and which books help turn scattered information into deep financial understanding.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill">When to Start</span>
+          <span class="pill">Pathways</span>
+          <span class="pill">Core Subjects</span>
+          <span class="pill">Top Universities</span>
+          <span class="pill">Books</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">Start Strong</div>
+
+    <section class="card">
+      <h2>1. When Should Someone Start Learning Finance?</h2>
+      <p>
+        The strongest answer is: as early as possible, but with the right depth for the learner’s age.
+        A child or teenager does not need advanced merger models first. They need financial awareness,
+        simple money habits, the idea of delayed gratification, and a clear sense that time changes outcomes.
+        Finance rewards early structure because the most powerful ideas in the field are cumulative.
+      </p>
+
+      <div class="grid-3">
+        <div class="mini mini-green">
+          <h3>Early Stage</h3>
+          <p>
+            Learn saving, budgeting, earning, spending choices, and the basic difference between assets and liabilities.
+          </p>
+        </div>
+
+        <div class="mini mini-blue">
+          <h3>Exploration Stage</h3>
+          <p>
+            Start learning inflation, simple investing, banking, company basics, and how markets affect real life.
+          </p>
+        </div>
+
+        <div class="mini mini-purple">
+          <h3>Direction Stage</h3>
+          <p>
+            Move into accounting, economics, analysis, and pathway selection once the student is ready for deeper study.
+          </p>
+        </div>
+      </div>
+
+      <div class="quote">
+        A strong finance journey does not begin with complexity. It begins with order, curiosity, and repeated good habits.
+      </div>
+    </section>
+
+    <div class="section-title">Choose Your Path</div>
+
+    <section class="card">
+      <h2>2. Main Pathways Into the Finance Domain</h2>
+      <p>
+        Finance is not one single road. It is a network of specialized directions. A student grows faster
+        when they understand which parts of finance match their natural strengths and interests.
+      </p>
+
+      <div class="grid-2">
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-green">📈</div>
+            Investment Analysis & Asset Management
+          </div>
+          <p>
+            Best for people who enjoy company analysis, portfolio construction, valuation, macro trends,
+            and the long-term logic of capital allocation.
+          </p>
+        </div>
+
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-blue">🤝</div>
+            Wealth Management & Financial Planning
+          </div>
+          <p>
+            Best for learners who like advising people, planning toward goals, retirement strategy,
+            behavioral finance, and long-range personal financial structure.
+          </p>
+        </div>
+
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-purple">🏢</div>
+            Corporate Finance
+          </div>
+          <p>
+            Best for those who want to work inside companies on budgeting, forecasting, capital structure,
+            internal strategy, and performance analysis.
+          </p>
+        </div>
+
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-orange">🏦</div>
+            Investment Banking
+          </div>
+          <p>
+            Best for learners interested in large transactions, company funding, valuation work,
+            mergers and acquisitions, and high-pressure financial deal environments.
+          </p>
+        </div>
+
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-green">📊</div>
+            Economics, Research & Policy
+          </div>
+          <p>
+            Best for those who enjoy macro systems, central bank decisions, data interpretation,
+            market cycles, and broader structural analysis.
+          </p>
+        </div>
+
+        <div class="path-card">
+          <div class="path-head">
+            <div class="icon-circle bg-purple">💻</div>
+            FinTech, Data & Quantitative Finance
+          </div>
+          <p>
+            Best for people who like coding, automation, probability, data systems, APIs,
+            and the meeting point between finance and technology.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. How to Know Which Path Fits You</h2>
+
+      <div class="grid-3">
+        <div class="mini mini-orange">
+          <h3>You love numbers</h3>
+          <p>
+            You may fit investment analysis, quant, corporate finance, research, or risk-focused roles.
+          </p>
+        </div>
+
+        <div class="mini mini-blue">
+          <h3>You love people</h3>
+          <p>
+            You may fit advisory, financial planning, private wealth, or relationship-driven finance roles.
+          </p>
+        </div>
+
+        <div class="mini mini-purple">
+          <h3>You love systems</h3>
+          <p>
+            You may fit FinTech, financial data, analytics, automation, or technology-enabled finance pathways.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">Build the Right Knowledge</div>
+
+    <section class="card">
+      <h2>4. Subjects One Should Choose to Enter the Domain</h2>
+      <p>
+        Some subjects are essential almost everywhere in finance. Others become more important depending
+        on the chosen pathway. A strong learner should understand both the universal base and the specialized layer.
+      </p>
+
+      <table>
+        <tr>
+          <th>Subject</th>
+          <th>Why It Matters</th>
+          <th>Best For</th>
+        </tr>
+        <tr>
+          <td><strong>Accounting</strong></td>
+          <td>It is the language of business. Without statement literacy, many finance ideas stay shallow.</td>
+          <td>Investing, banking, corporate finance, analysis</td>
+        </tr>
+        <tr>
+          <td><strong>Microeconomics</strong></td>
+          <td>Helps explain incentives, pricing, competition, and resource decisions.</td>
+          <td>General finance, business, policy</td>
+        </tr>
+        <tr>
+          <td><strong>Macroeconomics</strong></td>
+          <td>Important for understanding inflation, rates, cycles, unemployment, and policy.</td>
+          <td>Markets, research, asset allocation</td>
+        </tr>
+        <tr>
+          <td><strong>Mathematics</strong></td>
+          <td>Builds logical strength for valuation, optimization, future value, and probability.</td>
+          <td>Quant, risk, analysis, research</td>
+        </tr>
+        <tr>
+          <td><strong>Statistics</strong></td>
+          <td>Essential for evidence-based reasoning, uncertainty, forecasting, and data interpretation.</td>
+          <td>Research, data, FinTech, quant</td>
+        </tr>
+        <tr>
+          <td><strong>Corporate Finance</strong></td>
+          <td>Important for capital budgeting, funding choices, valuation, and firm-level decision logic.</td>
+          <td>Corporate finance, banking, leadership tracks</td>
+        </tr>
+        <tr>
+          <td><strong>Behavioral Finance / Psychology</strong></td>
+          <td>Money decisions are often emotional. This subject helps explain those patterns.</td>
+          <td>Wealth, investing, planning, advisory</td>
+        </tr>
+        <tr>
+          <td><strong>Tax & Legal Awareness</strong></td>
+          <td>Real financial life often depends on rules, structure, ownership, and consequences.</td>
+          <td>Planning, wealth, business, advisory</td>
+        </tr>
+        <tr>
+          <td><strong>Programming (Python / SQL / R)</strong></td>
+          <td>Now highly valuable for automation, dashboards, analytics, research, and system-building.</td>
+          <td>FinTech, quant, analytics, modern finance roles</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>5. Subject Combinations by Pathway</h2>
+
+      <div class="grid-2">
+        <div class="info-box">
+          <strong>Investment Analysis:</strong><br>
+          Accounting, valuation, macroeconomics, portfolio theory, statistics, and business analysis.
+        </div>
+
+        <div class="info-box">
+          <strong>Wealth Management:</strong><br>
+          Personal finance, tax basics, retirement, behavioral finance, communication, and planning systems.
+        </div>
+
+        <div class="info-box">
+          <strong>Corporate Finance:</strong><br>
+          Accounting, modeling, Excel, forecasting, cost of capital, and business strategy.
+        </div>
+
+        <div class="info-box">
+          <strong>FinTech / Quant:</strong><br>
+          Mathematics, probability, statistics, Python, databases, APIs, and systems thinking.
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">Aim Higher</div>
+
+    <section class="card">
+      <h2>6. Which Universities Are Strong for This Domain?</h2>
+      <p>
+        The best university depends on geography, budget, level, and pathway. Still, some institutions
+        are repeatedly respected for finance, accounting, economics, and related quantitative areas.
+      </p>
+
+      <table>
+        <tr>
+          <th>Focus Area</th>
+          <th>Examples to Research</th>
+          <th>Why They Stand Out</th>
+        </tr>
+        <tr>
+          <td><strong>Accounting & Finance Strength</strong></td>
+          <td>Wharton, Oxford, Cambridge, LSE, MIT, Chicago, Stanford, Harvard, NUS, Bocconi</td>
+          <td>Strong faculty depth, employer recognition, research quality, and alumni networks</td>
+        </tr>
+        <tr>
+          <td><strong>Master’s in Finance</strong></td>
+          <td>HEC Paris, Oxford Saïd, MIT Sloan, ESSEC, London Business School, Cambridge Judge</td>
+          <td>Useful for specialization, structured professional transition, and advanced finance study</td>
+        </tr>
+        <tr>
+          <td><strong>Economics / Research</strong></td>
+          <td>Chicago, LSE, Harvard, Princeton, Stanford, Oxford, Cambridge</td>
+          <td>Strong for rigorous macro, policy, data interpretation, and theory</td>
+        </tr>
+        <tr>
+          <td><strong>Finance + Technology</strong></td>
+          <td>MIT, Stanford, Carnegie Mellon, Berkeley, strong analytics-focused programs</td>
+          <td>Strong for FinTech, data, quant methods, and systems-based financial work</td>
+        </tr>
+      </table>
+
+      <div class="quote">
+        A prestigious institution can open doors, but a structured learner with strong skills, clear thinking,
+        and real projects often becomes more durable than someone relying on reputation alone.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>7. Certifications That Can Strengthen the Journey</h2>
+
+      <div class="grid-3">
+        <div class="mini mini-green">
+          <h3>CFA</h3>
+          <p>
+            Best fit for investment analysis, research, and asset management.
+          </p>
+        </div>
+
+        <div class="mini mini-blue">
+          <h3>CFP</h3>
+          <p>
+            Best fit for personal financial planning, wealth guidance, and client-centered strategy.
+          </p>
+        </div>
+
+        <div class="mini mini-purple">
+          <h3>CPA / CA</h3>
+          <p>
+            Best fit for accounting-heavy, tax-heavy, audit, reporting, and structured finance roles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">Read Deeply</div>
+
+    <section class="card">
+      <h2>8. Recommended Books to Gain Financial Knowledge</h2>
+      <p>
+        A strong financial mind is built not only through formulas, but through long-term reading.
+        Good books give historical perspective, behavioral insight, investment judgment, and structural understanding.
+      </p>
+
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Foundation</div>
+          <h4>The Richest Man in Babylon</h4>
+          <p>Simple but powerful lessons on saving, discipline, and personal money behavior.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Investment Core</div>
+          <h4>The Intelligent Investor</h4>
+          <p>A foundational classic for disciplined long-term investment thinking.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>Shows why behavior and mindset often matter more than raw intelligence in finance.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Markets</div>
+          <h4>A Random Walk Down Wall Street</h4>
+          <p>Helpful for understanding markets, long-term investing, and major investing debates.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Mental Models</div>
+          <h4>Poor Charlie’s Almanack</h4>
+          <p>Rich in multidisciplinary decision-making, judgment, and capital allocation logic.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Systems / Macro</div>
+          <h4>Principles for Dealing with the Changing World Order</h4>
+          <p>Useful for learners who want historical and macroeconomic perspective.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Decision Theory</div>
+          <h4>Thinking, Fast and Slow</h4>
+          <p>Important for seeing cognitive bias and the limits of human judgment.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Company Analysis</div>
+          <h4>Common Stocks and Uncommon Profits</h4>
+          <p>Excellent for understanding business quality and thoughtful investing.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Indexing</div>
+          <h4>The Little Book of Common Sense Investing</h4>
+          <p>Clear explanation of indexing, simplicity, and disciplined portfolio construction.</p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Long View</div>
+          <h4>The Automatic Millionaire</h4>
+          <p>Strong for showing how systems and automation can outperform pure motivation.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">Turn Learning Into Action</div>
+
+    <section class="card">
+      <h2>9. A Practical Finance Journey Roadmap</h2>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <strong>Stage 1: Build Vocabulary</strong>
+          Learn saving, spending, inflation, budgeting, and the difference between assets and liabilities.
+        </div>
+
+        <div class="timeline-step">
+          <strong>Stage 2: Strengthen Core Subjects</strong>
+          Move into accounting, economics, spreadsheets, and statement reading.
+        </div>
+
+        <div class="timeline-step">
+          <strong>Stage 3: Choose a Pathway</strong>
+          Decide whether you are leaning toward investing, advisory, corporate finance, research, or FinTech.
+        </div>
+
+        <div class="timeline-step">
+          <strong>Stage 4: Build Skill and Credibility</strong>
+          Work on projects, models, writing, coding, presentations, internships, or case studies.
+        </div>
+
+        <div class="timeline-step">
+          <strong>Stage 5: Convert Knowledge into Capability</strong>
+          Apply what you know in real decisions instead of keeping it only theoretical.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>10. Other Areas Worth Adding to the Journey</h2>
+      <ul>
+        <li>Communication and writing skills, because finance ideas must often be explained clearly</li>
+        <li>Ethics and responsibility, because money decisions affect real people and real systems</li>
+        <li>Technology awareness, because modern finance is increasingly data-driven</li>
+        <li>Behavioral discipline, because knowledge without control often leads to poor outcomes</li>
+        <li>Global awareness, because rates, inflation, policy, and institutions shape opportunities</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>11. Interactive Pathway Guide</h2>
+      <div class="choice-row">
+        <button class="btn-green" onclick="showPath('markets')">I like markets and investing</button>
+        <button class="btn-blue" onclick="showPath('people')">I like people and planning</button>
+        <button class="btn-purple" onclick="showPath('corp')">I like companies and strategy</button>
+        <button class="btn-orange" onclick="showPath('tech')">I like coding and systems</button>
+      </div>
+      <div id="pathResult" class="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2>12. Journey Builder Mini Game</h2>
+      <p>Strengthen your learning journey by making stronger study choices.</p>
+
+      <div class="score-strip">
+        <div class="score-pill">Knowledge: <span id="knowledgeScore">0</span></div>
+        <div class="score-pill">Skill: <span id="skillScore">0</span></div>
+        <div class="score-pill">Direction: <span id="directionScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button class="btn-green" onclick="journeyGame('read')">Read High-Quality Books</button>
+        <button class="btn-blue" onclick="journeyGame('accounting')">Study Accounting</button>
+        <button class="btn-purple" onclick="journeyGame('intern')">Do Practical Projects</button>
+        <button class="btn-orange" onclick="journeyGame('choose')">Choose a Clear Path</button>
+        <button class="btn-gray" onclick="journeyGame('scroll')">Only Scroll Finance Content</button>
+        <button class="btn-gray" onclick="resetJourneyGame()">Reset</button>
+      </div>
+
+      <div id="gameBox" class="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2>13. Final Reflection</h2>
+      <p>
+        A serious finance journey is not about sounding impressive. It is about building a mind that can
+        understand value, read systems, evaluate trade-offs, recognize risk, and make responsible decisions
+        over time. The learner who combines subject depth, reading discipline, practical skill, and clear direction
+        usually becomes much stronger than the learner who only collects terms and certificates.
+      </p>
+
+      <div class="info-box">
+        A strong financial journey becomes powerful when curiosity turns into structure, and structure turns into capability.
+      </div>
+
+      <div class="footer-nav">
+        <a href="legacy.html">⬅ Back to Legacy</a>
+        <a href="strategy.html">Go to Strategy ➡</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function showPath(type){
+      const box = document.getElementById("pathResult");
+      box.style.display = "block";
+
+      if(type === "markets"){
+        box.className = "feedback good";
+        box.innerHTML = "Possible fit: Investment analysis, research, portfolio management, or market strategy. Prioritize accounting, valuation, economics, statistics, and disciplined reading.";
+      } else if(type === "people"){
+        box.className = "feedback good";
+        box.innerHTML = "Possible fit: Wealth management, financial planning, private advisory, or relationship-driven finance. Prioritize planning frameworks, psychology, retirement, tax basics, and communication.";
+      } else if(type === "corp"){
+        box.className = "feedback good";
+        box.innerHTML = "Possible fit: Corporate finance, FP&A, treasury, or investment banking. Prioritize accounting, modeling, forecasting, capital structure, and business strategy.";
+      } else if(type === "tech"){
+        box.className = "feedback good";
+        box.innerHTML = "Possible fit: FinTech, quant, analytics, or finance data roles. Prioritize mathematics, probability, statistics, Python, SQL, and systems thinking.";
+      }
+    }
+
+    let knowledge = 0;
+    let skill = 0;
+    let direction = 0;
+
+    function updateJourneyBoard(){
+      document.getElementById("knowledgeScore").textContent = knowledge;
+      document.getElementById("skillScore").textContent = skill;
+      document.getElementById("directionScore").textContent = direction;
+    }
+
+    function journeyGame(type){
+      const box = document.getElementById("gameBox");
+      box.style.display = "block";
+
+      if(type === "read"){
+        knowledge += 2;
+        direction += 1;
+        box.className = "feedback good";
+        box.innerHTML = "Strong move. Good books build mental models that last much longer than random content.";
+      }
+
+      if(type === "accounting"){
+        knowledge += 2;
+        skill += 2;
+        box.className = "feedback good";
+        box.innerHTML = "Excellent move. Accounting strengthens your ability to understand businesses instead of guessing.";
+      }
+
+      if(type === "intern"){
+        skill += 2;
+        direction += 1;
+        box.className = "feedback good";
+        box.innerHTML = "Strong move. Practical work turns theory into usable capability.";
+      }
+
+      if(type === "choose"){
+        direction += 2;
+        knowledge += 1;
+        box.className = "feedback good";
+        box.innerHTML = "Good move. Clear direction makes learning more efficient and coherent.";
+      }
+
+      if(type === "scroll"){
+        knowledge -= 1;
+        skill -= 1;
+        direction -= 1;
+        box.className = "feedback bad";
+        box.innerHTML = "Weak move. Scattered finance content often creates the illusion of learning, not real mastery.";
+      }
+
+      updateJourneyBoard();
+    }
+
+    function resetJourneyGame(){
+      knowledge = 0;
+      skill = 0;
+      direction = 0;
+      updateJourneyBoard();
+
+      const box = document.getElementById("gameBox");
+      box.style.display = "none";
+      box.innerHTML = "";
+      box.className = "feedback";
+    }
+  </script>
+</body>
+</html>

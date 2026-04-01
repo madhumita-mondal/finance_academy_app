@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wealth Escape: Financial Freedom Quest</title>
+    <style>
+        :root {
+            --bg-a: #eef8ff;
+            --bg-b: #fff3f5;
+            --bg-c: #fff7eb;
+            --ink: #1f3142;
+            --muted: #5e7185;
+
+            --blue-soft: #dff1ff;
+            --blue-mid: #7bb7e8;
+            --blue-strong: #3a8fd1;
+
+            --green-soft: #e4f7ea;
+            --green-mid: #79c48f;
+            --green-strong: #31a85b;
+
+            --red-soft: #ffe4e6;
+            --red-mid: #ef8f98;
+            --red-strong: #d94b63;
+
+            --pink-soft: #fde6f4;
+            --pink-mid: #f39ac7;
+            --pink-strong: #d95ca0;
+
+            --orange-soft: #fff0d9;
+            --orange-mid: #f3b468;
+            --orange-strong: #ef8b2c;
+
+            --purple-soft: #efe8ff;
+            --purple-mid: #b69aec;
+            --purple-strong: #8660d3;
+
+            --line: #d8e5ef;
+            --card: #ffffffd9;
+            --shadow: 0 14px 34px rgba(70, 110, 150, 0.14);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(123, 183, 232, .30), transparent 28%),
+                radial-gradient(circle at 100% 0%, rgba(243, 154, 199, .24), transparent 28%),
+                radial-gradient(circle at 0% 100%, rgba(121, 196, 143, .22), transparent 24%),
+                radial-gradient(circle at 100% 100%, rgba(243, 180, 104, .22), transparent 26%),
+                linear-gradient(135deg, var(--bg-a), var(--bg-b), var(--bg-c));
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+        .app {
+            max-width: 1540px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .glass {
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, .8);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .title-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .title {
+            margin: 0;
+            font-size: clamp(2rem, 2.4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: .2px;
+            color: #27455e;
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .top-badge {
+            padding: 11px 16px;
+            border-radius: 999px;
+            font-weight: 900;
+            color: white;
+            background: linear-gradient(135deg, var(--blue-strong), var(--pink-strong), var(--orange-strong));
+            box-shadow: 0 10px 22px rgba(217, 92, 160, .18);
+        }
+
+        .screen {
+            padding: 24px;
+            margin-top: 16px;
+        }
+
+        h2,
+        h3 {
+            margin: 0 0 12px;
+            color: #2a4e6b;
+        }
+
+        .note {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .mode-grid,
+        .name-grid,
+        .occupation-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .mode-grid {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .name-grid {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .occupation-grid {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .select-card {
+            border-radius: 22px;
+            padding: 18px;
+            cursor: pointer;
+            transition: .18s ease;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, #fff, #f6fbff);
+            box-shadow: 0 8px 18px rgba(90, 140, 190, .08);
+        }
+
+        .select-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 28px rgba(90, 140, 190, .16);
+        }
+
+        .select-card.selected {
+            outline: 3px solid rgba(58, 143, 209, .25);
+            box-shadow: 0 0 0 6px rgba(58, 143, 209, .10), 0 18px 34px rgba(90, 140, 190, .16);
+        }
+
+        .mode-1 {
+            background: linear-gradient(135deg, var(--blue-soft), #ffffff);
+        }
+
+        .mode-2 {
+            background: linear-gradient(135deg, var(--green-soft), #ffffff);
+        }
+
+        .mode-4 {
+            background: linear-gradient(135deg, var(--pink-soft), #ffffff);
+        }
+
+        .mode-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: #2b5a7a;
+        }
+
+        .small {
+            font-size: .88rem;
+        }
+
+        .player-name-card {
+            border-radius: 22px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, #fff, #f7fbff);
+            box-shadow: 0 8px 18px rgba(90, 140, 190, .08);
+        }
+
+        .player-name-card.p1 {
+            background: linear-gradient(135deg, var(--blue-soft), #fff);
+        }
+
+        .player-name-card.p2 {
+            background: linear-gradient(135deg, var(--green-soft), #fff);
+        }
+
+        .player-name-card.p3 {
+            background: linear-gradient(135deg, var(--orange-soft), #fff);
+        }
+
+        .player-name-card.p4 {
+            background: linear-gradient(135deg, var(--pink-soft), #fff);
+        }
+
+        .player-label {
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #2c5572;
+            font-size: 1.05rem;
+        }
+
+        .name-input {
+            width: 100%;
+            border: 2px solid #dce9f2;
+            border-radius: 16px;
+            padding: 14px 14px;
+            font-size: 1rem;
+            outline: none;
+            color: #294458;
+            background: #ffffffdd;
+            transition: .15s ease;
+        }
+
+        .name-input:focus {
+            border-color: var(--blue-mid);
+            box-shadow: 0 0 0 5px rgba(123, 183, 232, .18);
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 16px;
+            padding: 13px 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .15s ease;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(70, 110, 150, .10);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue-strong), var(--purple-strong));
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, var(--green-strong), var(--blue-strong));
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, var(--orange-strong), #f26a45);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, var(--red-strong), #ff6f7d);
+        }
+
+        .btn-pink {
+            background: linear-gradient(135deg, var(--pink-strong), var(--purple-strong));
+        }
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .rule-card {
+            border-radius: 20px;
+            padding: 16px;
+            color: #314859;
+            line-height: 1.55;
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: 0 10px 18px rgba(90, 140, 190, .08);
+        }
+
+        .rule-card h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #23445d;
+        }
+
+        .rule-blue {
+            background: linear-gradient(135deg, var(--blue-soft), #fff);
+        }
+
+        .rule-green {
+            background: linear-gradient(135deg, var(--green-soft), #fff);
+        }
+
+        .rule-red {
+            background: linear-gradient(135deg, var(--red-soft), #fff);
+        }
+
+        .rule-pink {
+            background: linear-gradient(135deg, var(--pink-soft), #fff);
+        }
+
+        .rule-orange {
+            background: linear-gradient(135deg, var(--orange-soft), #fff);
+        }
+
+        .assign-preview {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffffff, var(--blue-soft));
+            border: 1px solid var(--line);
+            color: var(--muted);
+        }
+
+        .preview-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .preview-item {
+            border-radius: 16px;
+            padding: 12px 14px;
+            background: #ffffffd8;
+            border: 1px solid #dbe7f0;
+            font-weight: 700;
+            color: #29475d;
+        }
+
+        .occupation-gallery-wrap {
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #ffffff, var(--purple-soft));
+            border: 1px solid var(--line);
+            box-shadow: 0 10px 22px rgba(90, 140, 190, .08);
+        }
+
+        .occupation-card {
+            border-radius: 22px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: 0 10px 18px rgba(90, 140, 190, .08);
+            transition: .18s ease;
+        }
+
+        .occupation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 26px rgba(90, 140, 190, .16);
+        }
+
+        .occupation-card.blue {
+            background: linear-gradient(135deg, var(--blue-soft), #fff);
+        }
+
+        .occupation-card.green {
+            background: linear-gradient(135deg, var(--green-soft), #fff);
+        }
+
+        .occupation-card.orange {
+            background: linear-gradient(135deg, var(--orange-soft), #fff);
+        }
+
+        .occupation-card.pink {
+            background: linear-gradient(135deg, var(--pink-soft), #fff);
+        }
+
+        .occupation-card.red {
+            background: linear-gradient(135deg, var(--red-soft), #fff);
+        }
+
+        .occupation-card.finance-manager {
+            background: linear-gradient(135deg, #e6f0ff, #d1ffe7) !important;
+            border: 2px solid #4caf50 !important;
+        }
+
+        .occ-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .occ-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, .75);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .85);
+        }
+
+        .occ-name {
+            font-size: 1.08rem;
+            font-weight: 900;
+            color: #294c67;
+        }
+
+        .occ-note {
+            color: var(--muted);
+            font-size: .88rem;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+
+        .occ-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .occ-pill {
+            border-radius: 14px;
+            padding: 10px;
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(255, 255, 255, .85);
+            font-size: .88rem;
+            color: #50677c;
+            font-weight: 700;
+        }
+
+        .game-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr 370px;
+            gap: 18px;
+            margin-top: 18px;
+            align-items: start;
+        }
+
+        @media (max-width:1260px) {
+            .game-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel,
+        .board-wrap {
+            padding: 18px;
+        }
+
+        .panel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 12px;
+            font-size: 1.08rem;
+            font-weight: 900;
+            color: #2b516d;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: .82rem;
+            font-weight: 900;
+            color: #345167;
+            background: #f7fbff;
+            border: 1px solid #dce8f1;
+        }
+
+        .player-badge {
+            color: white;
+            border: none;
+        }
+
+        .badge-p1 {
+            background: linear-gradient(135deg, var(--blue-strong), var(--blue-mid));
+        }
+
+        .badge-p2 {
+            background: linear-gradient(135deg, var(--green-strong), var(--green-mid));
+        }
+
+        .badge-p3 {
+            background: linear-gradient(135deg, var(--orange-strong), var(--orange-mid));
+        }
+
+        .badge-p4 {
+            background: linear-gradient(135deg, var(--pink-strong), var(--pink-mid));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat {
+            border-radius: 18px;
+            padding: 14px;
+            border: 1px solid #dfebf3;
+            background: linear-gradient(180deg, #fff, #f8fbff);
+            box-shadow: 0 6px 14px rgba(90, 140, 190, .05);
+            min-height: 88px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: .88rem;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 900;
+        }
+
+        .good {
+            color: var(--green-strong);
+        }
+
+        .bad {
+            color: var(--red-strong);
+        }
+
+        .warn {
+            color: var(--orange-strong);
+        }
+
+        .info {
+            color: var(--blue-strong);
+        }
+
+        .pink {
+            color: var(--pink-strong);
+        }
+
+        .progress-wrap {
+            margin-top: 14px;
+            height: 18px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #edf5fb;
+            border: 1px solid #dce7ef;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue-strong), var(--green-strong), var(--orange-strong), var(--pink-strong));
+            transition: width .28s ease;
+        }
+
+        .progress-text {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: .92rem;
+            font-weight: 700;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .tile {
+            min-height: 118px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, .85);
+            box-shadow: 0 8px 18px rgba(90, 140, 190, .08);
+        }
+
+        .tile.salary {
+            background: linear-gradient(135deg, var(--green-soft), #fff);
+        }
+
+        .tile.deal {
+            background: linear-gradient(135deg, var(--blue-soft), #fff);
+        }
+
+        .tile.expense {
+            background: linear-gradient(135deg, var(--red-soft), #fff);
+        }
+
+        .tile.market {
+            background: linear-gradient(135deg, var(--orange-soft), #fff);
+        }
+
+        .tile.special {
+            background: linear-gradient(135deg, var(--pink-soft), #fff);
+        }
+
+        .tile .num {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: .76rem;
+            font-weight: 900;
+            color: #7d95a9;
+        }
+
+        .tile .name {
+            font-size: .95rem;
+            font-weight: 900;
+            color: #2a4f6c;
+            padding-right: 22px;
+        }
+
+        .tile .desc {
+            font-size: .8rem;
+            margin-top: 6px;
+            color: var(--muted);
+            line-height: 1.28;
+        }
+
+        .markers {
+            position: absolute;
+            left: 8px;
+            bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-width: 92%;
+        }
+
+        .marker {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: .85rem;
+            font-weight: 900;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, .95);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .10);
+        }
+
+        .m1 {
+            background: linear-gradient(135deg, var(--blue-strong), var(--blue-mid));
+        }
+
+        .m2 {
+            background: linear-gradient(135deg, var(--green-strong), var(--green-mid));
+        }
+
+        .m3 {
+            background: linear-gradient(135deg, var(--orange-strong), var(--orange-mid));
+        }
+
+        .m4 {
+            background: linear-gradient(135deg, var(--pink-strong), var(--pink-mid));
+        }
+
+        .dice-area {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .dice-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .dice {
+            width: 74px;
+            height: 74px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #27475e;
+            background: linear-gradient(135deg, #fff, var(--blue-soft));
+            border: 2px solid #dbe8f0;
+            box-shadow: 0 10px 20px rgba(90, 140, 190, .10);
+        }
+
+        .turn-badge {
+            padding: 10px 14px;
+            border-radius: 16px;
+            background: #f7fbff;
+            border: 1px solid #dce8f1;
+            color: #4f6a81;
+            font-weight: 900;
+        }
+
+        .info-box,
+        .deal-card,
+        .summary-card,
+        .log-item,
+        .asset-row {
+            border-radius: 18px;
+            border: 1px solid #dce8f1;
+            box-shadow: 0 6px 14px rgba(90, 140, 190, .05);
+        }
+
+        .info-box,
+        .deal-card,
+        .summary-card {
+            padding: 14px;
+            background: linear-gradient(180deg, #fff, #f8fbff);
+        }
+
+        .info-box {
+            margin-top: 14px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        .player-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .summary-card.active {
+            outline: 3px solid rgba(58, 143, 209, .16);
+            background: linear-gradient(135deg, #fff, var(--blue-soft));
+        }
+
+        .summary-card.bankrupt {
+            background: linear-gradient(135deg, #fff, var(--red-soft));
+        }
+
+        .summary-card.winner {
+            background: linear-gradient(135deg, #fff, var(--green-soft));
+        }
+
+        .summary-card.finance-manager {
+            background: linear-gradient(135deg, #e6f0ff, #d1ffe7) !important;
+            border: 2px solid #4caf50 !important;
+        }
+
+        .player-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-weight: 900;
+            color: #2b526f;
+        }
+
+        .asset-list,
+        .log {
+            display: grid;
+            gap: 10px;
+        }
+
+        .asset-row {
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            background: linear-gradient(135deg, #fff, var(--blue-soft));
+        }
+
+        .log {
+            max-height: 350px;
+            overflow: auto;
+            padding-right: 4px;
+        }
+
+        .log-item {
+            padding: 12px;
+            background: linear-gradient(135deg, #fff, #f9fcff);
+            line-height: 1.45;
+        }
+
+        .log-time {
+            font-size: .78rem;
+            color: #8aa0b1;
+            margin-bottom: 4px;
+        }
+
+        .money-up {
+            color: var(--green-strong);
+            font-weight: 900;
+        }
+
+        .money-down {
+            color: var(--red-strong);
+            font-weight: 900;
+        }
+
+        .banner-win {
+            margin-bottom: 14px;
+            padding: 15px 18px;
+            border-radius: 20px;
+            font-weight: 900;
+            color: #275441;
+            background: linear-gradient(135deg, var(--green-soft), #fff7c8);
+            border: 1px solid #dcecd6;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(60, 80, 100, .28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            width: min(760px, 100%);
+            padding: 24px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, #fff, var(--pink-soft), var(--orange-soft));
+            border: 1px solid rgba(255, 255, 255, .85);
+            box-shadow: 0 24px 60px rgba(70, 110, 150, .18);
+        }
+
+        .modal-title {
+            margin: 0 0 10px;
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #2a4960;
+        }
+
+        .modal-text {
+            color: #50667a;
+            line-height: 1.62;
+            margin-bottom: 14px;
+        }
+
+        .footer-note {
+            margin-top: 10px;
+            font-size: .86rem;
+            color: #6f8192;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#Featured Finance Games">Home</a>
+            <!-- <a href="strategy.html">⬅ Strategy</a>
+            <a href="behavior.html">➡ Behavior</a> -->
+        </div>
+    </div>
+    <div class="app">
+        <div class="title-wrap">
+            <div>
+                <h1 class="title">💰 Wealth Escape: Financial Freedom Quest</h1>
+                <div class="subtitle">Players enter names, occupations are assigned randomly, and the race to financial
+                    freedom begins.</div>
+            </div>
+            <div class="top-badge">Build Your Future Here</div>
+        </div>
+
+        <section id="setupScreen" class="screen glass">
+            <h2>Game Setup</h2>
+            <div class="note">Choose the number of players, enter each player name, and then start the game. The system
+                will randomly assign occupations every time.</div>
+
+            <h3 style="margin-top:18px;">Step 1: Select Player Count</h3>
+            <div class="mode-grid" id="modeGrid">
+                <div class="select-card mode-1 mode-card" data-count="1">
+                    <div class="mode-title">1 Player</div>
+                    <div class="small note">Solo strategy mode</div>
+                </div>
+                <div class="select-card mode-2 mode-card" data-count="2">
+                    <div class="mode-title">2 Players</div>
+                    <div class="small note">Head-to-head money race</div>
+                </div>
+                <div class="select-card mode-4 mode-card" data-count="4">
+                    <div class="mode-title">4 Players</div>
+                    <div class="small note">Family / friends mode</div>
+                </div>
+            </div>
+
+            <div id="nameSetupWrap" class="hidden"></div>
+
+            <div id="assignmentPreview" class="assign-preview hidden">
+                <strong style="color:#2c4f69;">Random occupation assignment will appear here before the game
+                    starts.</strong>
+                <div class="preview-list" id="previewList"></div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="assignBtn" disabled>🎲 Assign Random Occupations</button>
+                <button class="btn btn-green" id="startGameBtn" disabled>🚀 Start Game</button>
+            </div>
+
+            <h3 style="margin-top:24px;">Rules</h3>
+            <div class="rule-grid">
+                <div class="rule-card rule-blue">
+                    <h4>🎯 Main Goal</h4>
+                    Win by making your <strong>Passive Income ≥ Expenses</strong>. The first non-bankrupt player to do
+                    this wins.
+                </div>
+
+                <div class="rule-card rule-green">
+                    <h4>💵 Monthly Cashflow</h4>
+                    Monthly cashflow is:<br>
+                    <strong>Salary + Passive Income - Expenses - Debt Cost</strong>
+                </div>
+
+                <div class="rule-card rule-red">
+                    <h4>💥 Bankruptcy</h4>
+                    If a player's cash goes below <strong>-$1000</strong>, that player is bankrupt and out of the game.
+                </div>
+
+                <div class="rule-card rule-pink">
+                    <h4>🏠 Deals & Assets</h4>
+                    Buy deals only when you have enough cash. Assets reduce short-term cash but increase long-term
+                    passive income.
+                </div>
+
+                <div class="rule-card rule-orange">
+                    <h4>🎲 Turn Flow</h4>
+                    On your turn: roll dice, move, handle the tile, buy or skip deals, then end your turn.
+                </div>
+            </div>
+
+            <div class="occupation-gallery-wrap">
+                <h3>🌈 Occupation Gallery</h3>
+                <div class="note">These are all the occupations that can be assigned randomly at the start of the game.
+                </div>
+                <div class="occupation-grid" id="occupationGallery"></div>
+            </div>
+        </section>
+
+        <section id="gameScreen" class="hidden">
+            <div id="statusBanner"></div>
+
+            <div class="game-layout">
+                <div class="panel glass">
+                    <h3 class="panel-title">
+                        📊 Current Player Dashboard
+                        <span id="currentPlayerBadge" class="pill player-badge badge-p1">Player 1</span>
+                    </h3>
+
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Occupation</div>
+                            <div class="stat-value pink" id="careerStat">-</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Salary</div>
+                            <div class="stat-value good" id="salaryStat">$0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Passive Income</div>
+                            <div class="stat-value info" id="passiveStat">$0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Expenses</div>
+                            <div class="stat-value bad" id="expenseStat">$0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Cash</div>
+                            <div class="stat-value warn" id="cashStat">$0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Debt</div>
+                            <div class="stat-value bad" id="debtStat">$0</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-wrap">
+                        <div class="progress-bar" id="freedomBar"></div>
+                    </div>
+                    <div class="progress-text" id="freedomText">Freedom Progress: 0%</div>
+
+                    <div class="btn-row">
+                        <button class="btn btn-primary" id="rollBtn">🎲 Roll Dice</button>
+                        <button class="btn btn-orange" id="collectBtn">💵 Collect Monthly Cashflow</button>
+                        <button class="btn btn-pink" id="loanBtn">🏦 Take Small Loan</button>
+                        <button class="btn btn-red" id="restartBtn">🔄 Restart</button>
+                    </div>
+
+                    <div class="info-box" id="currentInfo">
+                        Start the game by rolling the dice.
+                    </div>
+                </div>
+
+                <div class="board-wrap glass">
+                    <h3 class="panel-title">
+                        🧩 Board
+                        <span class="turn-badge" id="turnInfo">Round 1 • Player 1</span>
+                    </h3>
+
+                    <div class="board" id="board"></div>
+
+                    <div class="dice-area">
+                        <div class="dice-box">
+                            <div class="dice" id="diceFace">🎲</div>
+                            <div class="turn-badge" id="positionInfo">Position: 1</div>
+                        </div>
+
+                        <div class="btn-row" style="margin-top:0;">
+                            <button class="btn btn-green" id="buyDealBtn" disabled>Buy Current Deal</button>
+                            <button class="btn btn-red" id="skipDealBtn" disabled>Skip Deal</button>
+                            <button class="btn btn-primary" id="endTurnBtn" disabled>End Turn</button>
+                        </div>
+                    </div>
+
+                    <div class="info-box" id="tileInfo">
+                        Roll the dice to move and trigger a board event.
+                    </div>
+                </div>
+
+                <div class="panel glass">
+                    <h3 class="panel-title">👥 Players, Assets & Activity</h3>
+
+                    <div class="player-list" id="playerList"></div>
+
+                    <div class="deal-card" style="margin-top:14px;">
+                        <div style="font-weight:900;color:#2c526d;margin-bottom:8px;">Owned Assets of Current Player
+                        </div>
+                        <div class="small note" style="margin-bottom:10px;">Assets increase monthly passive income.
+                        </div>
+                        <div class="asset-list" id="assetList"></div>
+                    </div>
+
+                    <div class="deal-card" style="margin-top:14px;">
+                        <div style="font-weight:900;color:#2c526d;margin-bottom:8px;">Game Log</div>
+                        <div class="log" id="gameLog"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="eventModal" class="modal hidden">
+        <div class="modal-card">
+            <h3 class="modal-title" id="modalTitle">Event</h3>
+            <div class="modal-text" id="modalText"></div>
+            <div class="btn-row">
+                <button class="btn btn-primary" id="modalOkBtn">OK</button>
+            </div>
+            <div class="footer-note">Good money decisions are usually calm, patient, and consistent.</div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                const occupations = [
+                    { id: "teacher", icon: "👩‍🏫", name: "Teacher", salary: 3300, passive: 0, expenses: 2400, cash: 2200, debt: 2500, note: "Steady income, balanced expenses." },
+                    { id: "engineer", icon: "👨‍💻", name: "Software Engineer", salary: 5200, passive: 0, expenses: 3600, cash: 2800, debt: 5000, note: "High salary, higher pressure." },
+                    { id: "nurse", icon: "🩺", name: "Nurse", salary: 4600, passive: 0, expenses: 3000, cash: 2600, debt: 3500, note: "Strong balanced path." },
+                    { id: "shopkeeper", icon: "🏪", name: "Shopkeeper", salary: 2900, passive: 150, expenses: 2200, cash: 1800, debt: 1800, note: "Small passive start." },
+                    { id: "designer", icon: "🎨", name: "Designer", salary: 3900, passive: 0, expenses: 2850, cash: 2400, debt: 3000, note: "Flexible financial path." },
+                    { id: "doctor", icon: "🩺", name: "Doctor", salary: 7000, passive: 0, expenses: 4800, cash: 3200, debt: 12000, note: "Big salary, big debt." },
+                    { id: "chef", icon: "👨‍🍳", name: "Chef", salary: 4100, passive: 0, expenses: 2950, cash: 2100, debt: 2800, note: "Stable but active lifestyle." },
+                    { id: "architect", icon: "📐", name: "Architect", salary: 5000, passive: 0, expenses: 3400, cash: 2600, debt: 5200, note: "Strong pay with strong costs." },
+                    { id: "pharmacist", icon: "💊", name: "Pharmacist", salary: 5400, passive: 0, expenses: 3550, cash: 2900, debt: 6000, note: "Good salary, education debt." },
+                    { id: "photographer", icon: "📷", name: "Photographer", salary: 3200, passive: 100, expenses: 2450, cash: 2000, debt: 1600, note: "Small passive creative income." },
+                    { id: "freelancer", icon: "💼", name: "Freelancer", salary: 3600, passive: 120, expenses: 2600, cash: 2300, debt: 2200, note: "Flexible but less predictable." },
+                    { id: "coach", icon: "🏅", name: "Coach", salary: 3500, passive: 0, expenses: 2500, cash: 2150, debt: 2000, note: "Moderate path with manageable risk." },
+                    { id: "accountant", icon: "📊", name: "Accountant", salary: 4700, passive: 0, expenses: 3150, cash: 2550, debt: 3800, note: "Strong structure and balance." },
+                    { id: "electrician", icon: "🔌", name: "Electrician", salary: 4300, passive: 80, expenses: 2900, cash: 2450, debt: 2600, note: "Good income plus tiny passive stream." },
+
+                    { id: "finance_manager", icon: "💹", name: "Finance Manager", salary: 5800, passive: 200, expenses: 3900, cash: 3200, debt: 6500, note: "Strong money knowledge with a head start in investing, but higher lifestyle cost and debt." }
+                ];
+
+                const tiles = [
+                    { type: "salary", name: "Salary Day", desc: "Collect monthly salary and passive income." },
+                    { type: "deal", name: "Small Deal", desc: "A low-cost investment appears." },
+                    { type: "expense", name: "Unexpected Expense", desc: "A sudden life cost appears." },
+                    { type: "market", name: "Market Movement", desc: "Economic ups and downs happen." },
+                    { type: "deal", name: "Property Deal", desc: "A real estate opportunity appears." },
+                    { type: "special", name: "Give & Grow", desc: "A special life event happens." },
+                    { type: "expense", name: "Family Expense", desc: "A family-related cost appears." },
+                    { type: "deal", name: "Business Deal", desc: "A small business chance appears." },
+                    { type: "market", name: "Opportunity Wave", desc: "Fortune may help or hurt." },
+                    { type: "salary", name: "Cashflow Checkpoint", desc: "Collect monthly income again." },
+                    { type: "deal", name: "Stock Bundle", desc: "An investment bundle is available." },
+                    { type: "expense", name: "Repair Bill", desc: "Something needs fixing." },
+                    { type: "deal", name: "Side Hustle", desc: "An extra income chance appears." },
+                    { type: "market", name: "Economy Shift", desc: "Your money life changes." },
+                    { type: "salary", name: "Payday Plus", desc: "Another month passes." }
+                ];
+
+                const smallDeals = [
+                    { name: "Dividend Stock", cost: 600, passive: 45, tag: "Stock", text: "A dividend stock package that pays monthly income." },
+                    { name: "Online Course Business", cost: 900, passive: 85, tag: "Business", text: "A small digital product income stream." },
+                    { name: "Vending Machine", cost: 1200, passive: 110, tag: "Business", text: "A vending machine in a good location." },
+                    { name: "Part-time Tutoring", cost: 300, passive: 35, tag: "Skill Asset", text: "Turn your skill into repeat income." },
+                    { name: "Small ETF Bundle", cost: 750, passive: 55, tag: "Fund", text: "A steady income-focused fund bundle." }
+                ];
+
+                const propertyDeals = [
+                    { name: "Studio Rental", cost: 2400, passive: 220, tag: "Real Estate", text: "A small rental property with monthly cashflow." },
+                    { name: "Garage Rental Space", cost: 1600, passive: 145, tag: "Real Estate", text: "Rent out a compact garage or storage unit." },
+                    { name: "Shared Office Corner", cost: 1900, passive: 175, tag: "Real Estate", text: "A micro-office leasing setup." },
+                    { name: "Parking Spot Lease", cost: 1300, passive: 120, tag: "Real Estate", text: "A simple monthly earning asset." }
+                ];
+
+                const businessDeals = [
+                    { name: "Food Cart Share", cost: 2200, passive: 260, tag: "Business", text: "Own a small share in a profitable food cart." },
+                    { name: "Print-on-Demand Store", cost: 1500, passive: 160, tag: "Business", text: "A small online business with repeat income." },
+                    { name: "Local Delivery Franchise", cost: 2800, passive: 310, tag: "Business", text: "A stronger deal with bigger cashflow." },
+                    { name: "Kids Learning App", cost: 1800, passive: 190, tag: "Business", text: "A digital learning product with monthly revenue." }
+                ];
+
+                const stockDeals = [
+                    { name: "Blue-Chip Dividend Pack", cost: 1100, passive: 90, tag: "Stock", text: "Reliable dividend companies." },
+                    { name: "Infrastructure Fund", cost: 1400, passive: 115, tag: "Fund", text: "Steady yield from infrastructure projects." },
+                    { name: "Retail Share Basket", cost: 900, passive: 70, tag: "Stock", text: "A diversified retail share basket." }
+                ];
+
+                const sideDeals = [
+                    { name: "Weekend Consulting", cost: 500, passive: 60, tag: "Skill Asset", text: "Turn knowledge into recurring income." },
+                    { name: "YouTube Mini Channel", cost: 700, passive: 75, tag: "Media Asset", text: "A small content system starts earning." },
+                    { name: "Printable Shop", cost: 450, passive: 50, tag: "Digital Asset", text: "Create useful downloads and sell them." }
+                ];
+
+                const expenseEvents = [
+                    { text: "Car repair bill hits the budget.", amount: 350 },
+                    { text: "Appliance replacement at home.", amount: 480 },
+                    { text: "Medical bill not fully covered.", amount: 650 },
+                    { text: "Phone and laptop both need repair.", amount: 420 },
+                    { text: "Travel for urgent family matter.", amount: 560 },
+                    { text: "Insurance premium jumps.", amount: 390 }
+                ];
+
+                const familyExpenses = [
+                    { text: "School fee or activity expense arrives.", amount: 300 },
+                    { text: "Family celebration costs more than planned.", amount: 450 },
+                    { text: "Gift and social commitment spending.", amount: 250 },
+                    { text: "Emergency grocery overspend.", amount: 220 },
+                    { text: "Unexpected transport and care costs.", amount: 380 }
+                ];
+
+                const markerClasses = ["m1", "m2", "m3", "m4"];
+                const badgeClasses = ["badge-p1", "badge-p2", "badge-p3", "badge-p4"];
+                const occCardColors = ["blue", "green", "orange", "pink", "red"];
+
+                const state = {
+                    playerCount: 0,
+                    players: [],
+                    assigned: false,
+                    currentPlayerIndex: 0,
+                    round: 1,
+                    pendingDeal: null,
+                    gameOver: false,
+                    winnerIndex: null
+                };
+
+                const nameSetupWrap = document.getElementById("nameSetupWrap");
+                const assignBtn = document.getElementById("assignBtn");
+                const startGameBtn = document.getElementById("startGameBtn");
+                const assignmentPreview = document.getElementById("assignmentPreview");
+                const previewList = document.getElementById("previewList");
+                const occupationGallery = document.getElementById("occupationGallery");
+
+                const setupScreen = document.getElementById("setupScreen");
+                const gameScreen = document.getElementById("gameScreen");
+                const statusBanner = document.getElementById("statusBanner");
+
+                const currentPlayerBadge = document.getElementById("currentPlayerBadge");
+                const careerStat = document.getElementById("careerStat");
+                const salaryStat = document.getElementById("salaryStat");
+                const passiveStat = document.getElementById("passiveStat");
+                const expenseStat = document.getElementById("expenseStat");
+                const cashStat = document.getElementById("cashStat");
+                const debtStat = document.getElementById("debtStat");
+                const freedomBar = document.getElementById("freedomBar");
+                const freedomText = document.getElementById("freedomText");
+                const currentInfo = document.getElementById("currentInfo");
+
+                const board = document.getElementById("board");
+                const diceFace = document.getElementById("diceFace");
+                const turnInfo = document.getElementById("turnInfo");
+                const positionInfo = document.getElementById("positionInfo");
+                const tileInfo = document.getElementById("tileInfo");
+
+                const playerList = document.getElementById("playerList");
+                const assetList = document.getElementById("assetList");
+                const gameLog = document.getElementById("gameLog");
+
+                const rollBtn = document.getElementById("rollBtn");
+                const collectBtn = document.getElementById("collectBtn");
+                const loanBtn = document.getElementById("loanBtn");
+                const buyDealBtn = document.getElementById("buyDealBtn");
+                const skipDealBtn = document.getElementById("skipDealBtn");
+                const endTurnBtn = document.getElementById("endTurnBtn");
+                const restartBtn = document.getElementById("restartBtn");
+
+                const eventModal = document.getElementById("eventModal");
+                const modalTitle = document.getElementById("modalTitle");
+                const modalText = document.getElementById("modalText");
+                const modalOkBtn = document.getElementById("modalOkBtn");
+
+                function money(n) {
+                    return "$" + Math.round(n).toLocaleString();
+                }
+
+                function rand(arr) {
+                    return arr[Math.floor(Math.random() * arr.length)];
+                }
+
+                function shuffle(arr) {
+                    const copy = [...arr];
+                    for (let i = copy.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [copy[i], copy[j]] = [copy[j], copy[i]];
+                    }
+                    return copy;
+                }
+
+                function applyFinanceManagerBonus(player, deal) {
+                    if (player.occupation === "Finance Manager") {
+                        if (Math.random() < 0.3) {
+                            deal.cost = Math.round(deal.cost * 0.9);
+                        } else {
+                            deal.passive = Math.round(deal.passive * 1.1);
+                        }
+                    }
+                }
+
+                function getCurrentPlayer() {
+                    return state.players[state.currentPlayerIndex];
+                }
+
+                function debtMonthlyCost(player) {
+                    return Math.round(player.debt * 0.03);
+                }
+
+                function log(message) {
+                    const now = new Date();
+                    const t = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const item = document.createElement("div");
+                    item.className = "log-item";
+                    item.innerHTML = `<div class="log-time">${t}</div><div>${message}</div>`;
+                    gameLog.prepend(item);
+                }
+
+                function showModal(title, text) {
+                    modalTitle.innerHTML = title;
+                    modalText.innerHTML = text;
+                    eventModal.classList.remove("hidden");
+                }
+
+                function hideModal() {
+                    eventModal.classList.add("hidden");
+                }
+
+                function renderOccupationGallery() {
+                    occupationGallery.innerHTML = "";
+                    occupations.forEach((occ, index) => {
+                        const colorClass = occ.name === "Finance Manager"
+                            ? "finance-manager"
+                            : occCardColors[index % occCardColors.length];
+
+                        const card = document.createElement("div");
+                        card.className = `occupation-card ${colorClass}`;
+                        card.innerHTML = `
+          <div class="occ-top">
+            <div class="occ-icon">${occ.icon}</div>
+            <div>
+              <div class="occ-name">${occ.name}</div>
+            </div>
+          </div>
+          <div class="occ-note">${occ.note}</div>
+          <div class="occ-stats">
+            <div class="occ-pill">Salary<br><strong>${money(occ.salary)}</strong></div>
+            <div class="occ-pill">Expenses<br><strong>${money(occ.expenses)}</strong></div>
+            <div class="occ-pill">Cash<br><strong>${money(occ.cash)}</strong></div>
+            <div class="occ-pill">Debt<br><strong>${money(occ.debt)}</strong></div>
+            <div class="occ-pill">Passive Income<br><strong>${money(occ.passive)}</strong></div>
+            <div class="occ-pill">Type<br><strong>Random Pick</strong></div>
+          </div>
+        `;
+                        occupationGallery.appendChild(card);
+                    });
+                }
+
+                function buildNameInputs(count) {
+                    nameSetupWrap.innerHTML = "";
+                    nameSetupWrap.classList.remove("hidden");
+
+                    const grid = document.createElement("div");
+                    grid.className = "name-grid";
+
+                    for (let i = 0; i < count; i++) {
+                        const card = document.createElement("div");
+                        card.className = `player-name-card p${i + 1}`;
+                        card.innerHTML = `
+          <div class="player-label">Player ${i + 1} Name</div>
+          <input class="name-input" type="text" maxlength="18" placeholder="Enter player ${i + 1} name" data-player="${i}">
+        `;
+                        grid.appendChild(card);
+                    }
+
+                    nameSetupWrap.appendChild(grid);
+
+                    document.querySelectorAll(".name-input").forEach(input => {
+                        input.addEventListener("input", validateNames);
+                    });
+                }
+
+                function validateNames() {
+                    const inputs = [...document.querySelectorAll(".name-input")];
+                    const allFilled = inputs.length === state.playerCount && inputs.every(i => i.value.trim().length > 0);
+                    assignBtn.disabled = !allFilled;
+                    startGameBtn.disabled = true;
+                    state.assigned = false;
+                    assignmentPreview.classList.add("hidden");
+                }
+
+                function assignRandomOccupations() {
+                    const inputs = [...document.querySelectorAll(".name-input")];
+                    const names = inputs.map(i => i.value.trim());
+
+                    const shuffledOccupations = shuffle(occupations).slice(0, state.playerCount);
+
+                    state.players = names.map((name, index) => {
+                        const occ = shuffledOccupations[index];
+                        return {
+                            id: index + 1,
+                            name: name,
+                            occupation: occ.name,
+                            icon: occ.icon,
+                            salary: occ.salary,
+                            passive: occ.passive,
+                            expenses: occ.expenses,
+                            cash: occ.cash,
+                            debt: occ.debt,
+                            position: 0,
+                            assets: [],
+                            bankrupt: false,
+                            won: false,
+                            bonusRoll: false,
+                            hasRolled: false
+                        };
+                    });
+
+                    state.assigned = true;
+                    startGameBtn.disabled = false;
+                    assignmentPreview.classList.remove("hidden");
+                    previewList.innerHTML = "";
+
+                    state.players.forEach((p) => {
+                        const item = document.createElement("div");
+                        item.className = "preview-item";
+                        item.innerHTML = `<strong>${p.name}</strong> → ${p.icon} <strong>${p.occupation}</strong> | Salary ${money(p.salary)} | Expenses ${money(p.expenses)} | Cash ${money(p.cash)} | Debt ${money(p.debt)}`;
+                        previewList.appendChild(item);
+                    });
+                }
+
+                function renderBoard() {
+                    board.innerHTML = "";
+                    tiles.forEach((tile, index) => {
+                        const tileEl = document.createElement("div");
+                        tileEl.className = `tile ${tile.type}`;
+                        const markers = state.players
+                            .map((p, i) => !p.bankrupt && p.position === index ? `<div class="marker ${markerClasses[i]}">${p.id}</div>` : "")
+                            .join("");
+
+                        tileEl.innerHTML = `
+          <div class="num">${index + 1}</div>
+          <div class="name">${tile.name}</div>
+          <div class="desc">${tile.desc}</div>
+          <div class="markers">${markers}</div>
+        `;
+                        board.appendChild(tileEl);
+                    });
+                }
+
+                function renderPlayerList() {
+                    playerList.innerHTML = "";
+                    state.players.forEach((player, index) => {
+                        const flow = player.salary + player.passive - player.expenses - debtMonthlyCost(player);
+                        const isFinanceManager = player.occupation === "Finance Manager";
+                        const extraClasses = [
+                            player.bankrupt ? "bankrupt" : "",
+                            player.won ? "winner" : "",
+                            (index === state.currentPlayerIndex && !state.gameOver) ? "active" : "",
+                            isFinanceManager ? "finance-manager" : ""
+                        ].filter(Boolean).join(" ");
+
+                        const card = document.createElement("div");
+                        card.className = `summary-card ${extraClasses}`;
+                        card.innerHTML = `
+          <div class="player-head">
+            <span>${player.icon} ${player.name}</span>
+            <span class="pill player-badge ${badgeClasses[index]}">P${player.id}</span>
+          </div>
+          <div class="small"><strong>${player.occupation}</strong></div>
+          <div class="small note" style="margin-top:4px;">Cash: <strong>${money(player.cash)}</strong> | Passive: <strong>${money(player.passive)}</strong></div>
+          <div class="small note">Expenses: <strong>${money(player.expenses)}</strong> | Flow: <strong>${money(flow)}</strong></div>
+          <div class="small" style="margin-top:6px;font-weight:900;color:${player.bankrupt ? '#d94b63' : player.won ? '#31a85b' : '#60758a'}">
+            ${player.bankrupt ? 'Bankrupt' : player.won ? 'Winner' : 'Active'}
+          </div>
+        `;
+                        playerList.appendChild(card);
+                    });
+                }
+
+                function renderAssets() {
+                    const player = getCurrentPlayer();
+                    if (!player || player.assets.length === 0) {
+                        assetList.innerHTML = `<div class="small note">No assets yet for this player.</div>`;
+                        return;
+                    }
+
+                    assetList.innerHTML = "";
+                    player.assets.forEach(asset => {
+                        const row = document.createElement("div");
+                        row.className = "asset-row";
+                        row.innerHTML = `
+          <div>
+            <strong>${asset.name}</strong><br>
+            <span class="small note">${asset.tag}</span>
+          </div>
+          <div style="text-align:right;">
+            <div class="money-down">-${money(asset.cost)}</div>
+            <div class="money-up">+${money(asset.passive)}/mo</div>
+          </div>
+        `;
+                        assetList.appendChild(row);
+                    });
+                }
+
+                function updateDashboard() {
+                    const p = getCurrentPlayer();
+                    if (!p) return;
+
+                    currentPlayerBadge.textContent = p.name;
+                    currentPlayerBadge.className = `pill player-badge ${badgeClasses[state.currentPlayerIndex]}`;
+
+                    careerStat.textContent = `${p.icon} ${p.occupation}`;
+                    salaryStat.textContent = money(p.salary);
+                    passiveStat.textContent = money(p.passive);
+                    expenseStat.textContent = money(p.expenses);
+                    cashStat.textContent = money(p.cash);
+                    debtStat.textContent = money(p.debt);
+
+                    const progress = Math.max(0, Math.min(100, (p.passive / p.expenses) * 100 || 0));
+                    freedomBar.style.width = progress + "%";
+                    freedomText.textContent = `Freedom Progress: ${progress.toFixed(0)}%`;
+
+                    turnInfo.textContent = `Round ${state.round} • ${p.name}`;
+                    positionInfo.textContent = `Position: ${p.position + 1}`;
+
+                    renderPlayerList();
+                    renderAssets();
+                    renderBoard();
+                    updateBanner();
+                }
+
+                function updateBanner() {
+                    statusBanner.innerHTML = "";
+                    if (state.gameOver && state.winnerIndex !== null) {
+                        const p = state.players[state.winnerIndex];
+                        statusBanner.innerHTML = `<div class="banner-win">🏆 ${p.name} wins! ${p.name} the ${p.occupation} reached financial freedom first.</div>`;
+                    }
+                }
+
+                function startGame() {
+                    if (!state.assigned) return;
+                    setupScreen.classList.add("hidden");
+                    gameScreen.classList.remove("hidden");
+                    state.currentPlayerIndex = 0;
+                    state.round = 1;
+                    state.pendingDeal = null;
+                    state.gameOver = false;
+                    state.winnerIndex = null;
+                    state.players.forEach(p => p.hasRolled = false);
+                    updateDashboard();
+                    currentInfo.innerHTML = `The game begins with <strong>${getCurrentPlayer().name}</strong>. Roll the dice to start.`;
+                    tileInfo.innerHTML = `Roll the dice to move and trigger a board event.`;
+                    gameLog.innerHTML = "";
+                    log(`🎉 Game started with ${state.playerCount} player(s). Occupations were assigned randomly.`);
+                    showModal("Game Started", `Players entered their names, and the system assigned occupations randomly. <strong>${getCurrentPlayer().name}</strong> takes the first turn.`);
+                }
+
+                function collectMonthlyCashflow(player, manual = false) {
+                    const income = player.salary + player.passive;
+                    const debtCost = debtMonthlyCost(player);
+                    const totalOut = player.expenses + debtCost;
+                    const net = income - totalOut;
+                    player.cash += net;
+
+                    if (manual) {
+                        log(`💵 ${player.name} collected monthly cashflow: <strong>${money(net)}</strong>.`);
+                    } else {
+                        log(`📅 ${player.name} received monthly net cashflow: <strong>${money(net)}</strong>.`);
+                    }
+                }
+
+                function animateDice(finalNumber, callback) {
+                    let count = 0;
+                    const intv = setInterval(() => {
+                        diceFace.textContent = Math.floor(Math.random() * 6) + 1;
+                        count++;
+                        if (count >= 10) {
+                            clearInterval(intv);
+                            diceFace.textContent = finalNumber;
+                            callback();
+                        }
+                    }, 70);
+                }
+
+                function rollDice() {
+                    if (state.gameOver || state.pendingDeal) return;
+                    const p = getCurrentPlayer();
+                    if (p.bankrupt || p.hasRolled) return;
+
+                    let roll = Math.floor(Math.random() * 6) + 1;
+                    if (p.bonusRoll) {
+                        roll += 1;
+                        p.bonusRoll = false;
+                    }
+
+                    animateDice(roll, () => {
+                        movePlayer(p, roll);
+                        p.hasRolled = true;
+                        endTurnBtn.disabled = false;
+                        updateDashboard();
+                    });
+                }
+
+                function movePlayer(player, steps) {
+                    const oldPos = player.position;
+                    const len = tiles.length;
+                    player.position = (player.position + steps) % len;
+
+                    if (player.position < oldPos) {
+                        collectMonthlyCashflow(player, false);
+                        log(`🔁 ${player.name} completed one full loop around the board.`);
+                    }
+
+                    log(`🎲 ${player.name} rolled <strong>${steps}</strong> and moved to <strong>${tiles[player.position].name}</strong>.`);
+                    handleTile(player, tiles[player.position]);
+                    checkPlayerStatus(player);
+                }
+
+                function handleTile(player, tile) {
+                    state.pendingDeal = null;
+                    buyDealBtn.disabled = true;
+                    skipDealBtn.disabled = true;
+
+                    if (tile.type === "salary") {
+                        collectMonthlyCashflow(player, false);
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> landed on <strong>${tile.name}</strong> and collected monthly cashflow.`;
+                        currentInfo.innerHTML = `${player.name} may now end the turn.`;
+                        return;
+                    }
+
+                    if (tile.type === "expense") {
+                        const event = tile.name === "Family Expense" ? rand(familyExpenses) : rand(expenseEvents);
+                        player.cash -= event.amount;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> landed on <strong>${tile.name}</strong>.<br>${event.text}<br><span class="money-down">-${money(event.amount)}</span>`;
+                        currentInfo.innerHTML = `${player.name} paid an expense.`;
+                        log(`💸 ${player.name}: ${event.text} Paid <strong>${money(event.amount)}</strong>.`);
+                        return;
+                    }
+
+                    if (tile.type === "market") {
+                        handleMarket(player, tile.name);
+                        return;
+                    }
+
+                    if (tile.type === "special") {
+                        handleSpecial(player);
+                        return;
+                    }
+
+                    if (tile.type === "deal") {
+                        let deal;
+                        if (tile.name === "Small Deal") deal = rand(smallDeals);
+                        else if (tile.name === "Property Deal") deal = rand(propertyDeals);
+                        else if (tile.name === "Business Deal") deal = rand(businessDeals);
+                        else if (tile.name === "Stock Bundle") deal = rand(stockDeals);
+                        else if (tile.name === "Side Hustle") deal = rand(sideDeals);
+                        else deal = rand(smallDeals);
+
+                        applyFinanceManagerBonus(player, deal);
+
+                        state.pendingDeal = { ...deal, playerIndex: state.currentPlayerIndex };
+                        buyDealBtn.disabled = false;
+                        skipDealBtn.disabled = false;
+                        tileInfo.innerHTML = `
+          <strong>${player.name} found a deal: ${deal.name}</strong><br>
+          ${deal.text}<br><br>
+          <span class="pill">Cost: ${money(deal.cost)}</span>
+          <span class="pill">Passive: +${money(deal.passive)}/mo</span>
+          <span class="pill">${deal.tag}</span>
+        `;
+                        currentInfo.innerHTML = `${player.name} can choose to buy or skip this deal.`;
+                        log(`💡 ${player.name} found deal <strong>${deal.name}</strong> for <strong>${money(deal.cost)}</strong>.`);
+                    }
+                }
+
+                function handleMarket(player, tileName) {
+                    const pick = Math.floor(Math.random() * 5);
+
+                    if (pick === 0) {
+                        const gain = 300;
+                        player.cash += gain;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> landed on <strong>${tileName}</strong> and gained <span class="money-up">+${money(gain)}</span>.`;
+                        currentInfo.innerHTML = `${player.name} received a market bonus.`;
+                        log(`📈 ${player.name} got market bonus <strong>${money(gain)}</strong>.`);
+                    } else if (pick === 1) {
+                        const loss = 350;
+                        player.cash -= loss;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> lost <span class="money-down">-${money(loss)}</span> from a market setback.`;
+                        currentInfo.innerHTML = `${player.name} faced a market setback.`;
+                        log(`📉 ${player.name} lost <strong>${money(loss)}</strong> in market movement.`);
+                    } else if (pick === 2) {
+                        const reduce = 120;
+                        player.expenses = Math.max(1200, player.expenses - reduce);
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> reduced expenses by <span class="money-up">${money(reduce)}</span>.`;
+                        currentInfo.innerHTML = `${player.name} optimized spending.`;
+                        log(`🧠 ${player.name} reduced expenses by <strong>${money(reduce)}</strong>.`);
+                    } else if (pick === 3) {
+                        const raise = 250;
+                        player.salary += raise;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> salary increased by <span class="money-up">${money(raise)}</span>.`;
+                        currentInfo.innerHTML = `${player.name} got a raise.`;
+                        log(`🎉 ${player.name} got salary raise of <strong>${money(raise)}</strong>.`);
+                    } else {
+                        const extra = 90;
+                        player.passive += extra;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> passive income increased by <span class="money-up">${money(extra)}</span>.`;
+                        currentInfo.innerHTML = `${player.name}'s investment performed well.`;
+                        log(`✨ ${player.name} gained <strong>${money(extra)}</strong> passive income boost.`);
+                    }
+                }
+
+                function handleSpecial(player) {
+                    const choice = Math.random();
+                    if (choice < 0.5) {
+                        const gift = 150;
+                        player.cash -= gift;
+                        player.bonusRoll = true;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> donated <span class="money-down">-${money(gift)}</span> and earned a <strong>+1 next roll bonus</strong>.`;
+                        currentInfo.innerHTML = `${player.name} gets bonus movement next turn.`;
+                        log(`💗 ${player.name} gave ${money(gift)} and earned bonus next roll.`);
+                    } else {
+                        const reward = 220;
+                        player.cash += reward;
+                        tileInfo.innerHTML = `<strong>${player.name}</strong> received support and gained <span class="money-up">+${money(reward)}</span>.`;
+                        currentInfo.innerHTML = `${player.name} received goodwill support.`;
+                        log(`🤝 ${player.name} gained support of <strong>${money(reward)}</strong>.`);
+                    }
+                }
+
+                function buyDeal() {
+                    if (!state.pendingDeal || state.gameOver) return;
+                    const p = getCurrentPlayer();
+                    if (state.pendingDeal.playerIndex !== state.currentPlayerIndex) return;
+
+                    if (p.cash < state.pendingDeal.cost) {
+                        showModal("Not Enough Cash", `${p.name} needs <strong>${money(state.pendingDeal.cost)}</strong> but only has <strong>${money(p.cash)}</strong>.`);
+                        return;
+                    }
+
+                    p.cash -= state.pendingDeal.cost;
+                    p.passive += state.pendingDeal.passive;
+                    p.assets.push({
+                        name: state.pendingDeal.name,
+                        cost: state.pendingDeal.cost,
+                        passive: state.pendingDeal.passive,
+                        tag: state.pendingDeal.tag
+                    });
+
+                    log(`✅ ${p.name} bought <strong>${state.pendingDeal.name}</strong> for <strong>${money(state.pendingDeal.cost)}</strong>.`);
+                    tileInfo.innerHTML = `${p.name} bought <strong>${state.pendingDeal.name}</strong>.<br><span class="money-down">-${money(state.pendingDeal.cost)}</span> and <span class="money-up">+${money(state.pendingDeal.passive)}/mo</span>`;
+                    currentInfo.innerHTML = `${p.name} completed the purchase and may end the turn.`;
+
+                    state.pendingDeal = null;
+                    buyDealBtn.disabled = true;
+                    skipDealBtn.disabled = true;
+                    checkPlayerStatus(p);
+                    updateDashboard();
+                }
+
+                function skipDeal() {
+                    if (!state.pendingDeal || state.gameOver) return;
+                    const p = getCurrentPlayer();
+                    log(`⏭️ ${p.name} skipped <strong>${state.pendingDeal.name}</strong>.`);
+                    tileInfo.innerHTML = `${p.name} skipped the deal. Saving cash can also be a smart move.`;
+                    currentInfo.innerHTML = `${p.name} skipped the deal and may end the turn.`;
+                    state.pendingDeal = null;
+                    buyDealBtn.disabled = true;
+                    skipDealBtn.disabled = true;
+                }
+
+                function takeLoan() {
+                    if (state.gameOver) return;
+                    const p = getCurrentPlayer();
+                    const loan = 1000;
+                    p.cash += loan;
+                    p.debt += loan;
+                    log(`🏦 ${p.name} took a small loan of <strong>${money(loan)}</strong>.`);
+                    currentInfo.innerHTML = `${p.name} took a loan. Debt pressure is now higher.`;
+                    updateDashboard();
+                }
+
+                function checkPlayerStatus(player) {
+                    if (player.bankrupt || player.won) return;
+
+                    if (player.passive >= player.expenses) {
+                        player.won = true;
+                        state.gameOver = true;
+                        state.winnerIndex = state.players.indexOf(player);
+                        updateDashboard();
+                        disableGameActions();
+                        showModal("🏆 Winner!", `<strong>${player.name}</strong> the <strong>${player.occupation}</strong> achieved financial freedom.<br><br>Passive Income: <strong>${money(player.passive)}</strong><br>Expenses: <strong>${money(player.expenses)}</strong>`);
+                        return;
+                    }
+
+                    if (player.cash < -1000) {
+                        player.bankrupt = true;
+                        log(`💥 ${player.name} is bankrupt and out of the game.`);
+                        showModal("Bankruptcy", `<strong>${player.name}</strong> went bankrupt and is out of the game.`);
+
+                        const alivePlayers = state.players.filter(p => !p.bankrupt);
+                        if (alivePlayers.length === 1) {
+                            const winner = alivePlayers[0];
+                            winner.won = true;
+                            state.gameOver = true;
+                            state.winnerIndex = state.players.indexOf(winner);
+                            updateDashboard();
+                            disableGameActions();
+                            showModal("🏆 Winner by Survival", `<strong>${winner.name}</strong> is the last non-bankrupt player and wins the game.`);
+                        }
+                    }
+                }
+
+                function nextPlayer() {
+                    if (state.gameOver) return;
+
+                    let safety = 0;
+                    do {
+                        state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+                        safety++;
+                        if (state.currentPlayerIndex === 0) state.round++;
+                    } while (state.players[state.currentPlayerIndex].bankrupt && safety < 20);
+
+                    state.players.forEach((p, idx) => {
+                        if (idx === state.currentPlayerIndex) p.hasRolled = false;
+                    });
+
+                    state.pendingDeal = null;
+                    buyDealBtn.disabled = true;
+                    skipDealBtn.disabled = true;
+                    endTurnBtn.disabled = true;
+                    currentInfo.innerHTML = `It is now <strong>${getCurrentPlayer().name}</strong>'s turn. Roll the dice.`;
+                    tileInfo.innerHTML = `Roll the dice to move and trigger a board event.`;
+                    updateDashboard();
+                }
+
+                function endTurn() {
+                    if (state.gameOver) return;
+                    if (state.pendingDeal) return;
+                    nextPlayer();
+                }
+
+                function disableGameActions() {
+                    rollBtn.disabled = true;
+                    collectBtn.disabled = true;
+                    loanBtn.disabled = true;
+                    buyDealBtn.disabled = true;
+                    skipDealBtn.disabled = true;
+                    endTurnBtn.disabled = true;
+                }
+
+                function restartGame() {
+                    location.reload();
+                }
+
+                document.querySelectorAll(".mode-card").forEach(card => {
+                    card.addEventListener("click", () => {
+                        document.querySelectorAll(".mode-card").forEach(c => c.classList.remove("selected"));
+                        card.classList.add("selected");
+                        state.playerCount = Number(card.dataset.count);
+                        state.players = [];
+                        state.assigned = false;
+                        buildNameInputs(state.playerCount);
+                        assignBtn.disabled = true;
+                        startGameBtn.disabled = true;
+                        assignmentPreview.classList.add("hidden");
+                    });
+                });
+
+                assignBtn.addEventListener("click", assignRandomOccupations);
+                startGameBtn.addEventListener("click", startGame);
+                rollBtn.addEventListener("click", rollDice);
+
+                collectBtn.addEventListener("click", () => {
+                    const p = getCurrentPlayer();
+                    collectMonthlyCashflow(p, true);
+                    checkPlayerStatus(p);
+                    updateDashboard();
+                    endTurnBtn.disabled = false;
+                });
+
+                loanBtn.addEventListener("click", takeLoan);
+                buyDealBtn.addEventListener("click", buyDeal);
+                skipDealBtn.addEventListener("click", skipDeal);
+                endTurnBtn.addEventListener("click", endTurn);
+                restartBtn.addEventListener("click", restartGame);
+                modalOkBtn.addEventListener("click", hideModal);
+
+                renderOccupationGallery();
+            </script>
+</body>
+
+</html>

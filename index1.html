@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Money Garden - Little Kids Finance</title>
+  <style>
+    :root {
+      --bg1: #fff8e7;
+      --bg2: #e8f9ff;
+      --card: #ffffff;
+      --text: #234;
+      --accent: #ffb84d;
+      --accent2: #6fd3ff;
+      --accent3: #7ee081;
+      --accent4: #ff8eb3;
+      --good: #3bb273;
+      --bad: #e25b5b;
+      --shadow: 0 10px 24px rgba(0, 0, 0, .08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Comic Sans MS", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+
+
+
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    }
+
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 8px 14px;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #22324c;
+    }
+
+    .nav-links a:hover {
+      background: #e6f0ff;
+    }
+
+    .nav-links a.active {
+      background: rgb(137, 63, 137);
+      color: white;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffe08a, #ffd1e6, #c8f3ff);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-left {
+      flex: 1 1 480px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 6px 0;
+      font-size: 1.05rem;
+    }
+
+    .mascot {
+      flex: 0 0 220px;
+      background: #fff;
+      border-radius: 26px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .mascot .big {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .stat h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .stat .num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .sidebar,
+    .content {
+      background: rgba(255, 255, 255, .72);
+      backdrop-filter: blur(6px);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .sidebar h2,
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu button {
+      border: none;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      background: #fff;
+      box-shadow: var(--shadow);
+      transition: .2s ease;
+    }
+
+    .menu button:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu button.active {
+      background: linear-gradient(90deg, #ffe699, #c8f3ff);
+      font-weight: 700;
+    }
+
+    .lesson-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .lesson-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eef7ff;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, #fff7c6, #fff, #eafcff);
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 14px;
+      line-height: 1.65;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: #f7fbff;
+      box-shadow: var(--shadow);
+      transition: .2s;
+    }
+
+    .choice-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      display: none;
+      font-weight: 700;
+    }
+
+    .feedback.good {
+      background: #e8fff0;
+      color: #1f7a48;
+      display: block;
+    }
+
+    .feedback.bad {
+      background: #ffe8e8;
+      color: #a73434;
+      display: block;
+    }
+
+    .game-area {
+      background: linear-gradient(180deg, #fefefe, #f7fdff);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .coins {
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    .jar-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .jar {
+      background: #fff;
+      border-radius: 22px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      min-height: 180px;
+      position: relative;
+    }
+
+    .jar h3 {
+      margin: 0 0 8px;
+    }
+
+    .jar-drop {
+      min-height: 72px;
+      border: 2px dashed #d8e8f5;
+      border-radius: 16px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      align-content: flex-start;
+      margin-top: 10px;
+      background: #fbfdff;
+    }
+
+    .coin {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, .1);
+      background: radial-gradient(circle at 30% 30%, #fff7b1, #ffc94d);
+    }
+
+    .shop {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .item {
+      background: #fff;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .item .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .progress-wrap {
+      margin-top: 8px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 18px;
+      border-radius: 999px;
+      background: #eaf3f8;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7ee081, #6fd3ff);
+      transition: .3s;
+    }
+
+    .quiz-q {
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+    }
+
+    .small {
+      font-size: .95rem;
+      opacity: .85;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 20px 8px 6px;
+      font-size: .95rem;
+      opacity: .8;
+    }
+
+    @media (max-width: 860px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .jar-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topnav">
+    <div class="nav-title">💰 Finance Academy</div>
+
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="index1.html" class="active">🧸 Little Kids</a>
+      <a href="index2.html">📚 Upper Elementary</a>
+      <a href="index3.html">🧠 Middle School</a>
+      <a href="index5.html">🎓 High School</a>
+    </div>
+  </div>
+  <div class="app">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>🌱 Money Garden</h1>
+        <p><strong>Little Kids Finance App</strong></p>
+        <p>Learn money in a happy, playful way: <strong>save</strong>, <strong>spend</strong>, <strong>share</strong>,
+          and <strong>grow goals</strong>.</p>
+        <p class="small">Best for little kids beginning their money journey.</p>
+      </div>
+      <div class="mascot">
+        <span class="big">🐿️</span>
+        <strong>Penny the Squirrel</strong>
+        <div>“Let’s collect coins and make smart money choices!”</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <h3>⭐ Stars</h3>
+        <div class="num" id="starsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>🪙 Coins Collected</h3>
+        <div class="num" id="coinsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>📘 Lessons Done</h3>
+        <div class="num" id="lessonsDone">0</div>
+      </div>
+      <div class="stat">
+        <h3>🎯 Goal Saved</h3>
+        <div class="num" id="goalSaved">$0</div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="sidebar">
+        <h2>🌈 Learn & Play</h2>
+        <div class="menu">
+          <button class="tab-btn active" data-tab="welcome">🏡 Welcome</button>
+          <button class="tab-btn" data-tab="lesson1">💵 What Is Money?</button>
+          <button class="tab-btn" data-tab="lesson2">🛍️ Needs vs Wants</button>
+          <button class="tab-btn" data-tab="lesson3">🐷 Save, Spend, Share</button>
+          <button class="tab-btn" data-tab="lesson4">🍋 Earn Money</button>
+          <button class="tab-btn" data-tab="story">📖 Story Time</button>
+          <button class="tab-btn" data-tab="game1">🪙 Coin Sorting Game</button>
+          <button class="tab-btn" data-tab="game2">🎯 Saving Goal Game</button>
+          <button class="tab-btn" data-tab="quiz">🧠 Fun Quiz</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div id="tabContent"></div>
+      </main>
+    </section>
+
+    <div class="footer-note">
+      Made for playful finance learning • Little Kids Version
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        const state = {
+          stars: 0,
+          coins: 0,
+          lessonsDone: 0,
+          goalSaved: 0,
+          completedLessons: new Set(),
+          currentQuiz: 0,
+          quizScore: 0,
+          storyStep: 0
+        };
+
+        const tabContent = document.getElementById('tabContent');
+        const starsCount = document.getElementById('starsCount');
+        const coinsCount = document.getElementById('coinsCount');
+        const lessonsDone = document.getElementById('lessonsDone');
+        const goalSaved = document.getElementById('goalSaved');
+
+        function updateStats() {
+          starsCount.textContent = state.stars;
+          coinsCount.textContent = state.coins;
+          lessonsDone.textContent = state.lessonsDone;
+          goalSaved.textContent = "$" + state.goalSaved;
+        }
+
+        function reward(stars = 1, coins = 1) {
+          state.stars += stars;
+          state.coins += coins;
+          updateStats();
+        }
+
+        function completeLesson(id) {
+          if (!state.completedLessons.has(id)) {
+            state.completedLessons.add(id);
+            state.lessonsDone += 1;
+            reward(2, 2);
+            updateStats();
+          }
+        }
+
+        const tabs = {
+          welcome: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🏡 Welcome to Money Garden</h2>
+            <span class="badge">Start Here</span>
+          </div>
+          <p>Hi, little learner! In this app, you will learn:</p>
+          <ul>
+            <li>What money is</li>
+            <li>What we need and what we want</li>
+            <li>How to save, spend, and share</li>
+            <li>How people earn money</li>
+            <li>How to make smart choices</li>
+          </ul>
+          <div class="story-box">
+            <strong>Penny says:</strong><br>
+            “Money is a helper tool. We can use it wisely. We can save some, spend some, and share some.”
+          </div>
+          <div class="progress-wrap">
+            <p><strong>Your learning mission:</strong></p>
+            <div class="progress">
+              <div class="progress-bar" style="width:${Math.min((state.lessonsDone / 4) * 100, 100)}%"></div>
+            </div>
+          </div>
+        </div>
+      `,
+
+          lesson1: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>💵 Lesson 1: What Is Money?</h2>
+            <span class="badge">Easy</span>
+          </div>
+          <p>Money is something we use to buy things and pay for services.</p>
+          <p>People use money to buy food, clothes, books, toys, and many other things.</p>
+          <p>Money can come as <strong>coins</strong>, <strong>bills</strong>, or numbers in a bank account.</p>
+
+          <div class="story-box">
+            <strong>Example:</strong><br>
+            You go to a store. You want an apple. You give money, and the store gives you the apple.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson1', true, this)">Money helps us buy things ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson1', false, this)">Money is only for toys</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson1', false, this)">Money grows on trees</button>
+          </div>
+          <div id="feedback-lesson1" class="feedback"></div>
+        </div>
+      `,
+
+          lesson2: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🛍️ Lesson 2: Needs vs Wants</h2>
+            <span class="badge">Smart Choice</span>
+          </div>
+          <p><strong>Needs</strong> are things we must have.</p>
+          <p>Examples: food, water, home, clothes.</p>
+          <p><strong>Wants</strong> are things that are nice to have, but not necessary.</p>
+          <p>Examples: extra toys, candy, fancy stickers.</p>
+
+          <div class="shop">
+            <div class="item">
+              <span class="emoji">🍞</span>
+              Bread
+              <div class="small">Need</div>
+            </div>
+            <div class="item">
+              <span class="emoji">💧</span>
+              Water
+              <div class="small">Need</div>
+            </div>
+            <div class="item">
+              <span class="emoji">🧸</span>
+              Teddy Bear
+              <div class="small">Want</div>
+            </div>
+            <div class="item">
+              <span class="emoji">🍭</span>
+              Candy
+              <div class="small">Want</div>
+            </div>
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson2', true, this)">Food is a need ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson2', false, this)">Every toy is a need</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson2', false, this)">Candy is a need</button>
+          </div>
+          <div id="feedback-lesson2" class="feedback"></div>
+        </div>
+      `,
+
+          lesson3: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🐷 Lesson 3: Save, Spend, Share</h2>
+            <span class="badge">Golden Rule</span>
+          </div>
+          <p>When you get money, you do not have to use it all at once.</p>
+          <p>You can:</p>
+          <ul>
+            <li><strong>Save</strong> for later</li>
+            <li><strong>Spend</strong> on something now</li>
+            <li><strong>Share</strong> by helping others</li>
+          </ul>
+
+          <div class="story-box">
+            <strong>Example:</strong><br>
+            If you get $6, maybe you save $3, spend $2, and share $1.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson3', true, this)">Saving means keeping some for later ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson3', false, this)">Spend all right away</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson3', false, this)">Sharing is bad</button>
+          </div>
+          <div id="feedback-lesson3" class="feedback"></div>
+        </div>
+      `,
+
+          lesson4: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🍋 Lesson 4: Earn Money</h2>
+            <span class="badge">Work & Reward</span>
+          </div>
+          <p>People earn money by doing work.</p>
+          <p>Adults may earn money through jobs. Kids can learn that helping, creating, and doing useful work has value.</p>
+          <p>Examples:</p>
+          <ul>
+            <li>Helping with a small family task</li>
+            <li>Selling lemonade in a pretend lesson</li>
+            <li>Making craft items in a learning activity</li>
+          </ul>
+
+          <div class="story-box">
+            <strong>Big idea:</strong><br>
+            Money does not magically appear. It is often earned by effort, time, and helping others.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson4', true, this)">People earn money by working ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson4', false, this)">Money only falls from the sky</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson4', false, this)">No one needs to work</button>
+          </div>
+          <div id="feedback-lesson4" class="feedback"></div>
+        </div>
+      `,
+
+          story: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>📖 Story Time: Penny and the Three Jars</h2>
+            <span class="badge">Interactive Story</span>
+          </div>
+          <div id="storyArea"></div>
+        </div>
+      `,
+
+          game1: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🪙 Coin Sorting Game</h2>
+            <span class="badge">Drag & Drop</span>
+          </div>
+          <p>Drag the coins into the jars: <strong>Save</strong>, <strong>Spend</strong>, and <strong>Share</strong>.</p>
+          <div class="game-area">
+            <div class="coins" id="coinPool"></div>
+
+            <div class="jar-row">
+              <div class="jar" ondragover="allowDrop(event)" ondrop="dropCoin(event, 'save')">
+                <h3>🐷 Save</h3>
+                <p class="small">Keep for later</p>
+                <div class="jar-drop" id="jar-save"></div>
+              </div>
+
+              <div class="jar" ondragover="allowDrop(event)" ondrop="dropCoin(event, 'spend')">
+                <h3>🛍️ Spend</h3>
+                <p class="small">Use now</p>
+                <div class="jar-drop" id="jar-spend"></div>
+              </div>
+
+              <div class="jar" ondragover="allowDrop(event)" ondrop="dropCoin(event, 'share')">
+                <h3>❤️ Share</h3>
+                <p class="small">Help others</p>
+                <div class="jar-drop" id="jar-share"></div>
+              </div>
+            </div>
+
+            <button class="choice-btn" onclick="resetCoinGame()">🔄 Reset Game</button>
+            <button class="choice-btn" onclick="finishCoinGame()">✅ Finish Sorting</button>
+            <div id="coinGameFeedback" class="feedback"></div>
+          </div>
+        </div>
+      `,
+
+          game2: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🎯 Saving Goal Game</h2>
+            <span class="badge">Goal Builder</span>
+          </div>
+          <p>Penny wants to save for a kite that costs <strong>$10</strong>.</p>
+          <p>Click coins to add money to the goal jar.</p>
+
+          <div class="game-area">
+            <div style="font-size:4rem;text-align:center;">🪁</div>
+            <h3 style="text-align:center;">Goal: Buy the Kite</h3>
+
+            <div class="progress-wrap">
+              <p><strong>Saved: $<span id="savedNow">0</span> / $10</strong></p>
+              <div class="progress">
+                <div class="progress-bar" id="goalBar"></div>
+              </div>
+            </div>
+
+            <div class="choices">
+              <button class="choice-btn" onclick="addGoalMoney(1)">Add $1</button>
+              <button class="choice-btn" onclick="addGoalMoney(2)">Add $2</button>
+              <button class="choice-btn" onclick="addGoalMoney(5)">Add $5</button>
+              <button class="choice-btn" onclick="resetGoal()">Reset Goal</button>
+            </div>
+
+            <div id="goalFeedback" class="feedback"></div>
+          </div>
+        </div>
+      `,
+
+          quiz: `
+        <div class="lesson-card">
+          <div class="lesson-title">
+            <h2>🧠 Fun Quiz</h2>
+            <span class="badge">Review Time</span>
+          </div>
+          <div id="quizArea"></div>
+        </div>
+      `
+        };
+
+        function renderTab(tabName) {
+          document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabName);
+          });
+
+          tabContent.innerHTML = tabs[tabName];
+
+          if (tabName === 'story') renderStory();
+          if (tabName === 'game1') initCoinGame();
+          if (tabName === 'game2') renderGoalGame();
+          if (tabName === 'quiz') renderQuiz();
+        }
+
+        function lessonCheck(id, correct) {
+          const box = document.getElementById(`feedback-${id}`);
+          if (correct) {
+            box.className = 'feedback good';
+            box.textContent = 'Great job! You got it right! ⭐';
+            reward(2, 1);
+            completeLesson(id);
+          } else {
+            box.className = 'feedback bad';
+            box.textContent = 'Nice try! Let’s think again.';
+          }
+        }
+
+        const storyPages = [
+          {
+            text: `
+          <p>One sunny morning, Penny the Squirrel found <strong>3 shiny coins</strong>.</p>
+          <p>Penny smiled and said, “I should make a smart choice with my money!”</p>
+        `,
+            choices: [
+              { text: "Put all coins in candy", good: false, msg: "Candy is fun, but using every coin right away is not always the smartest choice." },
+              { text: "Save some, spend some, share some", good: true, msg: "Wonderful! That is a smart money plan." }
+            ]
+          },
+          {
+            text: `
+          <p>Penny used <strong>1 coin to buy fruit</strong>, <strong>1 coin to save</strong>, and <strong>1 coin to help a friend</strong>.</p>
+          <p>Penny felt proud because the money was used wisely.</p>
+        `,
+            choices: [
+              { text: "That was a balanced choice", good: true, msg: "Yes! Penny used money in a thoughtful way." },
+              { text: "Saving is never useful", good: false, msg: "Saving helps us get bigger things later." }
+            ]
+          },
+          {
+            text: `
+          <p>Later, Penny wanted a beautiful kite that cost <strong>$10</strong>.</p>
+          <p>Penny learned that saving a little at a time helps reach a big goal.</p>
+        `,
+            choices: [
+              { text: "Big goals can be reached slowly", good: true, msg: "Exactly! Small saving steps can lead to big goals." },
+              { text: "Goals only happen in one day", good: false, msg: "Many goals take time and patience." }
+            ]
+          }
+        ];
+
+        function renderStory() {
+          const page = storyPages[state.storyStep];
+          const storyArea = document.getElementById('storyArea');
+
+          storyArea.innerHTML = `
+        <div class="story-box">${page.text}</div>
+        <div class="choices">
+          ${page.choices.map((c, i) => `
+            <button class="choice-btn" onclick="storyChoice(${i})">${c.text}</button>
+          `).join('')}
+        </div>
+        <div id="storyFeedback" class="feedback"></div>
+      `;
+        }
+
+        function storyChoice(index) {
+          const page = storyPages[state.storyStep];
+          const choice = page.choices[index];
+          const box = document.getElementById('storyFeedback');
+
+          if (choice.good) {
+            box.className = 'feedback good';
+            box.textContent = choice.msg;
+            reward(2, 2);
+            setTimeout(() => {
+              state.storyStep++;
+              if (state.storyStep >= storyPages.length) {
+                completeLesson('story');
+                document.getElementById('storyArea').innerHTML = `
+              <div class="story-box">
+                <h3>🎉 Story Complete!</h3>
+                <p>You finished Penny’s story and learned smart money habits!</p>
+              </div>
+            `;
+              } else {
+                renderStory();
+              }
+            }, 900);
+          } else {
+            box.className = 'feedback bad';
+            box.textContent = choice.msg;
+          }
+        }
+
+        let coinId = 0;
+
+        function initCoinGame() {
+          const pool = document.getElementById('coinPool');
+          if (!pool) return;
+          pool.innerHTML = '';
+          document.getElementById('jar-save').innerHTML = '';
+          document.getElementById('jar-spend').innerHTML = '';
+          document.getElementById('jar-share').innerHTML = '';
+          document.getElementById('coinGameFeedback').className = 'feedback';
+
+          for (let i = 0; i < 6; i++) {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            coin.draggable = true;
+            coin.textContent = '$1';
+            coin.id = 'coin-' + (coinId++);
+            coin.addEventListener('dragstart', dragCoin);
+            pool.appendChild(coin);
+          }
+        }
+
+        function dragCoin(e) {
+          e.dataTransfer.setData('text', e.target.id);
+        }
+
+        function allowDrop(e) {
+          e.preventDefault();
+        }
+
+        function dropCoin(e, jarName) {
+          e.preventDefault();
+          const id = e.dataTransfer.getData('text');
+          const coin = document.getElementById(id);
+          if (coin) {
+            document.getElementById('jar-' + jarName).appendChild(coin);
+          }
+        }
+
+        function resetCoinGame() {
+          initCoinGame();
+        }
+
+        function finishCoinGame() {
+          const saveCount = document.getElementById('jar-save').children.length;
+          const spendCount = document.getElementById('jar-spend').children.length;
+          const shareCount = document.getElementById('jar-share').children.length;
+          const total = saveCount + spendCount + shareCount;
+          const box = document.getElementById('coinGameFeedback');
+
+          if (total < 6) {
+            box.className = 'feedback bad';
+            box.textContent = 'Please sort all the coins first.';
+            return;
+          }
+
+          if (saveCount >= 2 && spendCount >= 2 && shareCount >= 1) {
+            box.className = 'feedback good';
+            box.textContent = 'Awesome! You made a balanced money plan! ⭐';
+            reward(4, 6);
+            completeLesson('game1');
+          } else {
+            box.className = 'feedback good';
+            box.textContent = 'Good job sorting! Different choices are possible, but balanced choices are often smart too.';
+            reward(2, 3);
+          }
+        }
+
+        let currentGoal = 0;
+
+        function renderGoalGame() {
+          const savedNow = document.getElementById('savedNow');
+          const goalBar = document.getElementById('goalBar');
+          const feedback = document.getElementById('goalFeedback');
+          if (savedNow) savedNow.textContent = currentGoal;
+          if (goalBar) goalBar.style.width = Math.min((currentGoal / 10) * 100, 100) + '%';
+          if (feedback) feedback.className = 'feedback';
+        }
+
+        function addGoalMoney(amount) {
+          currentGoal += amount;
+          if (currentGoal > 10) currentGoal = 10;
+          document.getElementById('savedNow').textContent = currentGoal;
+          document.getElementById('goalBar').style.width = (currentGoal / 10) * 100 + '%';
+
+          const box = document.getElementById('goalFeedback');
+          if (currentGoal >= 10) {
+            box.className = 'feedback good';
+            box.textContent = 'Yay! You reached the goal and bought the kite! 🪁';
+            state.goalSaved = 10;
+            reward(5, 5);
+            completeLesson('game2');
+            updateStats();
+          } else {
+            box.className = 'feedback good';
+            box.textContent = 'Nice saving! Keep going!';
+          }
+        }
+
+        function resetGoal() {
+          currentGoal = 0;
+          renderGoalGame();
+        }
+
+        const quizQuestions = [
+          {
+            q: "What is money used for?",
+            options: ["To buy things", "Only to draw pictures", "Only for bedtime"],
+            answer: 0
+          },
+          {
+            q: "Which one is a need?",
+            options: ["Water", "Extra candy", "Fancy toy"],
+            answer: 0
+          },
+          {
+            q: "Saving means...",
+            options: ["Keeping some money for later", "Throwing money away", "Using all of it now"],
+            answer: 0
+          },
+          {
+            q: "People often earn money by...",
+            options: ["Working", "Sleeping only", "Magic only"],
+            answer: 0
+          }
+        ];
+
+        function renderQuiz() {
+          const area = document.getElementById('quizArea');
+          if (state.currentQuiz >= quizQuestions.length) {
+            area.innerHTML = `
+          <div class="story-box">
+            <h3>🎉 Quiz Finished!</h3>
+            <p>Your score: <strong>${state.quizScore} / ${quizQuestions.length}</strong></p>
+            <p>Great learning, money explorer!</p>
+          </div>
+          <div class="choices">
+            <button class="choice-btn" onclick="restartQuiz()">🔄 Play Quiz Again</button>
+          </div>
+        `;
+            completeLesson('quiz');
+            return;
+          }
+
+          const q = quizQuestions[state.currentQuiz];
+          area.innerHTML = `
+        <div class="quiz-q"><strong>Q${state.currentQuiz + 1}.</strong> ${q.q}</div>
+        <div class="choices">
+          ${q.options.map((opt, i) => `
+            <button class="choice-btn" onclick="answerQuiz(${i})">${opt}</button>
+          `).join('')}
+        </div>
+        <div id="quizFeedback" class="feedback"></div>
+      `;
+        }
+
+        function answerQuiz(index) {
+          const q = quizQuestions[state.currentQuiz];
+          const box = document.getElementById('quizFeedback');
+
+          if (index === q.answer) {
+            state.quizScore++;
+            reward(2, 1);
+            box.className = 'feedback good';
+            box.textContent = 'Correct! Great thinking!';
+          } else {
+            box.className = 'feedback bad';
+            box.textContent = 'Nice try! Let’s learn and keep going.';
+          }
+
+          setTimeout(() => {
+            state.currentQuiz++;
+            renderQuiz();
+          }, 800);
+        }
+
+        function restartQuiz() {
+          state.currentQuiz = 0;
+          state.quizScore = 0;
+          renderQuiz();
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => renderTab(btn.dataset.tab));
+        });
+
+        updateStats();
+        renderTab('welcome');
+
+        window.lessonCheck = lessonCheck;
+        window.storyChoice = storyChoice;
+        window.allowDrop = allowDrop;
+        window.dropCoin = dropCoin;
+        window.dragCoin = dragCoin;
+        window.resetCoinGame = resetCoinGame;
+        window.finishCoinGame = finishCoinGame;
+        window.addGoalMoney = addGoalMoney;
+        window.resetGoal = resetGoal;
+        window.answerQuiz = answerQuiz;
+        window.restartQuiz = restartQuiz;
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Money Lab - Middle School Finance</title>
+  <style>
+    :root {
+      --bg1: #eef4ff;
+      --bg2: #fff6e8;
+      --card: #ffffff;
+      --text: #24324a;
+      --line: #d9e3f0;
+      --accent: #72c9ff;
+      --accent2: #ffd56f;
+      --accent3: #80de90;
+      --accent4: #ff9db8;
+      --good: #1f8c54;
+      --bad: #b54848;
+      --warn: #a56a00;
+      --shadow: 0 12px 28px rgba(0, 0, 0, .08);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    }
+
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 8px 14px;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #22324c;
+    }
+
+    .nav-links a:hover {
+      background: #e6f0ff;
+    }
+
+    .nav-links a.active {
+      background: rgb(137, 63, 137);
+      color: white;
+    }
+
+    body {
+      margin: 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    .app {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d8eeff, #fff0b8, #ffdce9);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 580px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .hero-mascot {
+      flex: 0 0 250px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .hero-mascot .big {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, .92);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat h3 {
+      margin: 0;
+      font-size: .92rem;
+    }
+
+    .stat .num {
+      margin-top: 8px;
+      font-size: 1.55rem;
+      font-weight: 800;
+    }
+
+    .main {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    .sidebar,
+    .content {
+      background: rgba(255, 255, 255, .82);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar h2,
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu button {
+      border: none;
+      border-radius: 18px;
+      background: #fff;
+      padding: 13px 14px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      transition: .18s ease;
+    }
+
+    .menu button:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu button.active {
+      background: linear-gradient(90deg, #ebf8ff, #fff2c7);
+      font-weight: 700;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eef7ff;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid #eef3f8;
+      border-radius: 18px;
+      padding: 15px;
+      line-height: 1.65;
+      margin-top: 14px;
+    }
+
+    .warn-box {
+      background: #fff7e6;
+      border: 1px solid #ffe0a3;
+      color: #7a5100;
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .item {
+      background: #fff;
+      border: 1px solid #eef3f8;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      border: none;
+      border-radius: 18px;
+      background: #f8fbff;
+      padding: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      transition: .18s ease;
+    }
+
+    .choice-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e9fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffe9e9;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff8e6;
+      color: var(--warn);
+    }
+
+    .game-area {
+      background: linear-gradient(180deg, #ffffff, #f7fcff);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 18px;
+      background: #eaf2f8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #80de90, #72c9ff);
+      transition: .3s ease;
+    }
+
+    .money-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .money-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .money-box h4 {
+      margin: 0 0 6px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn-row button,
+    .shop-item button,
+    .sim-card button {
+      border: none;
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: #f4fbff;
+      box-shadow: var(--shadow);
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .shop-item,
+    .sim-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .quiz-q {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .small {
+      font-size: .95rem;
+      opacity: .85;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: .95rem;
+      opacity: .8;
+      padding: 20px 0 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #f0f7ff;
+      font-size: .85rem;
+      font-weight: 700;
+      margin: 3px 6px 0 0;
+    }
+
+    @media (max-width: 1080px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-3,
+      .money-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+
+      .stats,
+      .grid-2,
+      .grid-3,
+      .money-board {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topnav">
+    <div class="nav-title">💰 Finance Academy</div>
+
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="index1.html">🧸 Little Kids</a>
+      <a href="index2.html">📚 Upper Elementary</a>
+      <a href="index3.html" class="active">🧠 Middle School</a>
+      <a href="index5.html">🎓 High School</a>
+    </div>
+  </div>
+  <div class="app">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>🧪 Money Lab</h1>
+        <p><strong>Middle School Finance App</strong></p>
+        <p>Learn budgeting, banking, taxes, inflation, credit, investing, risk, diversification, and scam detection in a
+          fun step-by-step way.</p>
+        <p class="small">Built for learners ready for deeper money ideas and real-world situations.</p>
+      </div>
+      <div class="hero-mascot">
+        <span class="big">🦉</span>
+        <strong>Nova the Owl</strong>
+        <div>“Smart money choices are skills you can build.”</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <h3>⭐ Stars</h3>
+        <div class="num" id="starsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>💰 Coins</h3>
+        <div class="num" id="coinsCount">0</div>
+      </div>
+      <div class="stat">
+        <h3>📘 Lessons Done</h3>
+        <div class="num" id="lessonsDone">0</div>
+      </div>
+      <div class="stat">
+        <h3>🏦 Savings</h3>
+        <div class="num" id="savingsCount">$0</div>
+      </div>
+      <div class="stat">
+        <h3>📈 Portfolio</h3>
+        <div class="num" id="portfolioCount">$0</div>
+      </div>
+      <div class="stat">
+        <h3>🚨 Scam Score</h3>
+        <div class="num" id="scamScore">0</div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="sidebar">
+        <h2>🧭 Modules</h2>
+        <div class="menu">
+          <button class="tab-btn active" data-tab="welcome">🏡 Welcome</button>
+          <button class="tab-btn" data-tab="lesson1">📒 Budgeting Deeper</button>
+          <button class="tab-btn" data-tab="lesson2">🛟 Emergency Fund</button>
+          <button class="tab-btn" data-tab="lesson3">💳 Debit Cards & Statements</button>
+          <button class="tab-btn" data-tab="lesson4">🧾 Taxes Intro</button>
+          <button class="tab-btn" data-tab="lesson5">📦 Inflation Intro</button>
+          <button class="tab-btn" data-tab="lesson6">🏛️ Credit Basics</button>
+          <button class="tab-btn" data-tab="lesson7">📈 Investing Basics</button>
+          <button class="tab-btn" data-tab="lesson8">⚖️ Risk & Diversification</button>
+          <button class="tab-btn" data-tab="lesson9">🕵️ Scam Safety</button>
+          <button class="tab-btn" data-tab="story">📖 Story Mode</button>
+          <button class="tab-btn" data-tab="game1">🧾 Budget Simulator</button>
+          <button class="tab-btn" data-tab="game2">🏦 Statement Lab</button>
+          <button class="tab-btn" data-tab="game3">📈 Investing Simulator</button>
+          <button class="tab-btn" data-tab="game4">🛑 Scam Detector</button>
+          <button class="tab-btn" data-tab="quiz">🧠 Quiz</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div id="tabContent"></div>
+      </main>
+    </section>
+
+    <div class="footer">Middle School Version • Stronger money habits, deeper real-world thinking</div>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        const state = {
+          stars: 0,
+          coins: 0,
+          lessonsDone: 0,
+          savings: 0,
+          portfolio: 0,
+          scamScore: 0,
+          completedLessons: new Set(),
+          storyStep: 0,
+          currentQuiz: 0,
+          quizScore: 0
+        };
+
+        const statsEls = {
+          stars: document.getElementById("starsCount"),
+          coins: document.getElementById("coinsCount"),
+          lessonsDone: document.getElementById("lessonsDone"),
+          savings: document.getElementById("savingsCount"),
+          portfolio: document.getElementById("portfolioCount"),
+          scamScore: document.getElementById("scamScore")
+        };
+
+        function updateStats() {
+          statsEls.stars.textContent = state.stars;
+          statsEls.coins.textContent = state.coins;
+          statsEls.lessonsDone.textContent = state.lessonsDone;
+          statsEls.savings.textContent = "$" + state.savings;
+          statsEls.portfolio.textContent = "$" + state.portfolio;
+          statsEls.scamScore.textContent = state.scamScore;
+        }
+
+        function reward(stars = 1, coins = 1) {
+          state.stars += stars;
+          state.coins += coins;
+          updateStats();
+        }
+
+        function completeLesson(id) {
+          if (!state.completedLessons.has(id)) {
+            state.completedLessons.add(id);
+            state.lessonsDone += 1;
+            reward(2, 2);
+            updateStats();
+          }
+        }
+
+        function lessonCheck(id, correct) {
+          const box = document.getElementById("feedback-" + id);
+          if (correct) {
+            box.className = "feedback good";
+            box.textContent = "Great job! That is correct. ⭐";
+            reward(2, 1);
+            completeLesson(id);
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Nice try. Review the lesson and think again.";
+          }
+        }
+
+        const tabs = {
+          welcome: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🏡 Welcome to Money Lab</h2>
+            <span class="pill">Start Here</span>
+          </div>
+          <p>This level goes beyond simple saving and spending. You will learn money skills that connect to real life.</p>
+
+          <div class="grid-3">
+            <div class="item">
+              <span class="emoji">🧾</span>
+              <strong>Budget Smart</strong>
+              <div class="small">Plan for needs, wants, and future goals</div>
+            </div>
+            <div class="item">
+              <span class="emoji">📈</span>
+              <strong>Grow Money</strong>
+              <div class="small">Understand basic investing and risk</div>
+            </div>
+            <div class="item">
+              <span class="emoji">🛑</span>
+              <strong>Stay Safe</strong>
+              <div class="small">Spot scams and avoid money traps</div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <strong>Big idea:</strong><br>
+            Finance is not just about spending. It is about planning, protecting, comparing, and growing money wisely over time.
+          </div>
+
+          <div style="margin-top:14px;">
+            <strong>Progress</strong>
+            <div class="progress" style="margin-top:8px;">
+              <div class="progress-bar" style="width:${Math.min((state.lessonsDone / 14) * 100, 100)}%"></div>
+            </div>
+          </div>
+        </div>
+      `,
+
+          lesson1: `
+        <div class="card">
+          <div class="title-row">
+            <h2>📒 Lesson 1: Budgeting Deeper</h2>
+            <span class="pill">Plan With Purpose</span>
+          </div>
+          <p>A deeper budget is not just “money in and money out.” It also helps you separate:</p>
+          <div>
+            <span class="tag">Needs</span>
+            <span class="tag">Wants</span>
+            <span class="tag">Savings</span>
+            <span class="tag">Emergency money</span>
+            <span class="tag">Future goals</span>
+          </div>
+
+          <table>
+            <tr><th>Category</th><th>Example</th></tr>
+            <tr><td>Need</td><td>School supplies</td></tr>
+            <tr><td>Want</td><td>Extra snack or game item</td></tr>
+            <tr><td>Savings</td><td>Money kept for later</td></tr>
+            <tr><td>Goal</td><td>Bike, book set, event ticket</td></tr>
+          </table>
+
+          <div class="info-box">
+            A strong budget gives every dollar a job before you spend it.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson1', true)">A good budget includes savings and goals ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson1', false)">A budget is only for buying wants</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson1', false)">Budgeting means never planning ahead</button>
+          </div>
+          <div id="feedback-lesson1" class="feedback"></div>
+        </div>
+      `,
+
+          lesson2: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🛟 Lesson 2: Emergency Fund</h2>
+            <span class="pill">Safety First</span>
+          </div>
+          <p>An <strong>emergency fund</strong> is money saved for unexpected problems.</p>
+
+          <div class="grid-3">
+            <div class="item">
+              <span class="emoji">🚲</span>
+              Broken bike tire
+            </div>
+            <div class="item">
+              <span class="emoji">📚</span>
+              Unexpected school supply need
+            </div>
+            <div class="item">
+              <span class="emoji">🧥</span>
+              Replacement for something important
+            </div>
+          </div>
+
+          <div class="info-box">
+            Emergency money is different from goal money. Goal money is for something planned. Emergency money is for something unexpected.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson2', true)">Emergency money helps with surprises ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson2', false)">Emergency money is only for candy</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson2', false)">Emergency money and fun spending are always the same</button>
+          </div>
+          <div id="feedback-lesson2" class="feedback"></div>
+        </div>
+      `,
+
+          lesson3: `
+        <div class="card">
+          <div class="title-row">
+            <h2>💳 Lesson 3: Debit Cards & Statements</h2>
+            <span class="pill">Track Money</span>
+          </div>
+          <p>A <strong>debit card</strong> uses money already in your account. It is not the same as borrowing.</p>
+
+          <table>
+            <tr><th>Date</th><th>Activity</th><th>Amount</th><th>Balance</th></tr>
+            <tr><td>May 2</td><td>Deposit</td><td>+$20</td><td>$20</td></tr>
+            <tr><td>May 3</td><td>Notebook</td><td>-$5</td><td>$15</td></tr>
+            <tr><td>May 5</td><td>Snack</td><td>-$3</td><td>$12</td></tr>
+          </table>
+
+          <div class="info-box">
+            A statement or transaction list helps you track where money went. Tracking spending helps stop surprises.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson3', true)">A debit card uses your own account money ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson3', false)">A debit card creates free money</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson3', false)">Statements are never useful</button>
+          </div>
+          <div id="feedback-lesson3" class="feedback"></div>
+        </div>
+      `,
+
+          lesson4: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🧾 Lesson 4: Taxes Intro</h2>
+            <span class="pill">Shared Services</span>
+          </div>
+          <p><strong>Taxes</strong> are money collected by government to help pay for public services.</p>
+
+          <div class="grid-3">
+            <div class="item"><span class="emoji">🏫</span>Schools</div>
+            <div class="item"><span class="emoji">🛣️</span>Roads</div>
+            <div class="item"><span class="emoji">🚒</span>Emergency services</div>
+          </div>
+
+          <div class="info-box">
+            There are different kinds of taxes. For middle school, the key idea is simple: some money collected from people and businesses helps support shared community services.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson4', true)">Taxes help pay for public services ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson4', false)">Taxes are only for toys</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson4', false)">Taxes mean roads and schools pay for themselves magically</button>
+          </div>
+          <div id="feedback-lesson4" class="feedback"></div>
+        </div>
+      `,
+
+          lesson5: `
+        <div class="card">
+          <div class="title-row">
+            <h2>📦 Lesson 5: Inflation Intro</h2>
+            <span class="pill">Prices Change</span>
+          </div>
+          <p><strong>Inflation</strong> means prices can rise over time.</p>
+
+          <table>
+            <tr><th>Item</th><th>Earlier Price</th><th>Later Price</th></tr>
+            <tr><td>Notebook</td><td>$2</td><td>$3</td></tr>
+            <tr><td>Snack</td><td>$1</td><td>$2</td></tr>
+          </table>
+
+          <div class="info-box">
+            If prices rise, the same amount of money may buy fewer things than before.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson5', true)">Inflation means prices may go up over time ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson5', false)">Inflation means all prices always go down</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson5', false)">Inflation has nothing to do with buying power</button>
+          </div>
+          <div id="feedback-lesson5" class="feedback"></div>
+        </div>
+      `,
+
+          lesson6: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🏛️ Lesson 6: Credit Basics</h2>
+            <span class="pill">Borrow Carefully</span>
+          </div>
+          <p><strong>Credit</strong> means borrowing now and paying later.</p>
+          <p>Used wisely, borrowing can help. Used poorly, it can create problems.</p>
+
+          <div class="grid-2">
+            <div class="item">
+              <span class="emoji">👍</span>
+              <strong>Helpful idea</strong>
+              <div class="small">Borrow carefully and repay on time</div>
+            </div>
+            <div class="item">
+              <span class="emoji">⚠️</span>
+              <strong>Risky idea</strong>
+              <div class="small">Borrowing too much or forgetting repayment</div>
+            </div>
+          </div>
+
+          <div class="warn-box">
+            Credit is not free money. Borrowing usually means a promise to pay back, sometimes with extra cost.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson6', true)">Credit means borrowing, not free money ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson6', false)">Credit means money never has to be repaid</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson6', false)">Borrowing always has no risk</button>
+          </div>
+          <div id="feedback-lesson6" class="feedback"></div>
+        </div>
+      `,
+
+          lesson7: `
+        <div class="card">
+          <div class="title-row">
+            <h2>📈 Lesson 7: Investing Basics</h2>
+            <span class="pill">Grow Over Time</span>
+          </div>
+          <p><strong>Investing</strong> means putting money into something that may grow over time.</p>
+
+          <div class="grid-3">
+            <div class="item">
+              <span class="emoji">🏢</span>
+              <strong>Stocks</strong>
+              <div class="small">Owning tiny parts of companies</div>
+            </div>
+            <div class="item">
+              <span class="emoji">📜</span>
+              <strong>Bonds</strong>
+              <div class="small">Lending money for a return</div>
+            </div>
+            <div class="item">
+              <span class="emoji">🧺</span>
+              <strong>Funds</strong>
+              <div class="small">A mix of many investments together</div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            Investing can help money grow faster than just sitting still, but values can also go down. That is why time and patience matter.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson7', true)">Investing can grow money but also has risk ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson7', false)">Investing always goes up every day</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson7', false)">Investing and saving are exactly the same thing</button>
+          </div>
+          <div id="feedback-lesson7" class="feedback"></div>
+        </div>
+      `,
+
+          lesson8: `
+        <div class="card">
+          <div class="title-row">
+            <h2>⚖️ Lesson 8: Risk & Diversification</h2>
+            <span class="pill">Balance Matters</span>
+          </div>
+          <p><strong>Risk</strong> means the chance that an outcome may not go the way you hoped.</p>
+          <p><strong>Diversification</strong> means spreading money across different places instead of just one.</p>
+
+          <div class="grid-2">
+            <div class="item">
+              <span class="emoji">🥚</span>
+              <strong>One basket</strong>
+              <div class="small">If one thing fails, everything is affected</div>
+            </div>
+            <div class="item">
+              <span class="emoji">🧺</span>
+              <strong>Many baskets</strong>
+              <div class="small">Spreading out can reduce damage</div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            Diversification does not remove all risk, but it can reduce the harm from one bad result.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson8', true)">Diversification means not putting everything in one place ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson8', false)">Risk means guaranteed success</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson8', false)">Putting everything into one risky choice is always safest</button>
+          </div>
+          <div id="feedback-lesson8" class="feedback"></div>
+        </div>
+      `,
+
+          lesson9: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🕵️ Lesson 9: Scam Safety</h2>
+            <span class="pill">Protect Your Money</span>
+          </div>
+          <p>Scams often try to trick people with:</p>
+
+          <div>
+            <span class="tag">“Get rich quick”</span>
+            <span class="tag">Urgent pressure</span>
+            <span class="tag">Too-good-to-be-true promises</span>
+            <span class="tag">Requests for private information</span>
+          </div>
+
+          <div class="warn-box">
+            A smart rule: slow down, ask questions, and check with a trusted adult before acting.
+          </div>
+
+          <div class="choices">
+            <button class="choice-btn" onclick="lessonCheck('lesson9', true)">Too-good-to-be-true offers can be a warning sign ✅</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson9', false)">Urgent pressure always means it is safe</button>
+            <button class="choice-btn" onclick="lessonCheck('lesson9', false)">You should give personal info to every message that asks</button>
+          </div>
+          <div id="feedback-lesson9" class="feedback"></div>
+        </div>
+      `,
+
+          story: `
+        <div class="card">
+          <div class="title-row">
+            <h2>📖 Story Mode: Nova’s Community Project</h2>
+            <span class="pill">Interactive Story</span>
+          </div>
+          <div id="storyArea"></div>
+        </div>
+      `,
+
+          game1: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🧾 Budget Simulator</h2>
+            <span class="pill">Needs, Wants, and Safety</span>
+          </div>
+          <p>You have <strong>$40</strong> for the month. Build a plan with needs, savings, and optional wants.</p>
+          <div class="game-area">
+            <div class="money-board">
+              <div class="money-box">
+                <h4>Start Budget</h4>
+                <div id="budgetStartDisplay">$40</div>
+              </div>
+              <div class="money-box">
+                <h4>Spent</h4>
+                <div id="budgetSpentDisplay">$0</div>
+              </div>
+              <div class="money-box">
+                <h4>Left</h4>
+                <div id="budgetLeftDisplay">$40</div>
+              </div>
+              <div class="money-box">
+                <h4>Emergency Saved</h4>
+                <div id="budgetEmergencyDisplay">$0</div>
+              </div>
+            </div>
+
+            <div class="shop-grid">
+              <div class="shop-item">
+                <span class="emoji">📓</span>
+                School supplies
+                <div>$8</div>
+                <button onclick="buyBudgetChoice('School supplies',8,'need')">Choose</button>
+              </div>
+              <div class="shop-item">
+                <span class="emoji">🚌</span>
+                Transport pass
+                <div>$10</div>
+                <button onclick="buyBudgetChoice('Transport pass',10,'need')">Choose</button>
+              </div>
+              <div class="shop-item">
+                <span class="emoji">🎮</span>
+                Game add-on
+                <div>$12</div>
+                <button onclick="buyBudgetChoice('Game add-on',12,'want')">Choose</button>
+              </div>
+              <div class="shop-item">
+                <span class="emoji">🍿</span>
+                Movie snack
+                <div>$6</div>
+                <button onclick="buyBudgetChoice('Movie snack',6,'want')">Choose</button>
+              </div>
+              <div class="shop-item">
+                <span class="emoji">🛟</span>
+                Emergency fund
+                <div>$8</div>
+                <button onclick="buyBudgetChoice('Emergency fund',8,'emergency')">Choose</button>
+              </div>
+              <div class="shop-item">
+                <span class="emoji">📚</span>
+                Reading app
+                <div>$5</div>
+                <button onclick="buyBudgetChoice('Reading app',5,'need')">Choose</button>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button onclick="finishBudgetSim()">✅ Finish Plan</button>
+              <button onclick="resetBudgetSim()">🔄 Reset</button>
+            </div>
+            <div id="budgetSimFeedback" class="feedback"></div>
+          </div>
+        </div>
+      `,
+
+          game2: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🏦 Statement Lab</h2>
+            <span class="pill">Read the Account</span>
+          </div>
+          <p>Look at the transaction list and answer what the current balance should be.</p>
+          <div class="game-area">
+            <table>
+              <tr><th>Date</th><th>Action</th><th>Amount</th></tr>
+              <tr><td>June 1</td><td>Deposit</td><td>+$30</td></tr>
+              <tr><td>June 2</td><td>Notebook</td><td>-$7</td></tr>
+              <tr><td>June 4</td><td>Snack</td><td>-$4</td></tr>
+              <tr><td>June 6</td><td>Gift deposit</td><td>+$10</td></tr>
+            </table>
+
+            <div class="choices">
+              <button class="choice-btn" onclick="answerStatement(29)">$29</button>
+              <button class="choice-btn" onclick="answerStatement(39)">$39</button>
+              <button class="choice-btn" onclick="answerStatement(49)">$49</button>
+            </div>
+            <div id="statementFeedback" class="feedback"></div>
+          </div>
+        </div>
+      `,
+
+          game3: `
+        <div class="card">
+          <div class="title-row">
+            <h2>📈 Investing Simulator</h2>
+            <span class="pill">Risk vs Return</span>
+          </div>
+          <p>Start with <strong>$100</strong>. Choose how much to place into safer or riskier options.</p>
+          <div class="game-area">
+            <div class="money-board">
+              <div class="money-box">
+                <h4>Cash Left</h4>
+                <div id="investCash">$100</div>
+              </div>
+              <div class="money-box">
+                <h4>Bond Fund</h4>
+                <div id="investBond">$0</div>
+              </div>
+              <div class="money-box">
+                <h4>Stock Fund</h4>
+                <div id="investStock">$0</div>
+              </div>
+              <div class="money-box">
+                <h4>Total After Round</h4>
+                <div id="investTotal">$100</div>
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin-top:14px;">
+              <div class="sim-card">
+                <span class="emoji">📜</span>
+                <strong>Bond Fund</strong>
+                <div class="small">Usually steadier, lower growth</div>
+                <div class="btn-row" style="justify-content:center;">
+                  <button onclick="addInvestment('bond',10)">+ $10</button>
+                  <button onclick="addInvestment('bond',20)">+ $20</button>
+                </div>
+              </div>
+              <div class="sim-card">
+                <span class="emoji">🏢</span>
+                <strong>Stock Fund</strong>
+                <div class="small">More growth chance, more ups and downs</div>
+                <div class="btn-row" style="justify-content:center;">
+                  <button onclick="addInvestment('stock',10)">+ $10</button>
+                  <button onclick="addInvestment('stock',20)">+ $20</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button onclick="runInvestmentRound()">▶️ Run Market Round</button>
+              <button onclick="resetInvestmentSim()">🔄 Reset</button>
+            </div>
+            <div id="investFeedback" class="feedback"></div>
+          </div>
+        </div>
+      `,
+
+          game4: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🛑 Scam Detector</h2>
+            <span class="pill">Trust Your Thinking</span>
+          </div>
+          <div class="game-area">
+            <div id="scamArea"></div>
+          </div>
+        </div>
+      `,
+
+          quiz: `
+        <div class="card">
+          <div class="title-row">
+            <h2>🧠 Quiz Time</h2>
+            <span class="pill">Review</span>
+          </div>
+          <div id="quizArea"></div>
+        </div>
+      `
+        };
+
+        const tabContent = document.getElementById("tabContent");
+
+        function renderTab(tabName) {
+          document.querySelectorAll(".tab-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.tab === tabName);
+          });
+
+          tabContent.innerHTML = tabs[tabName];
+
+          if (tabName === "story") renderStory();
+          if (tabName === "game1") renderBudgetSim();
+          if (tabName === "game3") renderInvestmentSim();
+          if (tabName === "game4") renderScamGame();
+          if (tabName === "quiz") renderQuiz();
+        }
+
+        const storyPages = [
+          {
+            text: `
+          <div class="info-box">
+            Nova the Owl wanted to help organize a small community learning fair.<br><br>
+            Nova had <strong>$60</strong> to work with and needed to plan carefully.
+          </div>
+        `,
+            choices: [
+              { text: "Make a budget with needs and backup money", good: true, msg: "Excellent start. Planning and safety matter." },
+              { text: "Spend everything fast before thinking", good: false, msg: "Fast spending can create problems later." }
+            ]
+          },
+          {
+            text: `
+          <div class="info-box">
+            Nova set aside some money for supplies and some for emergencies, just in case something unexpected happened.
+          </div>
+        `,
+            choices: [
+              { text: "Emergency savings are smart", good: true, msg: "Yes. Surprises happen." },
+              { text: "Emergency money is pointless", good: false, msg: "Unexpected problems can appear at any time." }
+            ]
+          },
+          {
+            text: `
+          <div class="info-box">
+            Later, Nova compared prices at two stores and chose the better value instead of the first option.
+          </div>
+        `,
+            choices: [
+              { text: "Comparing prices helps protect a budget", good: true, msg: "Correct. Smart comparison keeps more money available." },
+              { text: "The first thing you see is always best", good: false, msg: "Not always. Comparing can save money." }
+            ]
+          },
+          {
+            text: `
+          <div class="info-box">
+            Nova also learned that some online offers promised “double your money by tonight.” Nova stopped and checked carefully.
+          </div>
+        `,
+            choices: [
+              { text: "That could be a scam warning sign", good: true, msg: "Exactly. Too-good-to-be-true promises are risky." },
+              { text: "Urgent money promises are always safe", good: false, msg: "No. Pressure and unrealistic promises can be danger signs." }
+            ]
+          },
+          {
+            text: `
+          <div class="info-box">
+            At the end, Nova saved some money, handled costs carefully, and even put a little into a simple investment mix to learn about growth and risk.
+          </div>
+        `,
+            choices: [
+              { text: "That shows balanced money thinking", good: true, msg: "Great job. Budgeting, protection, and growth work together." },
+              { text: "Only spending matters in finance", good: false, msg: "Finance includes planning, safety, and long-term choices too." }
+            ]
+          }
+        ];
+
+        function renderStory() {
+          const area = document.getElementById("storyArea");
+          const page = storyPages[state.storyStep];
+
+          area.innerHTML = `
+        ${page.text}
+        <div class="choices">
+          ${page.choices.map((c, i) => `
+            <button class="choice-btn" onclick="storyChoice(${i})">${c.text}</button>
+          `).join("")}
+        </div>
+        <div id="storyFeedback" class="feedback"></div>
+      `;
+        }
+
+        function storyChoice(i) {
+          const page = storyPages[state.storyStep];
+          const choice = page.choices[i];
+          const box = document.getElementById("storyFeedback");
+
+          if (choice.good) {
+            box.className = "feedback good";
+            box.textContent = choice.msg;
+            reward(2, 2);
+
+            setTimeout(() => {
+              state.storyStep++;
+              if (state.storyStep >= storyPages.length) {
+                completeLesson("story");
+                document.getElementById("storyArea").innerHTML = `
+              <div class="info-box">
+                <h3>🎉 Story Complete</h3>
+                <p>You helped Nova use budgeting, safety, comparison, and scam awareness together.</p>
+              </div>
+            `;
+              } else {
+                renderStory();
+              }
+            }, 900);
+          } else {
+            box.className = "feedback bad";
+            box.textContent = choice.msg;
+          }
+        }
+
+        let budgetSim = {
+          start: 40,
+          spent: 0,
+          left: 40,
+          emergency: 0,
+          needs: 0,
+          wants: 0,
+          chosen: []
+        };
+
+        function renderBudgetSim() {
+          updateBudgetSimBoard();
+          const box = document.getElementById("budgetSimFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function updateBudgetSimBoard() {
+          const start = document.getElementById("budgetStartDisplay");
+          const spent = document.getElementById("budgetSpentDisplay");
+          const left = document.getElementById("budgetLeftDisplay");
+          const emergency = document.getElementById("budgetEmergencyDisplay");
+          if (!start) return;
+
+          start.textContent = "$" + budgetSim.start;
+          spent.textContent = "$" + budgetSim.spent;
+          left.textContent = "$" + budgetSim.left;
+          emergency.textContent = "$" + budgetSim.emergency;
+          state.savings = budgetSim.emergency;
+          updateStats();
+        }
+
+        function buyBudgetChoice(name, cost, type) {
+          const box = document.getElementById("budgetSimFeedback");
+          if (budgetSim.chosen.includes(name)) {
+            box.className = "feedback warn";
+            box.textContent = "You already chose that.";
+            return;
+          }
+          if (cost > budgetSim.left) {
+            box.className = "feedback bad";
+            box.textContent = "That would go over your budget.";
+            return;
+          }
+
+          budgetSim.chosen.push(name);
+          budgetSim.spent += cost;
+          budgetSim.left -= cost;
+          if (type === "need") budgetSim.needs++;
+          if (type === "want") budgetSim.wants++;
+          if (type === "emergency") budgetSim.emergency += cost;
+
+          reward(1, 1);
+          updateBudgetSimBoard();
+
+          box.className = "feedback good";
+          box.textContent = `${name} added to your plan.`;
+        }
+
+        function finishBudgetSim() {
+          const box = document.getElementById("budgetSimFeedback");
+
+          if (budgetSim.needs >= 2 && budgetSim.emergency >= 8 && budgetSim.left >= 0) {
+            box.className = "feedback good";
+            box.textContent = "Excellent! You covered needs and protected yourself with emergency savings.";
+            reward(5, 5);
+            completeLesson("game1");
+          } else if (budgetSim.needs >= 2) {
+            box.className = "feedback warn";
+            box.textContent = "Good start, but try to include stronger emergency savings too.";
+            reward(2, 2);
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Try choosing important needs before extra wants.";
+          }
+        }
+
+        function resetBudgetSim() {
+          budgetSim = {
+            start: 40,
+            spent: 0,
+            left: 40,
+            emergency: 0,
+            needs: 0,
+            wants: 0,
+            chosen: []
+          };
+          renderBudgetSim();
+        }
+
+        function answerStatement(amount) {
+          const box = document.getElementById("statementFeedback");
+          if (amount === 29) {
+            box.className = "feedback good";
+            box.textContent = "Correct! 30 - 7 - 4 + 10 = 29.";
+            reward(4, 3);
+            completeLesson("game2");
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Not quite. Add deposits and subtract spending carefully.";
+          }
+        }
+
+        let investSim = {
+          cash: 100,
+          bond: 0,
+          stock: 0,
+          total: 100
+        };
+
+        function renderInvestmentSim() {
+          document.getElementById("investCash").textContent = "$" + investSim.cash;
+          document.getElementById("investBond").textContent = "$" + investSim.bond;
+          document.getElementById("investStock").textContent = "$" + investSim.stock;
+          document.getElementById("investTotal").textContent = "$" + investSim.total;
+          const box = document.getElementById("investFeedback");
+          if (box) box.className = "feedback";
+        }
+
+        function addInvestment(type, amount) {
+          const box = document.getElementById("investFeedback");
+          if (amount > investSim.cash) {
+            box.className = "feedback bad";
+            box.textContent = "Not enough cash left.";
+            return;
+          }
+
+          investSim.cash -= amount;
+          if (type === "bond") investSim.bond += amount;
+          if (type === "stock") investSim.stock += amount;
+          investSim.total = investSim.cash + investSim.bond + investSim.stock;
+
+          box.className = "feedback good";
+          box.textContent = `$${amount} added to the ${type === 'bond' ? 'bond fund' : 'stock fund'}.`;
+          renderInvestmentSim();
+        }
+
+        function runInvestmentRound() {
+          const box = document.getElementById("investFeedback");
+
+          if (investSim.bond === 0 && investSim.stock === 0) {
+            box.className = "feedback bad";
+            box.textContent = "Invest some money first.";
+            return;
+          }
+
+          // safer modest gain, riskier variable result
+          const bondGrowth = Math.round(investSim.bond * 0.05);
+          const stockScenarios = [-0.10, -0.03, 0.08, 0.15];
+          const randomRate = stockScenarios[Math.floor(Math.random() * stockScenarios.length)];
+          const stockChange = Math.round(investSim.stock * randomRate);
+
+          investSim.bond += bondGrowth;
+          investSim.stock += stockChange;
+          investSim.total = investSim.cash + investSim.bond + investSim.stock;
+          state.portfolio = investSim.total;
+
+          let msg = `Bond fund change: +$${bondGrowth}. `;
+          msg += stockChange >= 0 ? `Stock fund change: +$${stockChange}. ` : `Stock fund change: -$${Math.abs(stockChange)}. `;
+          msg += `New total: $${investSim.total}.`;
+
+          if (investSim.bond > 0 && investSim.stock > 0) {
+            msg += " Nice diversification!";
+            completeLesson("game3");
+            reward(5, 5);
+          } else {
+            reward(2, 2);
+          }
+
+          box.className = stockChange >= 0 ? "feedback good" : "feedback warn";
+          box.textContent = msg;
+          renderInvestmentSim();
+          updateStats();
+        }
+
+        function resetInvestmentSim() {
+          investSim = {
+            cash: 100,
+            bond: 0,
+            stock: 0,
+            total: 100
+          };
+          state.portfolio = 0;
+          renderInvestmentSim();
+          updateStats();
+        }
+
+        const scamRounds = [
+          {
+            q: "A message says: 'Send your account details now or lose everything in 10 minutes!'",
+            safe: false,
+            explain: "Urgent pressure and requests for private details are strong warning signs."
+          },
+          {
+            q: "A site says: 'Guaranteed to double your money by tonight with zero risk.'",
+            safe: false,
+            explain: "Unrealistic guaranteed returns are a classic warning sign."
+          },
+          {
+            q: "You ask a trusted adult to help check a money offer before clicking anything.",
+            safe: true,
+            explain: "That is a smart protection step."
+          },
+          {
+            q: "An offer sounds amazing, so you slow down and research it first.",
+            safe: true,
+            explain: "Checking before acting is a strong habit."
+          }
+        ];
+
+        let scamIndex = 0;
+        let scamPoints = 0;
+
+        function renderScamGame() {
+          const area = document.getElementById("scamArea");
+
+          if (scamIndex >= scamRounds.length) {
+            area.innerHTML = `
+          <div class="info-box">
+            <h3>🛡️ Scam Detector Complete</h3>
+            <p>Your score: <strong>${scamPoints} / ${scamRounds.length}</strong></p>
+            <p>You are learning to slow down, question, and protect money.</p>
+          </div>
+          <div class="btn-row">
+            <button onclick="restartScamGame()">🔄 Play Again</button>
+          </div>
+        `;
+            state.scamScore = scamPoints;
+            updateStats();
+            completeLesson("game4");
+            return;
+          }
+
+          const round = scamRounds[scamIndex];
+          area.innerHTML = `
+        <div class="quiz-q"><strong>Situation ${scamIndex + 1}:</strong> ${round.q}</div>
+        <div class="choices">
+          <button class="choice-btn" onclick="answerScam(true)">✅ Safe / Smart</button>
+          <button class="choice-btn" onclick="answerScam(false)">🚨 Risky / Scam Sign</button>
+        </div>
+        <div id="scamFeedback" class="feedback"></div>
+      `;
+        }
+
+        function answerScam(choice) {
+          const round = scamRounds[scamIndex];
+          const box = document.getElementById("scamFeedback");
+
+          if (choice === round.safe) {
+            scamPoints++;
+            reward(2, 1);
+            box.className = "feedback good";
+            box.textContent = "Correct! " + round.explain;
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Not quite. " + round.explain;
+          }
+
+          setTimeout(() => {
+            scamIndex++;
+            renderScamGame();
+          }, 900);
+        }
+
+        function restartScamGame() {
+          scamIndex = 0;
+          scamPoints = 0;
+          renderScamGame();
+        }
+
+        const quizQuestions = [
+          {
+            q: "What is a stronger budget meant to include?",
+            options: ["Needs, savings, goals, and emergency money", "Only wants", "Only surprise spending"],
+            answer: 0
+          },
+          {
+            q: "What is an emergency fund for?",
+            options: ["Unexpected problems", "Only candy", "Only video games"],
+            answer: 0
+          },
+          {
+            q: "What does a debit card usually use?",
+            options: ["Your own account money", "Endless free money", "Magic money"],
+            answer: 0
+          },
+          {
+            q: "What is the basic purpose of taxes?",
+            options: ["Help pay for public services", "Only raise toy prices", "Do nothing useful"],
+            answer: 0
+          },
+          {
+            q: "What is inflation?",
+            options: ["Prices may rise over time", "Prices always fall forever", "A type of bank card"],
+            answer: 0
+          },
+          {
+            q: "What is credit?",
+            options: ["Borrowing now and paying later", "Free money forever", "Saving only"],
+            answer: 0
+          },
+          {
+            q: "What is true about investing?",
+            options: ["It can grow money but also has risk", "It always goes up", "It has no ups and downs"],
+            answer: 0
+          },
+          {
+            q: "What is diversification?",
+            options: ["Spreading money across different places", "Putting everything in one risky choice", "Buying without thinking"],
+            answer: 0
+          },
+          {
+            q: "Which is a scam warning sign?",
+            options: ["Guaranteed huge gains with no risk", "Careful research", "Asking a trusted adult"],
+            answer: 0
+          }
+        ];
+
+        function renderQuiz() {
+          const area = document.getElementById("quizArea");
+
+          if (state.currentQuiz >= quizQuestions.length) {
+            area.innerHTML = `
+          <div class="info-box">
+            <h3>🏆 Quiz Complete</h3>
+            <p>Your score: <strong>${state.quizScore} / ${quizQuestions.length}</strong></p>
+            <p>You are building real financial thinking skills.</p>
+          </div>
+          <div class="btn-row">
+            <button onclick="restartQuiz()">🔄 Restart Quiz</button>
+          </div>
+        `;
+            completeLesson("quiz");
+            return;
+          }
+
+          const q = quizQuestions[state.currentQuiz];
+          area.innerHTML = `
+        <div class="quiz-q"><strong>Q${state.currentQuiz + 1}.</strong> ${q.q}</div>
+        <div class="choices">
+          ${q.options.map((opt, i) => `<button class="choice-btn" onclick="answerQuiz(${i})">${opt}</button>`).join("")}
+        </div>
+        <div id="quizFeedback" class="feedback"></div>
+      `;
+        }
+
+        function answerQuiz(i) {
+          const q = quizQuestions[state.currentQuiz];
+          const box = document.getElementById("quizFeedback");
+
+          if (i === q.answer) {
+            state.quizScore++;
+            reward(2, 1);
+            box.className = "feedback good";
+            box.textContent = "Correct!";
+          } else {
+            box.className = "feedback bad";
+            box.textContent = "Nice try. Keep learning!";
+          }
+
+          setTimeout(() => {
+            state.currentQuiz++;
+            renderQuiz();
+          }, 800);
+        }
+
+        function restartQuiz() {
+          state.currentQuiz = 0;
+          state.quizScore = 0;
+          renderQuiz();
+        }
+
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          btn.addEventListener("click", () => renderTab(btn.dataset.tab));
+        });
+
+        updateStats();
+        renderTab("welcome");
+
+        window.lessonCheck = lessonCheck;
+        window.storyChoice = storyChoice;
+        window.buyBudgetChoice = buyBudgetChoice;
+        window.finishBudgetSim = finishBudgetSim;
+        window.resetBudgetSim = resetBudgetSim;
+        window.answerStatement = answerStatement;
+        window.addInvestment = addInvestment;
+        window.runInvestmentRound = runInvestmentRound;
+        window.resetInvestmentSim = resetInvestmentSim;
+        window.answerScam = answerScam;
+        window.restartScamGame = restartScamGame;
+        window.answerQuiz = answerQuiz;
+        window.restartQuiz = restartQuiz;
+      </script>
+</body>
+
+</html>

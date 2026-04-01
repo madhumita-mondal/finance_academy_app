@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEGACY - Finance Academy</title>
+
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 12px;
+      font-weight: 700;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d8f7ff, #ffe8a6, #ffdede, #e7ddff);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.85;
+      max-width: 920px;
+      font-size: 1.04rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .8);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .quote {
+      background: #f4f8ff;
+      padding: 14px 16px;
+      border-left: 5px solid #7baeff;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .mini {
+      border: 1px solid #dfe8f2;
+      padding: 18px;
+      border-radius: 16px;
+      transition: .2s;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .mini:hover {
+      transform: translateY(-4px);
+    }
+
+    .legacy-plan {
+      background: #eef5ff;
+    }
+
+    .legacy-protect {
+      background: #e8fff0;
+    }
+
+    .legacy-family {
+      background: #fff7e8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      background: #22324c;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    button:hover {
+      background: #1a263a;
+      transform: scale(1.03);
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: #18794e;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: #b34040;
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: #9a6500;
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .footer-nav a:hover {
+      background: #1a263a;
+      transform: scale(1.03);
+    }
+
+    @media(max-width:900px) {
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Growing Money" style="color:rgb(137, 63, 137);"> 🏠 Home</a>
+      <!-- <a href="invest.html">⬅ INVEST</a> -->
+      <a href="wealth.html" style="color:rgb(137, 63, 137);">◀︎−Wealth</a>
+      <a href="journey.html" style="color:rgb(137, 63, 137);">Journey−▶︎</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>Estate and Legacy Basics</h1>
+      <p>
+        Legacy planning is about more than passing on money. It is about protecting people, reducing
+        confusion, and making sure your financial life does not become a burden for others if
+        something happens to you. A strong legacy plan creates clarity around assets, responsibilities,
+        intentions, and protection so that important things are handled with less stress and less
+        chaos.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill">Clarity</span>
+        <span class="pill">Protection</span>
+        <span class="pill">Family</span>
+        <span class="pill">Responsibility</span>
+        <span class="pill">Legacy</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Why Legacy Planning Matters</h2>
+
+      <p>
+        Many people think legacy planning only matters much later in life, but the real issue is not
+        age alone. The real issue is responsibility. If assets, accounts, obligations, or family
+        support depend on you, clarity matters. Without a plan, confusion can delay access, increase
+        stress, and create avoidable conflict during already difficult moments.
+      </p>
+
+      <p>
+        Legacy planning is not about expecting the worst. It is about reducing chaos and protecting
+        the people and intentions connected to your financial life.
+      </p>
+
+      <div class="quote">
+        A legacy plan is not only about what you leave behind. It is also about what you prevent from
+        becoming a burden.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. A Real Story</h2>
+
+      <p>
+        Two families experience similar financial losses after a major life event. In one case,
+        accounts, documents, and intentions are difficult to trace. Important details are unclear.
+        People are forced to search, guess, and wait during an already emotional time. In the other
+        case, the plan is simple but organized. Key information is easier to find. Responsibilities
+        are clearer. The family still experiences grief, but not the same degree of financial
+        confusion.
+      </p>
+
+      <p>
+        The difference is not only wealth. It is preparation.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. The Three Big Parts of Legacy Planning</h2>
+
+      <div class="grid-3">
+
+        <div class="mini legacy-plan">
+          <h3>Clarity of Intent</h3>
+          <p>
+            People should know what matters, what exists, and what should happen in broad terms.
+            Clarity reduces confusion and conflict.
+          </p>
+        </div>
+
+        <div class="mini legacy-protect">
+          <h3>Protection of Assets</h3>
+          <p>
+            Assets, accounts, and responsibilities should be organized so they are less likely to be
+            lost, delayed, or mishandled.
+          </p>
+        </div>
+
+        <div class="mini legacy-family">
+          <h3>Support for People</h3>
+          <p>
+            Legacy planning matters because financial choices affect real people, not only numbers on a
+            page.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. What Legacy Planning Often Includes</h2>
+
+      <table>
+        <tr>
+          <th>Part</th>
+          <th>Why It Matters</th>
+        </tr>
+        <tr>
+          <td>List of major assets and accounts</td>
+          <td>Helps important financial pieces be identified clearly</td>
+        </tr>
+        <tr>
+          <td>Beneficiary awareness</td>
+          <td>Reduces uncertainty around who should receive what</td>
+        </tr>
+        <tr>
+          <td>Important documents organized</td>
+          <td>Makes access and action easier during stressful moments</td>
+        </tr>
+        <tr>
+          <td>Basic written intentions</td>
+          <td>Helps reduce confusion and mismatch of expectations</td>
+        </tr>
+        <tr>
+          <td>Protection for dependents</td>
+          <td>Ensures financial responsibility is not ignored</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>5. Legacy Is Bigger Than Money</h2>
+
+      <p>
+        A legacy is not only about inheritance. It can also include values, structure, educational
+        support, family stability, and how responsibly you handle what you build. Some people leave
+        behind money but no clarity. Others leave behind modest resources with strong order and clear
+        intent. In many cases, clarity itself becomes part of the legacy.
+      </p>
+
+      <p>
+        This is why legacy planning belongs inside a serious financial education system. It asks not
+        only how wealth is built, but how responsibility is handled.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>6. Common Mistakes</h2>
+
+      <ul>
+        <li>Assuming legacy planning matters only for the very old or very wealthy</li>
+        <li>Keeping important financial information disorganized or invisible</li>
+        <li>Ignoring the needs of people who depend on you</li>
+        <li>Failing to think about what happens if you are suddenly unavailable</li>
+        <li>Confusing wealth accumulation with complete financial responsibility</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>7. Stronger Legacy Thinking</h2>
+
+      <p>
+        A stronger way to think about legacy is to ask simple but serious questions. If something
+        happened to you, would others know what to do? Would they know what exists, what matters, and
+        what needs attention? Would important goals continue, or would everything become confusion?
+      </p>
+
+      <div class="info-box">
+        Legacy planning becomes stronger when financial life is not only built, but also organized.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>8. Scenario Thinking</h2>
+
+      <div class="scenario">
+        <p>
+          Which response is usually stronger?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="choose('plan')">Keep major financial information organized and intentions clear</button>
+          <button onclick="choose('avoid')">Avoid the subject completely and hope others figure it out</button>
+        </div>
+
+        <div id="result" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>9. Legacy Builder Game</h2>
+
+      <p>
+        Build a stronger legacy structure. Try to improve clarity, protection, and support.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Clarity: <span id="clarityScore">0</span></div>
+        <div class="score-pill">Protection: <span id="protectionScore">0</span></div>
+        <div class="score-pill">Support: <span id="supportScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="legacyGame('organize')">Organize Accounts</button>
+        <button onclick="legacyGame('document')">Write Basic Intentions</button>
+        <button onclick="legacyGame('beneficiary')">Review Beneficiaries</button>
+        <button onclick="legacyGame('dependents')">Plan for Dependents</button>
+        <button onclick="legacyGame('ignore')">Ignore the Topic</button>
+        <button class="alt" onclick="resetLegacyGame()">Reset</button>
+      </div>
+
+      <div id="gameBox" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>10. Quick Check</h2>
+
+      <div class="scenario">
+        <p>
+          Which statement reflects stronger legacy thinking?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="quiz('a')">Legacy planning reduces future confusion and protects people</button>
+          <button onclick="quiz('b')">Legacy planning is mostly unnecessary unless someone is extremely wealthy</button>
+        </div>
+
+        <div id="quiz" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>11. Real Life Reflection</h2>
+
+      <p>
+        Think about your current financial life. If someone important had to understand your accounts,
+        assets, and major responsibilities, could they? Are the most important parts of your financial
+        life organized clearly enough that others would not be forced into confusion?
+      </p>
+
+      <p>
+        The more responsibility a person carries, the more meaningful this question becomes.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>12. Book Recommendations</h2>
+
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Responsibility and Wealth</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Helpful for understanding that wealth is not only about accumulation, but also about wise
+            stewardship and human responsibility.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Long-Term Thinking</div>
+          <h4>The Richest Man in Babylon</h4>
+          <p>
+            Useful for reinforcing the importance of planning, structure, and thinking beyond the
+            present moment.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        let clarity = 0;
+        let protection = 0;
+        let support = 0;
+
+        function updateLegacyBoard() {
+          document.getElementById("clarityScore").textContent = clarity;
+          document.getElementById("protectionScore").textContent = protection;
+          document.getElementById("supportScore").textContent = support;
+        }
+
+        function choose(type) {
+          let box = document.getElementById("result");
+          box.style.display = "block";
+
+          if (type === "plan") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Clear organization and intention reduce confusion and protect others from unnecessary stress.";
+          } else {
+            box.className = "feedback bad";
+            box.innerHTML = "This weakens protection. Avoiding the subject often creates more confusion later.";
+          }
+        }
+
+        function legacyGame(type) {
+          let box = document.getElementById("gameBox");
+          box.style.display = "block";
+
+          if (type === "organize") {
+            clarity += 2;
+            protection += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Strong move. Organized financial information improves clarity immediately.";
+          }
+
+          if (type === "document") {
+            clarity += 2;
+            support += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Good move. Basic written intentions can reduce confusion and conflict.";
+          }
+
+          if (type === "beneficiary") {
+            protection += 2;
+            clarity += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Strong move. Reviewing who receives what is an important part of clear legacy planning.";
+          }
+
+          if (type === "dependents") {
+            support += 2;
+            protection += 1;
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. Planning for dependents strengthens the human side of financial responsibility.";
+          }
+
+          if (type === "ignore") {
+            clarity -= 1;
+            protection -= 1;
+            support -= 1;
+            box.className = "feedback bad";
+            box.innerHTML = "Ignoring the topic weakens the structure because uncertainty grows when nothing is prepared.";
+          }
+
+          updateLegacyBoard();
+        }
+
+        function resetLegacyGame() {
+          clarity = 0;
+          protection = 0;
+          support = 0;
+          updateLegacyBoard();
+
+          let box = document.getElementById("gameBox");
+          box.style.display = "none";
+          box.innerHTML = "";
+          box.className = "feedback";
+        }
+
+        function quiz(ans) {
+          let box = document.getElementById("quiz");
+          box.style.display = "block";
+
+          if (ans === "a") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Legacy planning is really about clarity, protection, and reducing future burden.";
+          } else {
+            box.className = "feedback bad";
+            box.innerHTML = "Not quite. Legacy planning matters whenever responsibility, assets, or dependents are involved.";
+          }
+        }
+
+        updateLegacyBoard();
+      </script>
+
+</body>
+
+</html>

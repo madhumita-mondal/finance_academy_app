@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VALUE - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 820px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <a href="wealth_ladder.html" style="color:rgb(137, 63, 137);"> ◀︎− Wealth Ladder </a>
+      <a href="system.html" style="color:rgb(137, 63, 137);"> System −▶︎ </a>
+    </div>
+  </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>VALUE</h1>
+      <p>
+        Money usually flows toward value. Not just effort, not just time, and not just busyness —
+        but usefulness. A person becomes financially stronger when they learn how to solve real
+        problems, create results, save time, reduce pain, or improve life for others. This page is
+        about understanding why some work is paid more than other work, and why value matters more
+        than simply staying busy.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Problem Solving</span>
+        <span class="pill">Usefulness</span>
+        <span class="pill">Trust</span>
+        <span class="pill">Skill</span>
+        <span class="pill">Demand</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        A lot of people think money comes mainly from working hard. Hard work matters, but it is not
+        the full story. The market usually rewards people more when their effort creates stronger
+        results. Someone who solves a difficult problem, saves time for others, improves quality, or
+        builds trust can often earn more than someone who works just as hard doing lower-value tasks.
+      </p>
+      <div class="quote">
+        “Being busy is not the same as being valuable.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> income often rises when a person becomes more useful,
+        more skilled, more trusted, or more rare.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Aarav and Mia</h2>
+      <p>
+        Aarav and Mia both wanted to earn money. Aarav chose the fastest path he could find. He did
+        easy, repetitive tasks that almost anyone could do. He stayed busy for many hours and felt
+        productive, but his earnings stayed low because the work was common and easy to replace.
+        Mia took a different route. She spent time learning a useful skill that people actually
+        needed — helping others make their school flyers, social media posts, and small business
+        designs look better. At first, she earned less because she was still learning. But as her
+        skill improved, people began to trust her. They recommended her to others. Soon she earned
+        more in fewer hours because her work created a stronger result.
+      </p>
+      <p>
+        Aarav was surprised. He had worked harder for longer. But Mia had become more valuable. That
+        is the lesson: the world does not always pay the most to the person who is tiredest. It
+        often pays more to the person who is more useful.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What Creates Value?</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">🛠️</span>
+          <strong>Solving Problems</strong>
+          <p>People often pay when a real problem becomes smaller or disappears.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">⏱️</span>
+          <strong>Saving Time</strong>
+          <p>Work that saves time can be highly valuable because time is precious.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">📈</span>
+          <strong>Improving Results</strong>
+          <p>Better outcomes often create more value than more effort alone.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🤝</span>
+          <strong>Building Trust</strong>
+          <p>People return and refer others when they trust the result and the person.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Important:</strong> value is not only about what you do. It is also about how much
+        difference your work makes to someone else.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        Value is the reason one kind of work gets paid more than another. If a task is easy, common,
+        and replaceable, the money attached to it is often lower. If a task is rare, difficult, or
+        important, the money attached to it can be much higher. But skill alone is not enough.
+        Someone may be talented but unreliable, unclear, or hard to trust. That lowers real value.
+        So in practice, value is often built from four things together: usefulness, skill, trust,
+        and consistency.
+      </p>
+      <p>
+        This is why financial growth often begins before investing. It begins with becoming more
+        useful. The stronger your value to other people, the stronger your earning power can become.
+        Once earning power rises, saving and investing become easier. That is why VALUE is the first
+        segment. It sits underneath almost everything else.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td>The usefulness or benefit your work creates for others.</td>
+        </tr>
+        <tr>
+          <td>Demand</td>
+          <td>How much people want or need a skill, product, or service.</td>
+        </tr>
+        <tr>
+          <td>Skill</td>
+          <td>An ability that helps you create better or rarer results.</td>
+        </tr>
+        <tr>
+          <td>Trust</td>
+          <td>Confidence that you will deliver well and consistently.</td>
+        </tr>
+        <tr>
+          <td>Leverage</td>
+          <td>Ways to increase impact beyond your direct time alone.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Effort vs Value</h2>
+      <table>
+        <tr>
+          <th>Situation</th>
+          <th>Looks Like</th>
+          <th>Likely Result</th>
+        </tr>
+        <tr>
+          <td>Hard work without skill growth</td>
+          <td>Long hours, same ability, easily replaceable work</td>
+          <td>Low or slow income growth</td>
+        </tr>
+        <tr>
+          <td>Hard work with useful skill growth</td>
+          <td>Long hours plus stronger capability</td>
+          <td>Better future earning power</td>
+        </tr>
+        <tr>
+          <td>Useful skill + trust + consistency</td>
+          <td>Reliable, high-value problem solving</td>
+          <td>Stronger long-term income potential</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ “If I work longer, I will always earn more.”</strong>
+          <p>Longer hours can help, but if the work stays low-value, income may stay limited.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ “Busy means valuable.”</strong>
+          <p>Busyness can look impressive, but value depends on results and usefulness.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ “Only jobs create money.”</strong>
+          <p>Money can also come from skills, services, ownership, and investments.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ “Talent matters more than trust.”</strong>
+          <p>People often choose reliable value over inconsistent talent.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          You have five extra hours each week. Which choice is stronger for your long-term financial
+          future?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('bad')">Do easy low-value work only</button>
+          <button class="alt" onclick="showScenario('good')">Use part of the time to build a useful skill</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Mini Game: Value Builder</h2>
+      <p class="small">
+        Build your earning power by making smart choices. Try to raise Skill, Trust, and Value.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Skill: <span id="skillScore">0</span></div>
+        <div class="score-pill">Trust: <span id="trustScore">0</span></div>
+        <div class="score-pill">Value: <span id="valueScore">0</span></div>
+        <div class="score-pill">Energy: <span id="energyScore">6</span></div>
+      </div>
+
+      <div class="choice-row" style="margin-top:16px;">
+        <button onclick="playValueGame('learn')">Learn a useful skill</button>
+        <button onclick="playValueGame('solve')">Solve a real problem</button>
+        <button onclick="playValueGame('reliable')">Deliver reliably</button>
+        <button onclick="playValueGame('waste')">Stay busy without improvement</button>
+        <button class="alt" onclick="resetValueGame()">Reset Game</button>
+      </div>
+
+      <div id="gameFeedback" class="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> Why can one person earn more than another even if both work hard?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">Because one may create more useful results</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">Because money always follows effort only</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">Because being busy is the same as being valuable</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Which combination usually strengthens value the most?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">Skill + trust + consistency</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Random effort without improvement</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">Working longer without solving anything important</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> Which is the stronger long-term choice?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">Build a useful skill that solves real problems</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Stay in low-value work forever because it feels easy</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Ignore trust and just rely on talent</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Write down 3 real problems people around you often face.</li>
+          <li>Pick 1 problem you could help solve.</li>
+          <li>Write 1 skill that would make you more useful in solving it.</li>
+          <li>Write 1 small action you can take this week to improve that skill.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Career Value</div>
+          <h4>So Good They Can’t Ignore You</h4>
+          <p>
+            A powerful reminder that strong skills often create stronger opportunities than vague
+            passion alone.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Real-World Thinking</div>
+          <h4>Freakonomics</h4>
+          <p>
+            Helps learners think deeper about incentives, human behavior, and why outcomes are often
+            driven by hidden causes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="card">
+      <h2>13. Next Step</h2>
+      <p>
+        Once you understand value, the next question becomes obvious: how does value turn into
+        different types of earnings in the real world? That is the purpose of the next page.
+      </p>
+
+      <div class="footer-nav">
+        <a href="home.html">🏠 Back to Home</a>
+        <a href="income.html">➡ Go to INCOME</a>
+      </div>
+    </section> -->
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "good") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct thinking. Low-value work may help now, but skill-building usually increases future earning power. This is how value grows.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That may bring short-term money, but if your value does not improve, your income power can stay limited.";
+          }
+        }
+
+        let skill = 0;
+        let trust = 0;
+        let value = 0;
+        let energy = 6;
+
+        function updateGame() {
+          document.getElementById("skillScore").textContent = skill;
+          document.getElementById("trustScore").textContent = trust;
+          document.getElementById("valueScore").textContent = value;
+          document.getElementById("energyScore").textContent = energy;
+        }
+
+        function playValueGame(action) {
+          const box = document.getElementById("gameFeedback");
+
+          if (energy <= 0) {
+            box.className = "feedback warn";
+            box.innerHTML = "You used all your energy. Reset the game and try building value more intentionally.";
+            return;
+          }
+
+          energy--;
+
+          if (action === "learn") {
+            skill += 2;
+            value += 1;
+            box.className = "feedback good";
+            box.innerHTML = "You invested time in learning. Skill rises first, and value often follows.";
+          }
+
+          if (action === "solve") {
+            value += 2;
+            box.className = "feedback good";
+            box.innerHTML = "You solved a real problem. Real usefulness is one of the strongest sources of value.";
+          }
+
+          if (action === "reliable") {
+            trust += 2;
+            value += 1;
+            box.className = "feedback good";
+            box.innerHTML = "You delivered reliably. Trust increases repeat opportunities and long-term strength.";
+          }
+
+          if (action === "waste") {
+            box.className = "feedback bad";
+            box.innerHTML = "You stayed busy, but your skill, trust, and usefulness did not grow much. Busyness without improvement is a trap.";
+          }
+
+          if (skill >= 3 && trust >= 2 && value >= 4) {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. You are building real earning power: useful skill, trust, and value together.";
+          }
+
+          updateGame();
+        }
+
+        function resetValueGame() {
+          skill = 0;
+          trust = 0;
+          value = 0;
+          energy = 6;
+          updateGame();
+          const box = document.getElementById("gameFeedback");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Higher income often comes from creating stronger results, not just spending more time.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Effort matters, but value is about usefulness, results, and demand — not effort alone.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Skill, trust, and consistency create stronger long-term value than random effort.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. People usually pay more for reliable, useful results than for random hard work.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Useful skills that solve real problems usually create stronger future earning power.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Easy low-value work can feel comfortable, but it often limits financial growth.";
+            }
+          }
+        }
+
+        updateGame();
+      </script>
+</body>
+
+</html>

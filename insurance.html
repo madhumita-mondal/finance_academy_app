@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INSURANCE - Finance Academy</title>
+
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 12px;
+      font-weight: bold;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d8f7ff, #ffe8a6, #ffdede, #efe0ff);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 900px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .78);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .mini .icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      background: #22324c;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 4px 4px 0 0;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: #18794e;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: #b34040;
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: #9a6500;
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .footer-nav a:hover {
+      transform: scale(1.04);
+      background: #1a263a;
+    }
+
+    @media(max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <a href="security.html" style="color:rgb(137, 63, 137);"> ◀︎− Security</a>
+      <a href="inflation.html" style="color:rgb(137, 63, 137);"> Inflation −▶︎</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>INSURANCE</h1>
+      <p>
+        Insurance is one of the clearest examples of financial protection. It does not exist mainly to
+        make you richer. It exists to protect you from a financial hit that might be too large to
+        absorb alone. Many people underestimate insurance because nothing exciting happens when it
+        works well. But that quiet protection can save years of savings, income, and stability when
+        life goes wrong.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill">Protection</span>
+        <span class="pill">Coverage</span>
+        <span class="pill">Premium</span>
+        <span class="pill">Deductible</span>
+        <span class="pill">Risk Transfer</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Insurance is a system where you pay a smaller ongoing cost in exchange for protection against
+        a much larger possible loss. It is not mainly about profit. It is about resilience. In other
+        words, insurance is a way to transfer certain large risks away from your personal balance
+        sheet so that one event does not destroy everything else.
+      </p>
+
+      <div class="quote">
+        “Insurance does not stop bad things from happening. It stops one bad thing from ruining your whole financial
+        system.”
+      </div>
+
+      <div class="info-box">
+        <strong>Core principle:</strong> insurance is most valuable when the possible loss is large,
+        painful, and hard to absorb on your own.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Story: Rahul and Neha</h2>
+      <p>
+        Rahul disliked insurance because he felt like he was paying for something he might not use. He
+        skipped important coverage to save money each month. At first, that choice felt smart. His
+        budget looked lighter. His cash stayed with him. But when a serious medical issue appeared, he
+        discovered the hidden weakness in his thinking. One emergency cost more than he had expected,
+        and what had once looked like “saving money” turned into a large financial shock.
+      </p>
+      <p>
+        Neha thought differently. She did not love paying premiums, but she understood what those
+        payments were really buying: protection against a large downside. When her own unexpected
+        problem appeared, she still faced stress, but not the same kind of financial damage. Insurance
+        did not remove the problem. It reduced the destruction.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. Why Insurance Exists</h2>
+      <div class="grid-4">
+        <div class="mini">
+          <span class="icon">🛡️</span>
+          <strong>Protect Savings</strong>
+          <p>One major loss can wipe out years of careful saving.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">⚠️</span>
+          <strong>Handle Big Shocks</strong>
+          <p>Some losses are too large to comfortably absorb alone.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">😌</span>
+          <strong>Reduce Financial Fear</strong>
+          <p>Protection makes life less fragile and planning more realistic.</p>
+        </div>
+
+        <div class="mini">
+          <span class="icon">📦</span>
+          <strong>Transfer Risk</strong>
+          <p>You move part of the financial burden away from yourself.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Main Types of Insurance</h2>
+      <div class="grid-2">
+        <div class="mini">
+          <strong>Health Insurance</strong>
+          <p>Helps protect against medical costs that can become very large very quickly.</p>
+        </div>
+
+        <div class="mini">
+          <strong>Life Insurance</strong>
+          <p>Often used to protect dependents or family members from income loss after death.</p>
+        </div>
+
+        <div class="mini">
+          <strong>Auto Insurance</strong>
+          <p>Helps cover damage, liability, and other risks connected to vehicles.</p>
+        </div>
+
+        <div class="mini">
+          <strong>Home / Renters Insurance</strong>
+          <p>Helps protect housing-related property and certain loss events.</p>
+        </div>
+
+        <div class="mini">
+          <strong>Disability / Income Protection</strong>
+          <p>Helps when a person cannot work and income is interrupted.</p>
+        </div>
+
+        <div class="mini">
+          <strong>Business Insurance</strong>
+          <p>Protects against certain losses that could disrupt or damage operations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Real Explanation</h2>
+      <p>
+        Insurance should not be judged the same way as an investment. People often dislike premiums
+        because if nothing happens, the money seems to have “gone nowhere.” But that is the wrong way
+        to evaluate insurance. The product being purchased is not profit. The product is protection.
+        When insurance works as intended, the best outcome is often that nothing catastrophic destroys
+        your financial life.
+      </p>
+      <p>
+        This is why insurance belongs in the same conversation as risk management, not wealth
+        multiplication. An investment asks, “How can money grow?” Insurance asks, “How can we prevent
+        a loss from becoming unbearable?” Both matter, but they do different jobs.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>6. Key Insurance Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>The regular amount paid for the insurance coverage.</td>
+        </tr>
+        <tr>
+          <td>Deductible</td>
+          <td>The amount you may need to pay yourself before coverage helps.</td>
+        </tr>
+        <tr>
+          <td>Coverage</td>
+          <td>The kinds of loss or damage the policy is designed to protect against.</td>
+        </tr>
+        <tr>
+          <td>Claim</td>
+          <td>A request for help or payment after a covered event happens.</td>
+        </tr>
+        <tr>
+          <td>Risk Transfer</td>
+          <td>Shifting part of a large possible loss away from yourself.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>7. When Insurance Makes the Most Sense</h2>
+      <table>
+        <tr>
+          <th>Situation</th>
+          <th>Insurance Usefulness</th>
+          <th>Reason</th>
+        </tr>
+        <tr>
+          <td>Small loss you can easily absorb</td>
+          <td>Lower</td>
+          <td>The damage may not justify ongoing cost.</td>
+        </tr>
+        <tr>
+          <td>Large loss that could break your finances</td>
+          <td>High</td>
+          <td>This is where insurance becomes especially valuable.</td>
+        </tr>
+        <tr>
+          <td>Unlikely but severe event</td>
+          <td>Often high</td>
+          <td>Rare events can still be financially devastating.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>8. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini">
+          <strong>❌ Treating insurance like an investment</strong>
+          <p>Insurance is mainly protection, not a growth engine.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Skipping important coverage to save small monthly amounts</strong>
+          <p>Small savings now can create huge losses later.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Buying a policy without understanding the coverage</strong>
+          <p>Protection is only useful if you understand what is actually included.</p>
+        </div>
+
+        <div class="mini">
+          <strong>❌ Ignoring low-probability, high-cost events</strong>
+          <p>Some rare events are exactly the ones that insurance is meant to handle.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>9. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          Which is usually the stronger long-term financial mindset?
+        </p>
+
+        <div class="choice-row">
+          <button onclick="scenario('insured')">Pay for protection against major losses</button>
+          <button onclick="scenario('skip')">Skip insurance and hope nothing serious happens</button>
+        </div>
+
+        <div id="scenarioBox" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>10. Insurance Game: Protection Planner</h2>
+      <p>
+        Build a stronger protection profile. Try to increase Safety and Stability without pretending
+        that luck is a strategy.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Safety: <span id="safetyScore">0</span></div>
+        <div class="score-pill">Stability: <span id="stabilityScore">0</span></div>
+        <div class="score-pill">Protection Score: <span id="protectScore">0</span></div>
+      </div>
+
+      <div class="choice-row">
+        <button onclick="insuranceGame('health')">Choose Health Coverage</button>
+        <button onclick="insuranceGame('life')">Choose Life Coverage</button>
+        <button onclick="insuranceGame('home')">Choose Home/Renters Coverage</button>
+        <button onclick="insuranceGame('skip')">Skip Protection</button>
+        <button class="alt" onclick="resetInsuranceGame()">Reset</button>
+      </div>
+
+      <div id="gameBox" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>11. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> Insurance is mainly:</p>
+        <button onclick="quiz(1,'a')">Protection</button>
+        <button onclick="quiz(1,'b')">A fast investment return</button>
+        <div id="q1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why is insurance useful?</p>
+        <button onclick="quiz(2,'a')">It helps reduce the financial damage of major loss</button>
+        <button onclick="quiz(2,'b')">It guarantees profit every year</button>
+        <div id="q2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> What is a deductible?</p>
+        <button onclick="quiz(3,'a')">The amount you may pay first before coverage helps</button>
+        <button onclick="quiz(3,'b')">A reward payment for not using insurance</button>
+        <div id="q3" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>12. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>List 3 big financial risks that could seriously damage your life.</li>
+          <li>Mark which ones are too large to comfortably absorb on your own.</li>
+          <li>Think about where insurance would matter most: health, housing, income, family, or property.</li>
+          <li>Ask: if this happened tomorrow, could I truly carry the cost myself?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>13. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Money Behavior</div>
+          <h4>The Psychology of Money</h4>
+          <p>
+            Helpful for understanding why people often underestimate rare but severe financial risks.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <div class="book-tag">Decision-Making</div>
+          <h4>Thinking, Fast and Slow</h4>
+          <p>
+            Useful for seeing how human judgment often fails when evaluating uncertainty and protection.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        let safety = 0;
+        let stability = 0;
+        let protect = 0;
+
+        function updateInsuranceBoard() {
+          document.getElementById("safetyScore").textContent = safety;
+          document.getElementById("stabilityScore").textContent = stability;
+          document.getElementById("protectScore").textContent = protect;
+        }
+
+        function scenario(type) {
+          const box = document.getElementById("scenarioBox");
+
+          if (type === "insured") {
+            box.className = "feedback good";
+            box.innerHTML = "Correct. Insurance can protect you from losses that would otherwise be too heavy to carry alone.";
+          } else {
+            box.className = "feedback bad";
+            box.innerHTML = "That may save money now, but one major event can erase far more than you saved.";
+          }
+        }
+
+        function insuranceGame(type) {
+          const box = document.getElementById("gameBox");
+
+          if (type === "health") {
+            safety += 2;
+            stability += 2;
+            protect += 3;
+            box.className = "feedback good";
+            box.innerHTML = "Strong choice. Health costs can become very large very quickly, so protection matters a lot here.";
+          }
+
+          if (type === "life") {
+            safety += 1;
+            stability += 2;
+            protect += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Good choice. Life coverage can matter greatly when other people depend on your income.";
+          }
+
+          if (type === "home") {
+            safety += 1;
+            stability += 2;
+            protect += 2;
+            box.className = "feedback good";
+            box.innerHTML = "Strong choice. Housing-related losses can create large financial stress without protection.";
+          }
+
+          if (type === "skip") {
+            safety -= 1;
+            stability -= 1;
+            protect -= 2;
+            box.className = "feedback bad";
+            box.innerHTML = "Skipping protection may feel cheaper now, but it increases exposure to major financial damage.";
+          }
+
+          if (protect >= 5) {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. You are building a stronger protection system against big financial shocks.";
+          }
+
+          updateInsuranceBoard();
+        }
+
+        function resetInsuranceGame() {
+          safety = 0;
+          stability = 0;
+          protect = 0;
+          updateInsuranceBoard();
+
+          const box = document.getElementById("gameBox");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function quiz(q, a) {
+          const box = document.getElementById("q" + q);
+
+          if (q === 1) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Insurance is mainly protection, not a fast-return investment product.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Insurance is mainly about protection against major loss.";
+            }
+          }
+
+          if (q === 2) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Insurance reduces the financial damage of serious unexpected events.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Insurance is not designed to guarantee yearly profit.";
+            }
+          }
+
+          if (q === 3) {
+            if (a === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. A deductible is often the amount paid by you before coverage starts helping.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. A deductible is not a reward — it is part of the cost-sharing structure.";
+            }
+          }
+        }
+
+        updateInsuranceBoard();
+      </script>
+
+</body>
+
+</html>

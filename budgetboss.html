@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Boss Deluxe</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #dff6ff, #f5ebff, #fff5d9);
+      color: #222;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 20px auto;
+      padding: 16px;
+    }
+
+    .game-shell {
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .header {
+      padding: 22px 22px 14px;
+      background: linear-gradient(135deg, #0b57d0, #6f42c1);
+      color: white;
+    }
+
+    .title {
+      font-size: 34px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .top-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 14px;
+      padding: 18px 20px;
+      background: #f8fbff;
+      border-bottom: 1px solid #e9eef8;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 18px;
+      padding: 14px 10px;
+      text-align: center;
+      border: 2px solid #e6efff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 7px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0b57d0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid #edf0f5;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .board-wrap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .tile {
+      min-height: 96px;
+      border-radius: 16px;
+      padding: 10px 8px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid rgba(0,0,0,0.05);
+      font-size: 13px;
+      font-weight: bold;
+      line-height: 1.2;
+      box-shadow: inset 0 -6px 0 rgba(0,0,0,0.03);
+    }
+
+    .tile-number {
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .tile-name {
+      font-size: 14px;
+    }
+
+    .tile-desc {
+      font-size: 11px;
+      opacity: 0.85;
+      font-weight: normal;
+    }
+
+    .start { background: #d9f6e5; }
+    .income { background: #dff2ff; }
+    .save { background: #e9e0ff; }
+    .shop { background: #fff0d9; }
+    .risk { background: #ffe0e0; }
+    .smart { background: #def9ef; }
+    .bill { background: #fff7d8; }
+    .bonus { background: #dff9ff; }
+    .invest { background: #e8f0fe; }
+    .emergency { background: #ffe7ec; }
+
+    .player {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0b57d0;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      border: 3px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+    }
+
+    .dice-zone {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .dice-box {
+      background: linear-gradient(135deg, #fff, #eef5ff);
+      border: 3px solid #dce9ff;
+      border-radius: 22px;
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+      box-shadow: inset 0 -8px 0 rgba(11,87,208,0.05);
+    }
+
+    .control-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 15px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      background: #0b57d0;
+      color: white;
+    }
+
+    .secondary {
+      background: #ff9800;
+      color: white;
+    }
+
+    .ghost {
+      background: #eef4ff;
+      color: #174ea6;
+    }
+
+    .challenge-card {
+      background: linear-gradient(135deg, #fffaf0, #f6fbff);
+      border: 2px dashed #c9dffc;
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 310px;
+    }
+
+    .challenge-type {
+      display: inline-block;
+      background: #0b57d0;
+      color: white;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .challenge-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .challenge-text {
+      font-size: 17px;
+      line-height: 1.55;
+      margin-bottom: 14px;
+      color: #333;
+    }
+
+    .timer-bar-wrap {
+      height: 16px;
+      background: #e8edf5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      border: 1px solid #dde5f0;
+    }
+
+    .timer-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #34a853, #fbbc05, #ea4335);
+      transition: width 1s linear;
+    }
+
+    .timer-text {
+      font-size: 14px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 14px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .choice-btn {
+      text-align: left;
+      background: #edf4ff;
+      color: #174ea6;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      background: #dfeaff;
+      transform: translateY(-2px);
+    }
+
+    .choice-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      background: #f6fbff;
+      border-left: 6px solid #0b57d0;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 78px;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .legend span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .journal {
+      max-height: 560px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid #ebeff5;
+    }
+
+    .entry {
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e8ee;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .good { color: #137333; font-weight: bold; }
+    .bad { color: #b3261e; font-weight: bold; }
+    .neutral { color: #5f6368; font-weight: bold; }
+
+    .tip {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #eefbf3;
+      border-left: 6px solid #34a853;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .game-over {
+      display: none;
+      margin-top: 15px;
+      background: #fff5f2;
+      border: 2px solid #ffd5cc;
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .result-rank {
+      font-size: 28px;
+      font-weight: bold;
+      color: #6f42c1;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .dice-zone {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .board-wrap {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .challenge-title {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="game-shell">
+      <div class="header">
+        <div class="title">Budget Boss Deluxe 🎲💰</div>
+        <div class="subtitle">
+          Roll the dice, move across the money board, beat the timer, and make smart financial choices.
+          Faster thinking earns more points.
+        </div>
+      </div>
+
+      <div class="top-stats">
+        <div class="stat-card">
+          <div class="stat-label">Round</div>
+          <div class="stat-value" id="round">0/12</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cash</div>
+          <div class="stat-value" id="cash">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Savings</div>
+          <div class="stat-value" id="savings">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Score</div>
+          <div class="stat-value" id="score">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Position</div>
+          <div class="stat-value" id="position">1</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Time Left</div>
+          <div class="stat-value" id="timeLeft">--</div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="panel">
+          <h2>Money Adventure Board</h2>
+          <div class="board-wrap" id="board"></div>
+
+          <div class="legend">
+            <span class="income">Income</span>
+            <span class="save">Save</span>
+            <span class="shop">Shop</span>
+            <span class="risk">Risk</span>
+            <span class="smart">Smart</span>
+            <span class="bill">Bill</span>
+            <span class="bonus">Bonus</span>
+            <span class="invest">Invest</span>
+            <span class="emergency">Emergency</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Play Area</h2>
+
+          <div class="dice-zone">
+            <div class="dice-box" id="diceFace">🎲</div>
+
+            <div class="control-stack">
+              <button class="btn primary" id="startBtn">Start Game</button>
+              <button class="btn secondary" id="rollBtn" disabled>Roll Dice</button>
+              <button class="btn ghost" id="nextBtn" disabled>Next Round</button>
+            </div>
+          </div>
+
+          <div class="challenge-card">
+            <div class="challenge-type" id="challengeType">Welcome</div>
+            <div class="challenge-title" id="challengeTitle">Ready to become Budget Boss?</div>
+            <div class="challenge-text" id="challengeText">
+              You will play 12 rounds. Roll the dice, land on money spaces, and answer quickly.
+              The faster you choose, the more points you earn.
+            </div>
+
+            <div class="timer-bar-wrap">
+              <div class="timer-bar" id="timerBar"></div>
+            </div>
+            <div class="timer-text" id="timerText">Timer will start after you roll.</div>
+
+            <div class="choices" id="choices"></div>
+
+            <div class="feedback" id="feedback">
+              Learning note: Strong budgeting means balancing needs, savings, and fun without losing control of your money.
+            </div>
+
+            <div class="game-over" id="gameOver"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin: 0 18px 18px;">
+        <h2>Money Journal</h2>
+        <div class="journal" id="journal"></div>
+        <div class="tip" id="tipBox">
+          Tip: A discount is not true savings if you were not planning to buy the item.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL_ROUNDS = 12;
+    const TIMER_SECONDS = 15;
+
+    const boardEl = document.getElementById("board");
+    const roundEl = document.getElementById("round");
+    const cashEl = document.getElementById("cash");
+    const savingsEl = document.getElementById("savings");
+    const scoreEl = document.getElementById("score");
+    const positionEl = document.getElementById("position");
+    const timeLeftEl = document.getElementById("timeLeft");
+    const diceFaceEl = document.getElementById("diceFace");
+    const startBtn = document.getElementById("startBtn");
+    const rollBtn = document.getElementById("rollBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const challengeTypeEl = document.getElementById("challengeType");
+    const challengeTitleEl = document.getElementById("challengeTitle");
+    const challengeTextEl = document.getElementById("challengeText");
+    const timerBarEl = document.getElementById("timerBar");
+    const timerTextEl = document.getElementById("timerText");
+    const choicesEl = document.getElementById("choices");
+    const feedbackEl = document.getElementById("feedback");
+    const journalEl = document.getElementById("journal");
+    const gameOverEl = document.getElementById("gameOver");
+    const tipBoxEl = document.getElementById("tipBox");
+
+    const boardTiles = [
+      { name: "Start", type: "start", desc: "Begin here" },
+      { name: "Payday", type: "income", desc: "+ money chance" },
+      { name: "Save Jar", type: "save", desc: "save wisely" },
+      { name: "Flash Sale", type: "shop", desc: "wants vs needs" },
+      { name: "Unexpected Bill", type: "bill", desc: "plan carefully" },
+      { name: "Smart Choice", type: "smart", desc: "money habit test" },
+      { name: "Bonus Work", type: "bonus", desc: "extra earning" },
+      { name: "Risk Zone", type: "risk", desc: "avoid bad moves" },
+      { name: "Invest Corner", type: "invest", desc: "future growth" },
+      { name: "Emergency", type: "emergency", desc: "use your buffer" }
+    ];
+
+    const challenges = {
+      income: [
+        {
+          title: "Payday Plan",
+          text: "You received $200 from a side job. What is the smartest first move?",
+          tip: "Good budgets give money a job before it disappears.",
+          choices: [
+            { label: "Split it: needs, savings, and a little fun", cash: 80, savings: 80, score: 25, feedback: "Excellent. You balanced present needs with future security.", mood: "good" },
+            { label: "Spend all of it on fun things today", cash: -120, savings: 0, score: -10, feedback: "You enjoyed the moment, but missed a chance to strengthen your budget.", mood: "bad" },
+            { label: "Hide all of it and refuse to spend any", cash: 0, savings: 120, score: 8, feedback: "Saving is good, but extreme choices can make budgets unrealistic.", mood: "neutral" }
+          ]
+        },
+        {
+          title: "Extra Income",
+          text: "A neighbor offers you a quick task and pays $50. What should you do with it?",
+          tip: "Small extra income can become powerful when used on purpose.",
+          choices: [
+            { label: "Add it to emergency savings", cash: 0, savings: 50, score: 24, feedback: "Great choice. Extra money is perfect for building safety.", mood: "good" },
+            { label: "Spend it because it feels like free money", cash: -50, savings: 0, score: -8, feedback: "Unexpected money can vanish quickly when it has no plan.", mood: "bad" },
+            { label: "Use some for a need and save the rest", cash: 15, savings: 25, score: 20, feedback: "Very smart. A balanced split keeps both today and tomorrow in mind.", mood: "good" }
+          ]
+        }
+      ],
+      save: [
+        {
+          title: "Savings Choice",
+          text: "You have enough money left this round to save something. What is the best move?",
+          tip: "Saving even small amounts regularly builds strong habits.",
+          choices: [
+            { label: "Save a steady amount now", cash: -40, savings: 40, score: 22, feedback: "Excellent habit. Consistency matters more than waiting for perfect moments.", mood: "good" },
+            { label: "Save only if there is a huge amount left later", cash: 0, savings: 0, score: -5, feedback: "Waiting to save often leads to not saving at all.", mood: "bad" },
+            { label: "Save half and keep half available", cash: -20, savings: 20, score: 16, feedback: "Solid plan. Flexible saving can work well.", mood: "good" }
+          ]
+        },
+        {
+          title: "Goal Jar",
+          text: "You want to buy something useful in the future. How should you prepare?",
+          tip: "Money goals work best when they are specific and repeated.",
+          choices: [
+            { label: "Create a savings target and start today", cash: -30, savings: 30, score: 24, feedback: "Perfect. Goals become real when attached to action.", mood: "good" },
+            { label: "Hope you will somehow have enough later", cash: 0, savings: 0, score: -10, feedback: "Hope is not a spending plan.", mood: "bad" },
+            { label: "Delay saving until the last minute", cash: 0, savings: 0, score: -8, feedback: "Starting late makes goals harder and more stressful.", mood: "bad" }
+          ]
+        }
+      ],
+      shop: [
+        {
+          title: "Flash Sale Temptation",
+          text: "A store says today-only sale on something you do not really need.",
+          tip: "A sale can still be a bad deal if the item is not useful.",
+          choices: [
+            { label: "Skip it and keep your plan", cash: 0, savings: 0, score: 25, feedback: "Excellent self-control. That protects your budget.", mood: "good" },
+            { label: "Buy it because it is cheaper than usual", cash: -60, savings: 0, score: -8, feedback: "A discount can trick you into spending on non-needs.", mood: "bad" },
+            { label: "Wait one day and decide later", cash: 0, savings: 0, score: 18, feedback: "Smart move. Waiting reduces impulse buying.", mood: "good" }
+          ]
+        },
+        {
+          title: "Cool Gadget",
+          text: "Your friends are buying a trendy gadget. You can afford it, but it is not in your budget.",
+          tip: "Not every affordable item is a smart purchase.",
+          choices: [
+            { label: "Buy it to keep up with everyone", cash: -90, savings: 0, score: -12, feedback: "Following the crowd can damage your money goals.", mood: "bad" },
+            { label: "Pass for now and stay with your plan", cash: 0, savings: 0, score: 22, feedback: "Excellent. You chose your priorities over pressure.", mood: "good" },
+            { label: "Find a cheaper or used alternative later", cash: -25, savings: 0, score: 16, feedback: "Nice thinking. Comparing options is a strong money skill.", mood: "good" }
+          ]
+        }
+      ],
+      bill: [
+        {
+          title: "Utility Bill",
+          text: "A monthly bill is due. What should happen first?",
+          tip: "Needs and fixed bills usually come before extra wants.",
+          choices: [
+            { label: "Pay the bill before fun spending", cash: -70, savings: 0, score: 22, feedback: "Correct. Bills should be handled before optional spending.", mood: "good" },
+            { label: "Ignore it and hope next round is easier", cash: 0, savings: 0, score: -15, feedback: "Delaying bills can create bigger problems later.", mood: "bad" },
+            { label: "Spend first and figure it out later", cash: -40, savings: 0, score: -12, feedback: "A budget loses control when needs are pushed aside.", mood: "bad" }
+          ]
+        },
+        {
+          title: "School Supply Need",
+          text: "You need a useful item for school or work. What is the smartest approach?",
+          tip: "Useful spending can be necessary, but comparing value still matters.",
+          choices: [
+            { label: "Buy the useful item at a fair price", cash: -35, savings: 0, score: 20, feedback: "Good choice. Needs spending is part of healthy budgeting.", mood: "good" },
+            { label: "Buy the most expensive version just because it looks best", cash: -85, savings: 0, score: -10, feedback: "Function matters more than showing off.", mood: "bad" },
+            { label: "Compare two options, then buy the better value", cash: -28, savings: 0, score: 25, feedback: "Excellent. Value-based buying is a great skill.", mood: "good" }
+          ]
+        }
+      ],
+      smart: [
+        {
+          title: "Compare Prices",
+          text: "Two stores sell the same item. One is cheaper, but you must check quality first.",
+          tip: "The lowest price is not always the best value unless quality is good too.",
+          choices: [
+            { label: "Check quality and buy the better value", cash: -30, savings: 0, score: 24, feedback: "Excellent. Smart buyers compare both price and quality.", mood: "good" },
+            { label: "Buy the first one immediately", cash: -45, savings: 0, score: -6, feedback: "Speed is not always smart when money is involved.", mood: "bad" },
+            { label: "Buy two because one is cheaper", cash: -60, savings: 0, score: -8, feedback: "Buying extra can erase the savings.", mood: "bad" }
+          ]
+        },
+        {
+          title: "Money Goal",
+          text: "You want to reach a savings goal in a few weeks. What works best?",
+          tip: "Specific targets change behavior better than vague wishes.",
+          choices: [
+            { label: "Set a weekly amount and track it", cash: 0, savings: 35, score: 25, feedback: "Perfect. Tracking turns good intentions into results.", mood: "good" },
+            { label: "Just think about the goal sometimes", cash: 0, savings: 0, score: -7, feedback: "Without a system, goals often stay wishes.", mood: "bad" },
+            { label: "Cut one small extra expense and save that money", cash: -10, savings: 25, score: 20, feedback: "Great thinking. Small repeated cuts can build real progress.", mood: "good" }
+          ]
+        }
+      ],
+      bonus: [
+        {
+          title: "Bonus Task",
+          text: "You earned a bonus for helping with a project. What should you do?",
+          tip: "Bonuses are a great chance to strengthen savings.",
+          choices: [
+            { label: "Save most and enjoy a little", cash: 20, savings: 50, score: 24, feedback: "Excellent. Balanced bonus planning is strong money behavior.", mood: "good" },
+            { label: "Spend all of it immediately", cash: -40, savings: 0, score: -8, feedback: "A bonus feels exciting, but it is still money with value.", mood: "bad" },
+            { label: "Put it toward a future goal", cash: 0, savings: 60, score: 22, feedback: "Great choice. Extra income can accelerate your goals.", mood: "good" }
+          ]
+        },
+        {
+          title: "Reward Money",
+          text: "You got $30 as a reward. What is your smartest next step?",
+          tip: "Even small rewards can train strong habits.",
+          choices: [
+            { label: "Split it between saving and spending", cash: 10, savings: 15, score: 20, feedback: "Nice balance. You enjoyed some and protected some.", mood: "good" },
+            { label: "Treat it like it does not count and waste it", cash: -30, savings: 0, score: -8, feedback: "Money always counts, even when it arrives unexpectedly.", mood: "bad" },
+            { label: "Add it all to emergency savings", cash: 0, savings: 30, score: 22, feedback: "Strong move. Safety first can be very wise.", mood: "good" }
+          ]
+        }
+      ],
+      risk: [
+        {
+          title: "Too-Good-To-Be-True Offer",
+          text: "A message says you can double your money fast if you send cash now.",
+          tip: "Fast guaranteed money is often a major warning sign.",
+          choices: [
+            { label: "Ignore it and protect your money", cash: 0, savings: 0, score: 26, feedback: "Perfect. Avoiding scams is a major financial skill.", mood: "good" },
+            { label: "Try it because the reward sounds huge", cash: -100, savings: 0, score: -18, feedback: "Risky and unrealistic promises can drain your money fast.", mood: "bad" },
+            { label: "Ask questions and verify before doing anything", cash: 0, savings: 0, score: 16, feedback: "Better. Verifying first is far safer than acting quickly.", mood: "good" }
+          ]
+        },
+        {
+          title: "Borrowing Trouble",
+          text: "You want something non-essential but do not have enough money right now.",
+          tip: "Borrowing for wants can increase stress and risk.",
+          choices: [
+            { label: "Save up patiently", cash: 0, savings: 20, score: 22, feedback: "Excellent patience. Delayed spending protects your future.", mood: "good" },
+            { label: "Borrow with no repayment plan", cash: 40, savings: 0, score: -14, feedback: "Borrowing without a plan is risky.", mood: "bad" },
+            { label: "Look for a lower-cost alternative", cash: -15, savings: 0, score: 18, feedback: "Great flexibility. Adjusting the plan is smart.", mood: "good" }
+          ]
+        }
+      ],
+      invest: [
+        {
+          title: "Investing Basics",
+          text: "You have a small amount that you do not need right away. What is the best idea?",
+          tip: "Cash and investing both matter. The right choice depends on time and purpose.",
+          choices: [
+            { label: "Use a small part for long-term investing", cash: -30, savings: 15, score: 22, feedback: "Good thinking. Long-term money can be put to work.", mood: "good" },
+            { label: "Spend it all because future-you can worry later", cash: -50, savings: 0, score: -10, feedback: "That choice trades long-term growth for short-term wants.", mood: "bad" },
+            { label: "Keep it all liquid if a short-term need is coming soon", cash: 0, savings: 10, score: 14, feedback: "Reasonable. Money decisions should fit the goal.", mood: "neutral" }
+          ]
+        },
+        {
+          title: "Future Growth",
+          text: "Someone explains that money can grow over time when used wisely. What is the key lesson?",
+          tip: "Growth usually takes patience, not speed.",
+          choices: [
+            { label: "Start small and think long-term", cash: -20, savings: 15, score: 22, feedback: "Exactly. Small steps matter when repeated over time.", mood: "good" },
+            { label: "Only huge amounts matter", cash: 0, savings: 0, score: -7, feedback: "Not true. Even small consistent action matters.", mood: "bad" },
+            { label: "Growth should happen instantly", cash: 0, savings: 0, score: -10, feedback: "Unrealistic speed often leads to poor choices.", mood: "bad" }
+          ]
+        }
+      ],
+      emergency: [
+        {
+          title: "Phone Repair",
+          text: "Something useful broke and needs repair. What is the smartest move?",
+          tip: "Emergency savings exist so problems do not become crises.",
+          choices: [
+            { label: "Use savings for the repair if needed", cash: 0, savings: -45, score: 20, feedback: "Good use of savings. That is exactly what emergency money is for.", mood: "good" },
+            { label: "Buy the fanciest replacement immediately", cash: -120, savings: 0, score: -12, feedback: "Replacing with the most expensive option hurts the budget.", mood: "bad" },
+            { label: "Compare repair and replacement cost first", cash: -10, savings: 0, score: 24, feedback: "Excellent. Smart spending starts with comparing options.", mood: "good" }
+          ]
+        },
+        {
+          title: "Unexpected Expense",
+          text: "A surprise cost appears this week. What is the best response?",
+          tip: "Preparation matters more than panic.",
+          choices: [
+            { label: "Use emergency savings carefully", cash: 0, savings: -35, score: 22, feedback: "Strong response. You prepared for exactly this.", mood: "good" },
+            { label: "Ignore the issue completely", cash: 0, savings: 0, score: -12, feedback: "Ignoring money problems often makes them grow.", mood: "bad" },
+            { label: "Reduce fun spending and cover the need", cash: -20, savings: 0, score: 20, feedback: "Very smart. Adjusting the budget is a strong skill.", mood: "good" }
+          ]
+        }
+      ],
+      start: [
+        {
+          title: "Fresh Start",
+          text: "You are at the beginning of your money journey. What mindset helps most?",
+          tip: "Good money habits grow from clear priorities.",
+          choices: [
+            { label: "Plan before spending", cash: 0, savings: 15, score: 20, feedback: "Excellent starting mindset.", mood: "good" },
+            { label: "Spend first and plan later", cash: -20, savings: 0, score: -8, feedback: "That can make money feel out of control.", mood: "bad" },
+            { label: "Track what comes in and what goes out", cash: 0, savings: 10, score: 18, feedback: "Great. Tracking is one of the best money habits.", mood: "good" }
+          ]
+        }
+      ]
+    };
+
+    let state = {};
+    let countdown = null;
+    let timeRemaining = TIMER_SECONDS;
+    let questionActive = false;
+    let answerChosen = false;
+
+    function initState() {
+      state = {
+        round: 0,
+        cash: 300,
+        savings: 150,
+        score: 0,
+        position: 0,
+        active: true
+      };
+      questionActive = false;
+      answerChosen = false;
+      clearInterval(countdown);
+      timeRemaining = TIMER_SECONDS;
+      renderBoard();
+      updateStats();
+      journalEl.innerHTML = "";
+      gameOverEl.style.display = "none";
+      gameOverEl.innerHTML = "";
+      addJournal("Game started with $300 cash and $150 savings.", "neutral");
+      setMessage("Game Start", "Press Roll Dice to move on the board and face your first money challenge.", "Timer will begin after your first roll.");
+      feedbackEl.textContent = "Learning note: Quick decisions matter in the game, but smart decisions matter more in life.";
+      tipBoxEl.textContent = "Tip: Needs first, savings next, fun spending after that is often a strong order.";
+      diceFaceEl.textContent = "🎲";
+      rollBtn.disabled = false;
+      nextBtn.disabled = true;
+      startBtn.disabled = true;
+      startBtn.textContent = "Game Running";
+    }
+
+    function setMessage(type, title, text) {
+      challengeTypeEl.textContent = type;
+      challengeTitleEl.textContent = title;
+      challengeTextEl.textContent = text;
+    }
+
+    function updateStats() {
+      roundEl.textContent = `${state.round}/${TOTAL_ROUNDS}`;
+      cashEl.textContent = `$${state.cash}`;
+      savingsEl.textContent = `$${state.savings}`;
+      scoreEl.textContent = `${state.score}`;
+      positionEl.textContent = `${state.position + 1}`;
+      timeLeftEl.textContent = questionActive ? `${timeRemaining}s` : "--";
+    }
+
+    function addJournal(text, mood = "neutral") {
+      const div = document.createElement("div");
+      div.className = `entry ${mood}`;
+      div.textContent = text;
+      journalEl.prepend(div);
+    }
+
+    function renderBoard() {
+      boardEl.innerHTML = "";
+      boardTiles.forEach((tile, index) => {
+        const tileEl = document.createElement("div");
+        tileEl.className = `tile ${tile.type}`;
+        tileEl.innerHTML = `
+          <div class="tile-number">Space ${index + 1}</div>
+          <div class="tile-name">${tile.name}</div>
+          <div class="tile-desc">${tile.desc}</div>
+          ${state.position === index ? `<div class="player">💼</div>` : ``}
+        `;
+        boardEl.appendChild(tileEl);
+      });
+    }
+
+    function rollDice() {
+      if (!state.active || questionActive) return;
+
+      state.round++;
+      if (state.round > TOTAL_ROUNDS) {
+        finishGame();
+        return;
+      }
+
+      rollBtn.disabled = true;
+      nextBtn.disabled = true;
+      choicesEl.innerHTML = "";
+      feedbackEl.textContent = "Rolling the dice...";
+
+      let flashes = 0;
+      const anim = setInterval(() => {
+        const temp = Math.floor(Math.random() * 6) + 1;
+        diceFaceEl.textContent = getDiceEmoji(temp);
+        flashes++;
+        if (flashes >= 10) {
+          clearInterval(anim);
+          const result = Math.floor(Math.random() * 6) + 1;
+          diceFaceEl.textContent = getDiceEmoji(result);
+          movePlayer(result);
+        }
+      }, 90);
+    }
+
+    function getDiceEmoji(n) {
+      const map = {
+        1: "⚀",
+        2: "⚁",
+        3: "⚂",
+        4: "⚃",
+        5: "⚄",
+        6: "⚅"
+      };
+      return map[n];
+    }
+
+    function movePlayer(steps) {
+      state.position = (state.position + steps) % boardTiles.length;
+      renderBoard();
+      updateStats();
+      addJournal(`Round ${state.round}: You rolled ${steps} and moved to ${boardTiles[state.position].name}.`, "neutral");
+
+      const tile = boardTiles[state.position];
+      launchChallenge(tile.type, tile.name);
+    }
+
+    function randomChallenge(type) {
+      const pool = challenges[type] || challenges.start;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function launchChallenge(type, tileName) {
+      const ch = randomChallenge(type);
+      state.currentChallenge = ch;
+      questionActive = true;
+      answerChosen = false;
+
+      setMessage(tileName, ch.title, ch.text);
+      tipBoxEl.textContent = "Tip: " + ch.tip;
+      choicesEl.innerHTML = "";
+
+      ch.choices.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "choice-btn";
+        btn.textContent = choice.label;
+        btn.onclick = () => chooseAnswer(choice, idx);
+        choicesEl.appendChild(btn);
+      });
+
+      feedbackEl.textContent = "Choose quickly. Faster answers earn more points.";
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(countdown);
+      timeRemaining = TIMER_SECONDS;
+      updateTimerUI();
+
+      countdown = setInterval(() => {
+        timeRemaining--;
+        updateTimerUI();
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdown);
+          timeExpired();
+        }
+      }, 1000);
+    }
+
+    function updateTimerUI() {
+      const percent = Math.max(0, (timeRemaining / TIMER_SECONDS) * 100);
+      timerBarEl.style.width = percent + "%";
+      timerTextEl.textContent = questionActive
+        ? `Answer in ${timeRemaining} second${timeRemaining === 1 ? "" : "s"}`
+        : "Timer stopped";
+      timeLeftEl.textContent = questionActive ? `${timeRemaining}s` : "--";
+    }
+
+    function chooseAnswer(choice) {
+      if (!questionActive || answerChosen) return;
+      answerChosen = true;
+      questionActive = false;
+      clearInterval(countdown);
+
+      const allBtns = choicesEl.querySelectorAll("button");
+      allBtns.forEach(btn => btn.disabled = true);
+
+      const speedBonus = timeRemaining * 2;
+      const roundBonus = Math.max(0, speedBonus);
+      const totalScoreGain = choice.score + roundBonus;
+
+      state.cash += choice.cash;
+      state.savings += choice.savings;
+      state.score += totalScoreGain;
+
+      if (state.cash < 0) {
+        const needed = Math.abs(state.cash);
+        const taken = Math.min(state.savings, needed);
+        state.savings -= taken;
+        state.cash += taken;
+        if (taken > 0) {
+          addJournal(`You used $${taken} from savings to cover missing cash.`, "neutral");
+        }
+      }
+
+      const mood = totalScoreGain >= 18 ? "good" : totalScoreGain < 0 ? "bad" : "neutral";
+      feedbackEl.textContent = `${choice.feedback} Time bonus: +${roundBonus} points.`;
+      addJournal(
+        `${state.currentChallenge.title}: ${choice.label}. Cash ${formatSigned(choice.cash)}, Savings ${formatSigned(choice.savings)}, Score +${totalScoreGain}.`,
+        mood
+      );
+
+      if (state.cash < 0 && state.savings <= 0) {
+        state.cash = 0;
+        state.savings = 0;
+        updateStats();
+        finishGame(true);
+        return;
+      }
+
+      updateStats();
+      timerTextEl.textContent = "Timer stopped";
+      timeLeftEl.textContent = "--";
+      nextBtn.disabled = false;
+
+      if (state.round >= TOTAL_ROUNDS) {
+        nextBtn.textContent = "See Final Result";
+      } else {
+        nextBtn.textContent = "Next Round";
+      }
+    }
+
+    function timeExpired() {
+      if (!questionActive || answerChosen) return;
+
+      questionActive = false;
+      answerChosen = true;
+      const buttons = choicesEl.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true);
+
+      state.score = Math.max(0, state.score - 5);
+      feedbackEl.textContent = "Time is up. No answer chosen. You lost 5 points for missing the chance.";
+      addJournal(`${state.currentChallenge.title}: Time ran out. Score -5.`, "bad");
+      timerTextEl.textContent = "Time is up";
+      timeLeftEl.textContent = "0s";
+      updateStats();
+      nextBtn.disabled = false;
+
+      if (state.round >= TOTAL_ROUNDS) {
+        nextBtn.textContent = "See Final Result";
+      } else {
+        nextBtn.textContent = "Next Round";
+      }
+    }
+
+    function formatSigned(num) {
+      if (num > 0) return `+$${num}`;
+      if (num < 0) return `-$${Math.abs(num)}`;
+      return `$0`;
+    }
+
+    function advanceRound() {
+      if (!state.active) return;
+
+      if (state.round >= TOTAL_ROUNDS) {
+        finishGame(false);
+        return;
+      }
+
+      choicesEl.innerHTML = "";
+      feedbackEl.textContent = "Roll again to continue your money adventure.";
+      setMessage("Next Turn", "Ready for the next move?", "Roll the dice and land on a new financial challenge.");
+      rollBtn.disabled = false;
+      nextBtn.disabled = true;
+      updateStats();
+    }
+
+    function finishGame(bankrupt = false) {
+      state.active = false;
+      questionActive = false;
+      clearInterval(countdown);
+      rollBtn.disabled = true;
+      nextBtn.disabled = true;
+      startBtn.disabled = false;
+      startBtn.textContent = "Play Again";
+
+      let rank = "Budget Beginner";
+      if (state.score >= 260 && state.savings >= 180) rank = "Money Strategist";
+      else if (state.score >= 200) rank = "Smart Budgeter";
+      else if (state.score >= 140) rank = "Careful Planner";
+      else if (state.score >= 90) rank = "Growing Saver";
+
+      let message = "You completed the game and practiced budgeting, savings, smart spending, and emergency thinking.";
+      if (bankrupt) {
+        rank = "Try Again";
+        message = "You ran out of money resources. That shows how important savings and careful choices are.";
+      }
+
+      setMessage("Game Complete", "Budget Boss Results", message);
+
+      gameOverEl.style.display = "block";
+      gameOverEl.innerHTML = `
+        <div class="result-rank">${rank}</div>
+        <p><strong>Final Cash:</strong> $${state.cash}</p>
+        <p><strong>Final Savings:</strong> $${state.savings}</p>
+        <p><strong>Final Score:</strong> ${state.score}</p>
+        <p>${message}</p>
+      `;
+
+      if (bankrupt) {
+        feedbackEl.textContent = "Your budget collapsed before the end. Next time, protect cash and savings more carefully.";
+      } else {
+        feedbackEl.textContent = "Well done. You finished your board journey.";
+      }
+
+      updateStats();
+    }
+
+    startBtn.addEventListener("click", initState);
+    rollBtn.addEventListener("click", rollDice);
+    nextBtn.addEventListener("click", advanceRound);
+
+    renderBoard();
+    updateStats();
+  </script>
+</body>
+</html>

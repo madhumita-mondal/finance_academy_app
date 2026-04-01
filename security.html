@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SECURITY - Finance Academy</title>
+  <style>
+    :root {
+      --bg1: #eef5ff;
+      --bg2: #fff8ef;
+      --card: #ffffff;
+      --text: #22324c;
+      --muted: #4b5b77;
+      --line: #dfe8f2;
+      --good: #18794e;
+      --bad: #b34040;
+      --warn: #9a6500;
+      --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #core-finance-lessons {
+      scroll-margin-top: 95px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    .wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      max-width: 820px;
+      font-size: 1.03rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .75);
+      color: #22324c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #fffce8, #f7fcff);
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.8;
+      margin-top: 14px;
+    }
+
+    .quote {
+      background: #f6fbff;
+      border-left: 5px solid #7baeff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    ul {
+      line-height: 1.9;
+      padding-left: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th {
+      background: #f5fbff;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      background: #22324c;
+      color: #fff;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: .96;
+    }
+
+    button.alt {
+      background: #5d739b;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .feedback.good {
+      display: block;
+      background: #e8fff0;
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      display: block;
+      background: #ffeaea;
+      color: var(--bad);
+    }
+
+    .feedback.warn {
+      display: block;
+      background: #fff7e8;
+      color: var(--warn);
+    }
+
+    .score-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .score-pill {
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+    }
+
+    .book-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+    }
+
+    .book-tag {
+      display: inline-block;
+      background: #eef5ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .book-card h4 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .book-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      background: #22324c;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    @media (max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div><strong>💰 Finance Academy</strong></div>
+    <div>
+      <a href="index.html#Protection, Planning & Stability" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+      <!-- <a href="strategy.html">⬅ Strategy</a> -->
+      <a href="risk.html" style="color:rgb(137, 63, 137);"> ◀︎− Risk </a>
+      <a href="insurance.html" style="color:rgb(137, 63, 137);"> Insurance −▶︎</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>SECURITY</h1>
+      <p>
+        Security in finance means protection, breathing room, and stability. It is the difference
+        between facing a problem with panic or with preparation. Income may begin the journey, but
+        savings and financial buffers create the calm that prevents small problems from becoming big
+        disasters.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Emergency Fund</span>
+        <span class="pill">Liquidity</span>
+        <span class="pill">Buffer</span>
+        <span class="pill">Stability</span>
+        <span class="pill">Protection</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. Big Idea</h2>
+      <p>
+        Security is not mainly about feeling rich. It is about being harder to shake. A financially
+        secure person may not have huge wealth yet, but they have enough protection that one bad day
+        does not break their whole system. Savings give time to think, time to respond, and time to
+        avoid desperate decisions.
+      </p>
+      <div class="quote">
+        “Security is the quiet power of having options when life becomes difficult.”
+      </div>
+      <div class="info-box">
+        <strong>Core principle:</strong> before money is pushed toward big growth, a strong part of
+        it should first create stability.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Story: Two Emergencies, Two Outcomes</h2>
+      <p>
+        Aarav and Sara both faced the same type of problem. Their laptop stopped working just before
+        an important deadline. Aarav had been earning, but he had not kept any real savings. His
+        first reaction was stress. He began thinking about borrowing, delaying work, and asking
+        others for help. The problem was not only the broken laptop — it was the fact that one
+        unexpected cost had immediately put pressure on everything else.
+      </p>
+      <p>
+        Sara faced the same event, but her experience was different. She had slowly built a small
+        emergency fund. It was not huge, but it was enough. She paid for the repair, protected her
+        work, and moved on. The event was still inconvenient, but it did not become a financial
+        crisis. The difference was not luck. The difference was preparation.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3. What Security Actually Means</h2>
+      <div class="grid-4">
+        <div class="mini-card">
+          <span class="icon">🛟</span>
+          <strong>Protection</strong>
+          <p>Savings help absorb shocks without immediately needing debt or rescue.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">😌</span>
+          <strong>Lower Stress</strong>
+          <p>Money set aside reduces panic and improves decision-making quality.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">⏳</span>
+          <strong>Time</strong>
+          <p>A buffer buys time to think instead of forcing rushed choices.</p>
+        </div>
+        <div class="mini-card">
+          <span class="icon">🧱</span>
+          <strong>Foundation</strong>
+          <p>Security makes future saving and investing more durable.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Important:</strong> security is not wasted money. It is money with a job: protecting
+        your future from avoidable damage.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Real Explanation</h2>
+      <p>
+        Security usually begins with liquidity — money you can reach when life becomes expensive,
+        urgent, or unstable. This is why an emergency fund matters. Long-term investing is powerful,
+        but if all your money is locked into risk or long-term plans, even a small emergency can
+        force you into bad timing, debt, or panic. Security does not reject growth. It protects
+        growth.
+      </p>
+      <p>
+        For many people, the first real financial milestone is not making a huge investment. It is
+        building the first meaningful buffer. That may begin with a few hundred dollars, then one
+        month of expenses, then more. The exact number varies by life situation, but the logic is
+        consistent: the stronger the buffer, the less fragile the system.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>5. Key Concepts</h2>
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Emergency Fund</td>
+          <td>Money set aside for real unexpected problems, not random wants.</td>
+        </tr>
+        <tr>
+          <td>Liquidity</td>
+          <td>How quickly money can be accessed when it is needed.</td>
+        </tr>
+        <tr>
+          <td>Buffer</td>
+          <td>A financial cushion between you and stress.</td>
+        </tr>
+        <tr>
+          <td>Stability</td>
+          <td>The ability to handle disruption without everything collapsing.</td>
+        </tr>
+        <tr>
+          <td>Runway</td>
+          <td>How long your money can support you if income weakens.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Comparison: Weak vs Strong Protection</h2>
+      <table>
+        <tr>
+          <th>Situation</th>
+          <th>Likely Experience</th>
+          <th>Financial Effect</th>
+        </tr>
+        <tr>
+          <td>No savings</td>
+          <td>High stress, rushed decisions, greater dependence on debt</td>
+          <td>Fragile system</td>
+        </tr>
+        <tr>
+          <td>Small buffer</td>
+          <td>Some protection, but larger problems still create pressure</td>
+          <td>Moderate stability</td>
+        </tr>
+        <tr>
+          <td>Strong emergency fund</td>
+          <td>More calm, more options, less forced borrowing</td>
+          <td>Stronger resilience</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>7. Common Mistakes</h2>
+      <div class="grid-2">
+        <div class="mini-card">
+          <strong>❌ “I’ll save later.”</strong>
+          <p>Later often becomes never. Security has to be built intentionally.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Investing before protecting</strong>
+          <p>Growth matters, but without a buffer, even small emergencies can cause damage.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Using emergency savings for casual wants</strong>
+          <p>That weakens the very protection the money was meant to provide.</p>
+        </div>
+        <div class="mini-card">
+          <strong>❌ Believing security is “unproductive”</strong>
+          <p>Security may not look exciting, but it protects everything built after it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Scenario Thinking</h2>
+      <div class="scenario">
+        <p>
+          You receive some extra money. What is usually the stronger move if you do not yet have a
+          solid emergency buffer?
+        </p>
+        <div class="choice-row">
+          <button onclick="showScenario('buffer')">Strengthen savings first, then invest later</button>
+          <button class="alt" onclick="showScenario('rush')">Skip protection and invest everything immediately</button>
+        </div>
+        <div id="scenarioFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Mini Game: Emergency Buffer Builder</h2>
+      <p class="small">
+        Build protection step by step. Try to increase your Buffer while handling small surprises.
+      </p>
+
+      <div class="score-strip">
+        <div class="score-pill">Cash Available: $<span id="cashScore">300</span></div>
+        <div class="score-pill">Emergency Fund: $<span id="bufferScore">0</span></div>
+        <div class="score-pill">Stress Level: <span id="stressScore">High</span></div>
+        <div class="score-pill">Actions Left: <span id="actionsScore">6</span></div>
+      </div>
+
+      <div class="choice-row" style="margin-top:16px;">
+        <button onclick="playSecurityGame('save50')">Save $50</button>
+        <button onclick="playSecurityGame('save100')">Save $100</button>
+        <button onclick="playSecurityGame('spendfun')">Spend $40 on a want</button>
+        <button onclick="playSecurityGame('surprise')">Random surprise event</button>
+        <button class="alt" onclick="resetSecurityGame()">Reset Game</button>
+      </div>
+
+      <div id="gameFeedback" class="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2>10. Quiz</h2>
+
+      <div class="scenario">
+        <p><strong>Q1.</strong> What is the main purpose of an emergency fund?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(1,'a')">To handle real unexpected problems</button>
+          <button class="alt" onclick="checkQuiz(1,'b')">To fund every random purchase</button>
+          <button class="alt" onclick="checkQuiz(1,'c')">To replace all long-term investing forever</button>
+        </div>
+        <div id="quiz1" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q2.</strong> Why does security matter before aggressive growth?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(2,'a')">Because protection reduces the chance of bad forced decisions</button>
+          <button class="alt" onclick="checkQuiz(2,'b')">Because security means you should never invest</button>
+          <button class="alt" onclick="checkQuiz(2,'c')">Because emergencies never really happen</button>
+        </div>
+        <div id="quiz2" class="feedback"></div>
+      </div>
+
+      <div class="scenario">
+        <p><strong>Q3.</strong> Which is usually the weaker financial move?</p>
+        <div class="choice-row">
+          <button onclick="checkQuiz(3,'a')">Using all spare money on wants while having no buffer</button>
+          <button class="alt" onclick="checkQuiz(3,'b')">Building a cushion before chasing more risk</button>
+          <button class="alt" onclick="checkQuiz(3,'c')">Keeping some liquid money for emergencies</button>
+        </div>
+        <div id="quiz3" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>11. Real-Life Action</h2>
+      <div class="info-box">
+        <strong>Try this now:</strong>
+        <ul>
+          <li>Choose a first emergency savings target, even if it is small.</li>
+          <li>List 3 real situations where emergency money would help you stay calm.</li>
+          <li>Write one amount you can set aside each week or month.</li>
+          <li>Decide where this security money will live so it stays accessible and protected.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>12. Book Recommendations</h2>
+      <div class="grid-2">
+        <div class="book-card">
+          <div class="book-tag">Money Habits</div>
+          <h4>The Richest Man in Babylon</h4>
+          <p>
+            A timeless reminder that keeping part of what you earn is one of the first real steps
+            toward financial strength.
+          </p>
+        </div>
+        <div class="book-card">
+          <div class="book-tag">Practical Personal Finance</div>
+          <h4>I Will Teach You to Be Rich</h4>
+          <p>
+            A practical system for automating money decisions and creating structure around saving
+            and financial protection.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <footer class="footer">
+    <div class="footer-container">
+
+      <h3>Explore All Pages</h3>
+
+      <div class="footer-links">
+        <a href="index.html">🏠 Home</a>
+
+        <a href="goals.html">🎯 Goals</a>
+        <a href="behavior.html">🧠 Behavior</a>
+        <a href="income.html">💸 Income</a>
+        <a href="business.html">💼 Business</a>
+        <a href="cashflow.html">💰 Cash Flow</a>
+        <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+        <a href="value.html">💎 Value</a>
+        <a href="system.html">🛠️ System</a>
+
+        <a href="assets.html">🌱 Assets</a>
+        <a href="invest.html">📊 Invest</a>
+        <a href="compound.html">🧮 Compound</a>
+        <a href="fund.html">📚 Fund</a>
+        <a href="strategy.html">🧭 Strategy</a>
+        <a href="wealth.html">🏆 Wealth</a>
+        <a href="legacy.html">🧬 Legacy</a>
+        <a href="journey.html">🛤️ Journey</a>
+
+        <a href="credit.html">💳 Credit</a>
+        <a href="debt.html">⛓️ Debt</a>
+        <a href="risk.html">🧯 Risk</a>
+        <a href="security.html">🛡️ Security</a>
+        <a href="insurance.html">🩺 Insurance</a>
+        <a href="inflation.html">🔥 Inflation</a>
+        <a href="mistake.html">⚠️ Mistakes</a>
+        <a href="tax.html">🧾 Tax Basics</a>
+
+        <a href="realestate.html">🏠 Real Estate</a>
+        <a href="retirment.html">👴 Retirement</a>
+        <a href="tax-advanced.html">🧮 Tax Advanced</a>
+        <a href="story.html">📖 Story</a>
+
+      </div>
+
+      <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+      <script>
+        function showScenario(type) {
+          const box = document.getElementById("scenarioFeedback");
+          if (type === "buffer") {
+            box.className = "feedback good";
+            box.innerHTML = "Strong choice. Protection first often prevents emergencies from turning into debt, panic, or forced bad decisions.";
+          } else {
+            box.className = "feedback warn";
+            box.innerHTML = "That can work only if nothing goes wrong. Without security, even a small emergency can damage your system.";
+          }
+        }
+
+        let cash = 300;
+        let buffer = 0;
+        let actions = 6;
+
+        function stressLabel() {
+          if (buffer >= 250) return "Low";
+          if (buffer >= 120) return "Medium";
+          return "High";
+        }
+
+        function updateGame() {
+          document.getElementById("cashScore").textContent = cash;
+          document.getElementById("bufferScore").textContent = buffer;
+          document.getElementById("stressScore").textContent = stressLabel();
+          document.getElementById("actionsScore").textContent = actions;
+        }
+
+        function playSecurityGame(action) {
+          const box = document.getElementById("gameFeedback");
+
+          if (actions <= 0) {
+            box.className = "feedback warn";
+            box.innerHTML = "No actions left. Reset the game and try to build stronger protection.";
+            return;
+          }
+
+          actions--;
+
+          if (action === "save50") {
+            if (cash >= 50) {
+              cash -= 50;
+              buffer += 50;
+              box.className = "feedback good";
+              box.innerHTML = "Good move. Small steady savings can build real protection.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not enough cash available for that move.";
+            }
+          }
+
+          if (action === "save100") {
+            if (cash >= 100) {
+              cash -= 100;
+              buffer += 100;
+              box.className = "feedback good";
+              box.innerHTML = "Strong move. Larger savings build security faster.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not enough cash available for that move.";
+            }
+          }
+
+          if (action === "spendfun") {
+            if (cash >= 40) {
+              cash -= 40;
+              box.className = "feedback warn";
+              box.innerHTML = "That may feel nice now, but it slows down your protection.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not enough cash available for that move.";
+            }
+          }
+
+          if (action === "surprise") {
+            const eventCost = [30, 60, 120][Math.floor(Math.random() * 3)];
+            if (buffer >= eventCost) {
+              buffer -= eventCost;
+              box.className = "feedback good";
+              box.innerHTML = "A surprise cost of $" + eventCost + " happened — but your buffer handled it.";
+            } else if (cash >= eventCost) {
+              cash -= eventCost;
+              box.className = "feedback warn";
+              box.innerHTML = "A surprise cost of $" + eventCost + " hit your available cash. A stronger buffer would make this easier.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "A surprise cost of $" + eventCost + " happened, and you were not ready. This is why security matters.";
+            }
+          }
+
+          if (buffer >= 200) {
+            box.className = "feedback good";
+            box.innerHTML = "Excellent. You are building real financial protection, not just hoping nothing goes wrong.";
+          }
+
+          updateGame();
+        }
+
+        function resetSecurityGame() {
+          cash = 300;
+          buffer = 0;
+          actions = 6;
+          updateGame();
+          const box = document.getElementById("gameFeedback");
+          box.className = "feedback";
+          box.innerHTML = "";
+        }
+
+        function checkQuiz(q, ans) {
+          const box = document.getElementById("quiz" + q);
+
+          if (q === 1) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Emergency money is meant for real unexpected needs, not random spending.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Emergency funds are for protection, not casual spending or replacing all long-term investing.";
+            }
+          }
+
+          if (q === 2) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Security improves decision quality by reducing panic and forced borrowing.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Security does not cancel investing forever — it protects you so that growth can survive.";
+            }
+          }
+
+          if (q === 3) {
+            if (ans === "a") {
+              box.className = "feedback good";
+              box.innerHTML = "Correct. Spending everything while having no buffer leaves you exposed to avoidable damage.";
+            } else {
+              box.className = "feedback bad";
+              box.innerHTML = "Not quite. Building a cushion and keeping some liquid money are usually stronger moves.";
+            }
+          }
+        }
+
+        updateGame();
+      </script>
+</body>
+
+</html>

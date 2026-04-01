@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INCOME - Finance Academy</title>
+    <style>
+        :root {
+            --bg1: #eef5ff;
+            --bg2: #fff8ef;
+            --card: #ffffff;
+            --text: #22324c;
+            --muted: #4b5b77;
+            --line: #dfe8f2;
+            --good: #18794e;
+            --bad: #b34040;
+            --warn: #9a6500;
+            --shadow: 0 14px 30px rgba(0, 0, 0, .08);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        #core-finance-lessons {
+            scroll-margin-top: 95px;
+        }
+
+        /* .topbar{
+      background:#22324c;
+      color:#fff;
+      padding:14px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    } */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, #d7ebff, #ffe2a9, #ffd9e7, #e4dcff);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+        }
+
+
+        .topbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            margin-left: 14px;
+        }
+
+        .wrap {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 22px 16px 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d7ebff, #ffe2a9, #ffdceb, #e6ddff);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.06;
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            line-height: 1.8;
+            max-width: 820px;
+            font-size: 1.03rem;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, .75);
+            color: #22324c;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .93rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+            display: grid;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .mini-card {
+            background: linear-gradient(180deg, #fff, #f8fbff);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .mini-card .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fffce8, #f7fcff);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 18px;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .quote {
+            background: #f6fbff;
+            border-left: 5px solid #7baeff;
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin: 16px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        ul {
+            line-height: 1.9;
+            padding-left: 22px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        th {
+            background: #f5fbff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 16px;
+            background: #fff;
+            margin-top: 12px;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            border: none;
+            background: #22324c;
+            color: #fff;
+            padding: 11px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s ease, opacity .15s ease, background .15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: .96;
+        }
+
+        button.alt {
+            background: #5d739b;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            display: none;
+            font-weight: 700;
+            line-height: 1.7;
+        }
+
+        .feedback.good {
+            display: block;
+            background: #e8fff0;
+            color: var(--good);
+        }
+
+        .feedback.bad {
+            display: block;
+            background: #ffeaea;
+            color: var(--bad);
+        }
+
+        .feedback.warn {
+            display: block;
+            background: #fff7e8;
+            color: var(--warn);
+        }
+
+        .score-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .score-pill {
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 9px 14px;
+            font-weight: 700;
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 45%, #fff8ef 100%);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, .06);
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #7baeff, #8ee0c2, #ffd27a, #f3a6d6);
+        }
+
+        .book-tag {
+            display: inline-block;
+            background: #eef5ff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: .82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .book-card h4 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+        }
+
+        .book-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .footer-nav a {
+            text-decoration: none;
+            background: #22324c;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: .96rem;
+        }
+
+        @media (max-width:900px) {
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div><strong>💰 Finance Academy</strong></div>
+        <div>
+            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
+            <a href="behavior.html" style="color:rgb(137, 63, 137);"> ◀︎− Behavior </a>
+            <a href="business.html" style="color:rgb(137, 63, 137);">  Business −▶︎ </a>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <section class="hero">
+            <h1>INCOME</h1>
+            <p>
+                Income is not just about how much money comes in. It is also about how stable it is, how
+                much control you have over it, how hard it is to grow, and whether it depends only on your
+                time. This page explores the different ways people earn money and why some income paths
+                create more long-term flexibility than others.
+            </p>
+            <div class="pill-row">
+                <span class="pill">Salary</span>
+                <span class="pill">Freelance</span>
+                <span class="pill">Business</span>
+                <span class="pill">Hybrid Path</span>
+                <span class="pill">Scalability</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>1. Big Idea</h2>
+            <p>
+                Not all income is built the same way. Some income is steady but harder to scale. Some income
+                is flexible but less predictable. Some income takes longer to build but can grow beyond your
+                direct hours. Financial strength is not only about earning more. It is also about
+                understanding what kind of income you have, what risks come with it, and how your income can
+                become stronger over time.
+            </p>
+            <div class="quote">
+                “A strong financial life is not built only by earning more. It is built by earning more
+                intelligently.”
+            </div>
+            <div class="info-box">
+                <strong>Core principle:</strong> the best income path for most people is not blind
+                chasing. It is a thoughtful mix of stability, skill, and future growth.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>2. Story: Raj and Sara</h2>
+            <p>
+                Raj chose a traditional full-time job. It gave him stability, monthly income, and a clear
+                structure. He knew what he would roughly earn, and that predictability helped him plan. Sara
+                took a different route. She also worked, but she built a side skill that she could offer
+                independently. At first, Raj looked stronger because his income was steady and Sara’s extra
+                earnings were inconsistent. But over time, Sara’s second layer of income gave her something
+                Raj did not have: flexibility.
+            </p>
+            <p>
+                When Raj’s job became stressful, he still depended fully on it. Sara, on the other hand,
+                could lean more on freelance work, raise her rates as her skill improved, and later invest a
+                portion of what she earned. Raj had one strong pillar. Sara gradually built several smaller
+                ones. That difference matters because financial resilience often increases when income is not
+                coming from only one place.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>3. Main Types of Income</h2>
+            <div class="grid-4">
+                <div class="mini-card">
+                    <span class="icon">👔</span>
+                    <strong>Job Income</strong>
+                    <p>Usually more stable and predictable, but often tied closely to your time.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🧑‍💻</span>
+                    <strong>Freelance Income</strong>
+                    <p>Flexible and skill-based, but can be variable and less predictable.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">🏪</span>
+                    <strong>Business Income</strong>
+                    <p>Can scale more than direct labor, but often involves more risk and responsibility.</p>
+                </div>
+                <div class="mini-card">
+                    <span class="icon">📈</span>
+                    <strong>Investment Income</strong>
+                    <p>Usually slower to build, but it can add long-term strength when assets grow.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Important:</strong> each type of income has different tradeoffs. Stability, control,
+                effort, and growth do not always come together in equal amounts.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>4. Real Explanation</h2>
+            <p>
+                Income can be active, flexible, or scalable. A salary often gives stability, which is a
+                major strength. Freelance work often gives flexibility, which can be valuable but sometimes
+                stressful because it is less certain. Business income can create much larger upside because
+                one system can serve many people, but that usually comes with higher risk. Investment income
+                is rarely strong at the beginning because it depends on having capital, but over time it can
+                become a meaningful support layer.
+            </p>
+            <p>
+                The smartest path for many people is not choosing only one forever. It is often a hybrid
+                path: start with stable income, build a useful side skill, then gradually invest. That
+                approach combines security, growth, and optionality. It reduces dependence on one source and
+                allows financial life to become stronger step by step.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>5. Key Concepts</h2>
+            <table>
+                <tr>
+                    <th>Concept</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td>Active Income</td>
+                    <td>Income earned directly from your time, effort, or work.</td>
+                </tr>
+                <tr>
+                    <td>Flexible Income</td>
+                    <td>Income that can adapt but may also fluctuate.</td>
+                </tr>
+                <tr>
+                    <td>Scalable Income</td>
+                    <td>Income that can grow without increasing hours at the same rate.</td>
+                </tr>
+                <tr>
+                    <td>Income Stream</td>
+                    <td>A source from which money regularly or repeatedly comes in.</td>
+                </tr>
+                <tr>
+                    <td>Hybrid Path</td>
+                    <td>A mix of stability, skill-based earning, and long-term investing.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>6. Comparison: Income Paths</h2>
+            <table>
+                <tr>
+                    <th>Path</th>
+                    <th>Strength</th>
+                    <th>Weakness</th>
+                    <th>Who it often suits</th>
+                </tr>
+                <tr>
+                    <td>Job</td>
+                    <td>Stability and predictability</td>
+                    <td>May be less scalable</td>
+                    <td>People who need structure and reliable monthly cash flow</td>
+                </tr>
+                <tr>
+                    <td>Freelance</td>
+                    <td>Flexibility and skill-based income growth</td>
+                    <td>Variable demand and less certainty</td>
+                    <td>People with useful skills and self-management ability</td>
+                </tr>
+                <tr>
+                    <td>Business</td>
+                    <td>Higher growth potential and ownership</td>
+                    <td>Higher risk and more responsibility</td>
+                    <td>Builders, problem-solvers, long-term operators</td>
+                </tr>
+                <tr>
+                    <td>Hybrid</td>
+                    <td>Balance of stability and growth</td>
+                    <td>Takes energy and planning</td>
+                    <td>Most learners and early earners</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>7. Common Mistakes</h2>
+            <div class="grid-2">
+                <div class="mini-card">
+                    <strong>❌ Depending on one source forever</strong>
+                    <p>If that one source weakens, the whole system becomes fragile.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Chasing only the highest number</strong>
+                    <p>Higher income with extreme instability is not always better.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Ignoring skill growth</strong>
+                    <p>Income usually grows faster when value and skill grow too.</p>
+                </div>
+                <div class="mini-card">
+                    <strong>❌ Confusing freedom with randomness</strong>
+                    <p>Flexibility is powerful, but it needs planning and structure.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>8. Scenario Thinking</h2>
+            <div class="scenario">
+                <p>
+                    You are starting your earning journey. Which path is often strongest for most people in the
+                    early stages?
+                </p>
+                <div class="choice-row">
+                    <button onclick="showScenario('hybrid')">Stable income + build a side skill + invest slowly</button>
+                    <button class="alt" onclick="showScenario('single')">Depend only on one source with no backup
+                        plan</button>
+                </div>
+                <div id="scenarioFeedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>9. Mini Game: Build Your Income Mix</h2>
+            <p class="small">
+                Try building a stronger income system. Increase Stability, Flexibility, and Growth Potential.
+            </p>
+
+            <div class="score-strip">
+                <div class="score-pill">Stability: <span id="stabilityScore">0</span></div>
+                <div class="score-pill">Flexibility: <span id="flexibilityScore">0</span></div>
+                <div class="score-pill">Growth Potential: <span id="growthScore">0</span></div>
+                <div class="score-pill">Energy: <span id="energyScore">6</span></div>
+            </div>
+
+            <div class="choice-row" style="margin-top:16px;">
+                <button onclick="playIncomeGame('job')">Take a steady job</button>
+                <button onclick="playIncomeGame('skill')">Build a side skill</button>
+                <button onclick="playIncomeGame('client')">Get freelance clients</button>
+                <button onclick="playIncomeGame('invest')">Start small investing</button>
+                <button onclick="playIncomeGame('random')">Chase random quick money</button>
+                <button class="alt" onclick="resetIncomeGame()">Reset Game</button>
+            </div>
+
+            <div id="gameFeedback" class="feedback"></div>
+        </section>
+
+        <section class="card">
+            <h2>10. Quiz</h2>
+
+            <div class="scenario">
+                <p><strong>Q1.</strong> What is one major strength of job income?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(1,'a')">It is often more stable and predictable</button>
+                    <button class="alt" onclick="checkQuiz(1,'b')">It always scales infinitely</button>
+                    <button class="alt" onclick="checkQuiz(1,'c')">It never depends on time</button>
+                </div>
+                <div id="quiz1" class="feedback"></div>
+            </div>
+
+            <div class="scenario">
+                <p><strong>Q2.</strong> Why is a hybrid income path often powerful?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(2,'a')">It can combine stability, skill growth, and future
+                        investing</button>
+                    <button class="alt" onclick="checkQuiz(2,'b')">Because it removes all risk instantly</button>
+                    <button class="alt" onclick="checkQuiz(2,'c')">Because it means you never need planning</button>
+                </div>
+                <div id="quiz2" class="feedback"></div>
+            </div>
+
+            <div class="scenario">
+                <p><strong>Q3.</strong> Which is usually a weak income strategy?</p>
+                <div class="choice-row">
+                    <button onclick="checkQuiz(3,'a')">Depending on one source forever without building skills</button>
+                    <button class="alt" onclick="checkQuiz(3,'b')">Building value and adding layers over time</button>
+                    <button class="alt" onclick="checkQuiz(3,'c')">Starting with stability and growing
+                        carefully</button>
+                </div>
+                <div id="quiz3" class="feedback"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>11. Real-Life Action</h2>
+            <div class="info-box">
+                <strong>Try this now:</strong>
+                <ul>
+                    <li>Write your current or future main income path: job, freelance, business, or mixed.</li>
+                    <li>Write one possible second income layer you could add later.</li>
+                    <li>Write one skill that would make your income stronger in the next 12 months.</li>
+                    <li>Write one action you can take this week to move in that direction.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>12. Book Recommendations</h2>
+            <div class="grid-2">
+                <div class="book-card">
+                    <div class="book-tag">Scalable Thinking</div>
+                    <h4>The Millionaire Fastlane</h4>
+                    <p>
+                        A bold book about control, scale, and why some income systems can grow much faster than
+                        salary alone.
+                    </p>
+                </div>
+                <div class="book-card">
+                    <div class="book-tag">Focused Skill</div>
+                    <h4>Deep Work</h4>
+                    <p>
+                        Shows why focused effort and strong skill-building can increase long-term earning power.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <link rel="stylesheet" href="style.css">
+    <footer class="footer">
+        <div class="footer-container">
+
+            <h3>Explore All Pages</h3>
+
+            <div class="footer-links">
+                <a href="index.html">🏠 Home</a>
+
+                <a href="goals.html">🎯 Goals</a>
+                <a href="behavior.html">🧠 Behavior</a>
+                <a href="income.html">💸 Income</a>
+                <a href="business.html">💼 Business</a>
+                <a href="cashflow.html">💰 Cash Flow</a>
+                <a href="wealth_ladder.html">🪜 Wealth Ladder</a>
+                <a href="value.html">💎 Value</a>
+                <a href="system.html">🛠️ System</a>
+
+                <a href="assets.html">🌱 Assets</a>
+                <a href="invest.html">📊 Invest</a>
+                <a href="compound.html">🧮 Compound</a>
+                <a href="fund.html">📚 Fund</a>
+                <a href="strategy.html">🧭 Strategy</a>
+                <a href="wealth.html">🏆 Wealth</a>
+                <a href="legacy.html">🧬 Legacy</a>
+                <a href="journey.html">🛤️ Journey</a>
+
+                <a href="credit.html">💳 Credit</a>
+                <a href="debt.html">⛓️ Debt</a>
+                <a href="risk.html">🧯 Risk</a>
+                <a href="security.html">🛡️ Security</a>
+                <a href="insurance.html">🩺 Insurance</a>
+                <a href="inflation.html">🔥 Inflation</a>
+                <a href="mistake.html">⚠️ Mistakes</a>
+                <a href="tax.html">🧾 Tax Basics</a>
+
+                <a href="realestate.html">🏠 Real Estate</a>
+                <a href="retirment.html">👴 Retirement</a>
+                <a href="tax-advanced.html">🧮 Tax Advanced</a>
+                <a href="story.html">📖 Story</a>
+
+            </div>
+
+            <p class="footer-note">💰 Finance Academy • Learn • Grow • Play</p>
+
+            <script>
+                function showScenario(type) {
+                    const box = document.getElementById("scenarioFeedback");
+                    if (type === "hybrid") {
+                        box.className = "feedback good";
+                        box.innerHTML = "Strong choice. For many people, stability plus skill-building plus gradual investing creates a stronger base than depending on one income source only.";
+                    } else {
+                        box.className = "feedback warn";
+                        box.innerHTML = "That can feel simple, but it leaves your financial life more fragile if that one source weakens.";
+                    }
+                }
+
+                let stability = 0;
+                let flexibility = 0;
+                let growth = 0;
+                let energy = 6;
+
+                function updateGame() {
+                    document.getElementById("stabilityScore").textContent = stability;
+                    document.getElementById("flexibilityScore").textContent = flexibility;
+                    document.getElementById("growthScore").textContent = growth;
+                    document.getElementById("energyScore").textContent = energy;
+                }
+
+                function playIncomeGame(action) {
+                    const box = document.getElementById("gameFeedback");
+
+                    if (energy <= 0) {
+                        box.className = "feedback warn";
+                        box.innerHTML = "You used all your energy. Reset the game and try to build a more balanced income system.";
+                        return;
+                    }
+
+                    energy--;
+
+                    if (action === "job") {
+                        stability += 2;
+                        box.className = "feedback good";
+                        box.innerHTML = "Good. A steady job can strengthen stability and give you a base to build from.";
+                    }
+
+                    if (action === "skill") {
+                        flexibility += 1;
+                        growth += 2;
+                        box.className = "feedback good";
+                        box.innerHTML = "Excellent. Building a side skill can improve both future flexibility and income growth potential.";
+                    }
+
+                    if (action === "client") {
+                        flexibility += 2;
+                        growth += 1;
+                        box.className = "feedback good";
+                        box.innerHTML = "Nice. Freelance clients can increase flexibility, but they usually depend on skill and trust.";
+                    }
+
+                    if (action === "invest") {
+                        growth += 2;
+                        box.className = "feedback good";
+                        box.innerHTML = "Good thinking. Investment income usually starts small, but it can strengthen the future.";
+                    }
+
+                    if (action === "random") {
+                        box.className = "feedback bad";
+                        box.innerHTML = "That may feel exciting, but random quick-money chasing is weak compared with structured income building.";
+                    }
+
+                    if (stability >= 2 && flexibility >= 2 && growth >= 3) {
+                        box.className = "feedback good";
+                        box.innerHTML = "Excellent. You are building a stronger income system with balance, adaptability, and long-term growth.";
+                    }
+
+                    updateGame();
+                }
+
+                function resetIncomeGame() {
+                    stability = 0;
+                    flexibility = 0;
+                    growth = 0;
+                    energy = 6;
+                    updateGame();
+                    const box = document.getElementById("gameFeedback");
+                    box.className = "feedback";
+                    box.innerHTML = "";
+                }
+
+                function checkQuiz(q, ans) {
+                    const box = document.getElementById("quiz" + q);
+
+                    if (q === 1) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. Job income is often valued for stability and predictability, especially in early financial life.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. A job often gives structure and predictability, but it is not automatically highly scalable.";
+                        }
+                    }
+
+                    if (q === 2) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. A hybrid path can combine stability, extra earning layers, and long-term financial growth.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. Hybrid paths are powerful because they combine strengths — not because they remove all risk or planning.";
+                        }
+                    }
+
+                    if (q === 3) {
+                        if (ans === "a") {
+                            box.className = "feedback good";
+                            box.innerHTML = "Correct. Depending on one source forever without growing skills can leave income fragile and limited.";
+                        } else {
+                            box.className = "feedback bad";
+                            box.innerHTML = "Not quite. Building skills, layers, and structure is usually stronger than staying dependent on one weak path.";
+                        }
+                    }
+                }
+
+                updateGame();
+            </script>
+</body>
+
+</html>
