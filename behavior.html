@@ -52,6 +52,24 @@
             font-weight: bold;
         }
 
+        .topbar>div:nth-child(2) {
+
+            display: flex;
+
+            width: 100%;
+
+            align-items: center;
+
+        }
+
+        /* ✅ Push Income to right */
+
+        .topbar>div:nth-child(2) a:last-child {
+
+            margin-left: auto;
+
+        }
+
         .wrap {
             max-width: 1100px;
             margin: auto;
@@ -152,7 +170,27 @@
             background: #1a263a;
         }
 
-        @media(max-width:800px) {
+        /* @media(max-width:800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+        } */
+
+        @media (max-width: 800px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .topbar>div:nth-child(2) {
+                width: 100%;
+            }
+
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -167,14 +205,36 @@
 
 <body>
 
-    <div class="topbar">
+    <!-- <div class="topbar">
         <div><strong>💰 Finance Academy</strong></div>
         <div>
-            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
-            <!-- <a href="strategy.html">⬅ Strategy</a> -->
-             <a href="goals.html" style="color:rgb(137, 63, 137);"> ◀︎−Goal </a>
-            <a href="income.html" style="color:rgb(137, 63, 137);">  Income−▶︎ </a>
+            <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a> -->
+    <!-- <a href="strategy.html">⬅ Strategy</a> -->
+    <!-- <a href="goals.html" style="color:rgb(137, 63, 137);"> ◀︎− Goal </a>
+            <a href="income.html" style="color:rgb(137, 63, 137);"> Income −▶︎ </a>
         </div>
+    </div> -->
+
+
+
+    <div class="topbar">
+
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+
+            <!-- LEFT SIDE -->
+            <div>
+                <strong>💰 Finance Academy</strong>
+            </div>
+
+            <!-- RIGHT SIDE NAV -->
+            <div style="display:flex; align-items:center; gap:12px;">
+                <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);">🏠 Home</a>
+                <a href="goals.html" style="color:rgb(137, 63, 137);">◀︎− Goal</a>
+                <a href="income.html" style="color:rgb(137, 63, 137);">Income −▶︎</a>
+            </div>
+
+        </div>
+
     </div>
 
     <div class="wrap">
