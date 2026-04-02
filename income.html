@@ -68,6 +68,24 @@
             margin-left: 14px;
         }
 
+        .topbar>div:nth-child(2) {
+
+            display: flex;
+
+            width: 100%;
+
+            align-items: center;
+
+        }
+
+        /* ✅ Push Income to right */
+
+        .topbar>div:nth-child(2) a:last-child {
+
+            margin-left: auto;
+
+        }
+
         .wrap {
             max-width: 1050px;
             margin: 0 auto;
@@ -355,26 +373,67 @@
             font-size: .96rem;
         }
 
-        @media (max-width:900px) {
+        /* @media (max-width:900px) {
 
             .grid-2,
             .grid-3,
             .grid-4 {
                 grid-template-columns: 1fr;
             }
+        } */
+
+
+        @media (max-width: 800px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .topbar>div:nth-child(2) {
+                width: 100%;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <div class="topbar">
+
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+
+            <div>
+                <strong>💰 Finance Academy</strong>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137); text-decoration:none;">🏠
+                    Home</a>
+                <a href="behavior.html" style="color:rgb(137, 63, 137); text-decoration:none;">◀︎− Behavior</a>
+                <a href="business.html" style="color:rgb(137, 63, 137); text-decoration:none;">Business −▶︎</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- <div class="topbar">
         <div><strong>💰 Finance Academy</strong></div>
         <div>
             <a href="index.html#core-finance-lessons" style="color:rgb(137, 63, 137);"> 🏠 Home </a>
             <a href="behavior.html" style="color:rgb(137, 63, 137);"> ◀︎− Behavior </a>
             <a href="business.html" style="color:rgb(137, 63, 137);">  Business −▶︎ </a>
         </div>
-    </div>
+    </div> -->
 
     <div class="wrap">
         <section class="hero">
